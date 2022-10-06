@@ -5,7 +5,7 @@
   "description": "userstories.dev utils",
   "main": "dist",
   "scripts": {
-    "build": "rm -rf dist && tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.26",

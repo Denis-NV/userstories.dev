@@ -4,9 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:all": "nx run-many --target=build --all",
+    "build:affected": "nx affected:build",
+    "build:bbn": "nx build bbn",
+    "dev:bbn": "nx start bbn"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nx": "^14.8.3"
+  }
 }
