@@ -14,5 +14,13 @@
   "license": "ISC",
   "devDependencies": {
     "nx": "^14.8.3"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "18",
+        "react-dom": "18"
+      }
+    }
   }
 }

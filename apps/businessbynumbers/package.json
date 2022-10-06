@@ -9,18 +9,25 @@
     "start": "concurrently \"yarn start:tsc\" \"razzle start\"",
     "build": "tsc -b && razzle build --noninteractive",
     "test": "razzle test --env=jsdom",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "amplify:status": "amplify status",
+    "amplify:console": "amplify console"
   },
   "dependencies": {
+    "@aws-amplify/core": "^4.7.6",
+    "@aws-amplify/geo": "^1.3.18",
+    "@aws-amplify/ui-react": "^3.5.7",
     "@types/styled-components": "^5.1.26",
     "@ustrs/utils": "workspace:*",
+    "aws-amplify": "^4.3.37",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.3",
@@ -37,6 +44,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "razzle": "^4.2.17",
     "razzle-dev-utils": "^4.2.17",
+    "react-native": "^0.70.2",
     "typescript": "^4.8.4",
     "webpack": "^4.44.1",
     "webpack-dev-server": "^3.11.2"
