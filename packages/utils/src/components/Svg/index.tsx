@@ -1,7 +1,7 @@
-import { forwardRef, cloneElement, SVGProps, Fragment } from 'react';
-import styled from 'styled-components';
+import { forwardRef, cloneElement, SVGProps, Fragment } from 'react'
+import styled from 'styled-components'
 
-import { pxToInt } from '../..';
+import { pxToInt } from '../..'
 
 const StyledSvg = styled.svg<{ fill?: string }>`
   & path,
@@ -9,19 +9,19 @@ const StyledSvg = styled.svg<{ fill?: string }>`
   & polygon {
     fill: ${({ fill }) => fill && fill};
   }
-`;
+`
 
 type TProps = Omit<SVGProps<SVGSVGElement>, 'css'> & {
-  children: JSX.Element;
-};
+  children: JSX.Element
+}
 
 const SVG = forwardRef(({ children, width, fill }: TProps, ref): JSX.Element => {
   if (children.type === 'svg') {
-    const { viewBox, ...rest } = children?.props;
-    const viewboxArr = String(viewBox).split(' ');
-    const masterWidth = width ?? children?.props?.width ?? 0;
-    const vb = { width: parseInt(viewboxArr[2]), height: parseInt(viewboxArr[3]) };
-    const intWidth = typeof masterWidth === 'string' ? pxToInt(masterWidth) : masterWidth;
+    const { viewBox, ...rest } = children ? children.props : null
+    const viewboxArr = String(viewBox)?.split(' ')
+    const masterWidth = width ?? children?.props?.width ?? 0
+    const vb = { width: parseInt(viewboxArr[2]), height: parseInt(viewboxArr[3]) }
+    const intWidth = typeof masterWidth === 'string' ? pxToInt(masterWidth) : masterWidth
 
     return (
       <StyledSvg
@@ -38,10 +38,10 @@ const SVG = forwardRef(({ children, width, fill }: TProps, ref): JSX.Element => 
             ))
           : cloneElement(children?.props?.children)}
       </StyledSvg>
-    );
+    )
   }
 
-  return children;
-});
+  return children
+})
 
-export default SVG;
+export default SVG

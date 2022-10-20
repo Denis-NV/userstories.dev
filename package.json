@@ -7,13 +7,26 @@
     "build:all": "nx run-many --target=build --all",
     "build:affected": "nx affected:build",
     "build:bbn": "nx build bbn",
-    "dev:bbn": "nx start bbn"
+    "dev:bbn": "nx start bbn",
+    "lint": "eslint '{apps,packages}/*/src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix '{apps,packages}/*/src/**/*.{jsx,ts,tsx}'",
+    "format": "prettier --write {apps,packages}/*/src/**/*.{ts,tsx,css} --config ./.prettierrc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nx": "^14.8.3"
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
+    "eslint": "^8.25.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "nx": "^14.8.3",
+    "prettier": "^2.7.1",
+    "react-hooks": "^1.0.1",
+    "typescript": "^4.8.4"
   },
   "pnpm": {
     "peerDependencyRules": {

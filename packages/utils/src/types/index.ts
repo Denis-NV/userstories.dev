@@ -1,15 +1,8 @@
-type Primitive =
-  | string
-  | Function
-  | number
-  | boolean
-  | symbol
-  | undefined
-  | null;
+type Primitive = string | number | boolean | symbol | undefined | null
 
 type DeepOmitArray<T extends any[], K> = {
-  [P in keyof T]: DeepOmit<T[P], K>;
-};
+  [P in keyof T]: DeepOmit<T[P], K>
+}
 
 export type DeepOmit<T, K> = T extends Primitive
   ? T
@@ -20,5 +13,5 @@ export type DeepOmit<T, K> = T extends Primitive
           : TP extends any[]
           ? DeepOmitArray<TP, K> // Array special handling
           : DeepOmit<TP, K>
-        : never;
-    };
+        : never
+    }
