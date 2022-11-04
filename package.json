@@ -10,11 +10,35 @@
     "dev:bbn": "nx start bbn",
     "lint": "eslint '{apps,packages}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,packages}/*/src/**/*.{jsx,ts,tsx}'",
-    "format": "prettier --write {apps,packages}/*/src/**/*.{ts,tsx,css} --config ./.prettierrc"
+    "format": "prettier --write {apps,packages}/*/src/**/*.{ts,tsx,css} --config ./.prettierrc",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "18",
+        "react-dom": "18"
+      }
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/*/src/**/*.{js,jsx,ts,tsx}": [
+      "yarn eslint",
+      "yarn format"
+    ],
+    "apps/*/src/**/*.{js,jsx,ts,tsx}": [
+      "yarn eslint",
+      "yarn format"
+    ]
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
@@ -23,17 +47,11 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nx": "^14.8.3",
     "prettier": "^2.7.1",
     "react-hooks": "^1.0.1",
     "typescript": "^4.8.4"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "react": "18",
-        "react-dom": "18"
-      }
-    }
   }
 }
