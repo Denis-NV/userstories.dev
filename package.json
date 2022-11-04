@@ -31,12 +31,12 @@
   },
   "lint-staged": {
     "packages/*/src/**/*.{js,jsx,ts,tsx}": [
-      "yarn eslint",
-      "yarn format"
+      "pnpm run lint",
+      "pnpm run format"
     ],
     "apps/*/src/**/*.{js,jsx,ts,tsx}": [
-      "yarn eslint",
-      "yarn format"
+      "pnpm run lint",
+      "pnpm run format"
     ]
   },
   "devDependencies": {
