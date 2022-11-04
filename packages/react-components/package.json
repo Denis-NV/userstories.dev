@@ -17,8 +17,7 @@
     ".": {
       "import": "./dist/react-components.es.js",
       "require": "./dist/react-components.umd.js"
-    },
-    "./dist/style.css": "./dist/style.css"
+    }
   },
   "main": "./dist/react-components.umd.js",
   "module": "./dist/react-components.es.js",
