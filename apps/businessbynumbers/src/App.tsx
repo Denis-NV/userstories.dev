@@ -3,7 +3,8 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries'
 
-import { Button } from '@ustrs/utils'
+// import { Button } from '@ustrs/utils'
+import { Button } from '@ustrs/react-components'
 
 import { ListTodosQuery } from './API'
 

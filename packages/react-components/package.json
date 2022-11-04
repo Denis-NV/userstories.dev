@@ -15,12 +15,12 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/react-components.es.js",
-      "require": "./dist/react-components.umd.js"
+      "import": "./dist/lib.es.js",
+      "require": "./dist/lib.umd.js"
     }
   },
-  "main": "./dist/react-components.umd.js",
-  "module": "./dist/react-components.es.js",
+  "main": "./dist/lib.umd.js",
+  "module": "./dist/lib.es.js",
   "types": "./dist/index.d.ts",
   "devDependencies": {
     "@types/node": "18.7.6",

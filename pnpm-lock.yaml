@@ -49,6 +49,7 @@ importers:
       '@types/react-dom': ^18.0.6
       '@types/styled-components': ^5.1.26
       '@types/webpack-env': ^1.15.2
+      '@ustrs/react-components': workspace:*
       '@ustrs/utils': workspace:*
       aws-amplify: ^4.3.37
       babel-preset-razzle: 4.2.17
@@ -71,6 +72,7 @@ importers:
       '@aws-amplify/geo': 1.3.18_react-native@0.70.2
       '@aws-amplify/ui-react': 3.5.7_lsv3mnmuzpzchuljypdbv2mjmq
       '@types/styled-components': 5.1.26
+      '@ustrs/react-components': link:../../packages/react-components
       '@ustrs/utils': link:../../packages/utils
       aws-amplify: 4.3.37_react-native@0.70.2
       react: 18.2.0

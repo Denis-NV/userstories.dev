@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import EsLint from 'vite-plugin-linter'
+// TODO: Check if ts-paths can be used
 // import tsConfigPaths from 'vite-tsconfig-paths'
 import * as packageJson from './package.json'
 
@@ -25,9 +26,9 @@ export default defineConfig((configEnv) => ({
   build: {
     lib: {
       entry: resolve('src', 'index.ts'),
-      name: 'react-components',
+      name: '@ustrs/react-components',
       formats: ['es', 'umd'],
-      fileName: (format) => `react-components.${format}.js`,
+      fileName: (format) => `lib.${format}.js`,
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
