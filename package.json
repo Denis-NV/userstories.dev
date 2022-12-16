@@ -7,7 +7,7 @@
     "build:all": "nx run-many --target=build --all",
     "build:affected": "nx affected:build",
     "build:bbn": "nx build bbn",
-    "dev:bbn": "nx start bbn",
+    "dev:bbn": "nx dev bbn",
     "lint": "eslint '{apps,packages}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,packages}/*/src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write '{apps,packages}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
