@@ -10,6 +10,11 @@
       "StackName": "amplify-businessbynumbers-dev-154537",
       "StackId": "arn:aws:cloudformation:eu-west-2:253880142086:stack/amplify-businessbynumbers-dev-154537/8add28b0-4585-11ed-8fff-025cc8650d7c",
       "AmplifyAppId": "dga1hh07x88sh"
+    },
+    "categories": {
+      "api": {
+        "businessbynumbers": {}
+      }
     }
   }
 }

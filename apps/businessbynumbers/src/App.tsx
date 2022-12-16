@@ -1,29 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { gql, useQuery } from '@apollo/client'
+
+import { listTodos } from './graphql/queries'
+import { ListTodosQuery, ListTodosQueryVariables } from './API'
+
+const initialState = { name: '', description: '' }
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data, loading } = useQuery<ListTodosQuery, ListTodosQueryVariables>(gql(listTodos))
+  const [formState, setFormState] = useState(initialState)
+
+  function setInput(key: string, value: string) {
+    setFormState({ ...formState, [key]: value })
+  }
+
+  const todos = data?.listTodos?.items
+
+  console.log(data, loading)
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      Business by numbers
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+    <div>
+      <h2>Amplify Todos</h2>
+      <input
+        onChange={(event) => setInput('name', event.target.value)}
+        value={formState.name}
+        placeholder="Name"
+      />
+      <input
+        onChange={(event) => setInput('description', event.target.value)}
+        value={formState.description}
+        placeholder="Description"
+      />
+      {/* <Button onClick={addTodo}>Create Todo</Button> */}
+
+      {todos?.map((todo, index) => (
+        <div key={todo?.id ? todo.id : index}>
+          <p>{todo?.name}</p>
+          <p>{todo?.description}</p>
+        </div>
+      ))}
     </div>
   )
 }
