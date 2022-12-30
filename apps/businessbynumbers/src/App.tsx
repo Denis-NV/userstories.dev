@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button } from '@ustrs/react-components'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
@@ -23,6 +24,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <Button>Login</Button>
     </div>
   )
 }
