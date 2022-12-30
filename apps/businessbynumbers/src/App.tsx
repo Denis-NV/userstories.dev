@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import { Button } from '@ustrs/react-components'
+import { useAuth0 } from '@auth0/auth0-react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0()
+
+  const logoutWithRedirect = () =>
+    logout({
+      returnTo: window?.location?.origin,
+    })
 
   return (
     <div className="App">
@@ -23,8 +31,14 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      <Button>Login</Button>
+      {isAuthenticated ? (
+        <div>
+          <p className="read-the-docs">Hello {user?.nickname}</p>
+          <Button onClick={() => logoutWithRedirect()}>Log out</Button>
+        </div>
+      ) : (
+        <Button onClick={() => loginWithRedirect()}>Log in</Button>
+      )}
     </div>
   )
 }

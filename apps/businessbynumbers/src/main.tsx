@@ -7,8 +7,8 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Auth0Provider
-      domain="businessbynumbers.uk.auth0.com"
-      clientId="VtDA2PocloQFi998sRZfNsW4QR5AqnuD"
+      domain={import.meta.env.VITE_DOMAIN || ''}
+      clientId={import.meta.env.VITE_CLIENT_ID || ''}
       redirectUri={window?.location?.origin}
     >
       <App />

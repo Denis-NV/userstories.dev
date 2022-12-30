@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@ustrs/react-components": "workspace:*",
     "@ustrs/utils": "workspace:*",
-    "@ustrs/react-components": "workspace:*"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
