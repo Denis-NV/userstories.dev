@@ -4,22 +4,16 @@ import {
   Auth0Provider,
   // Auth0ProviderOptions
 } from '@auth0/auth0-react'
+import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '@const/auth0'
 
 export type TAuth0ProviderWithHistoryProps = {
   children: React.ReactNode
 }
 
 const Auth0ProviderWithHistory = ({ children }: TAuth0ProviderWithHistoryProps): JSX.Element => {
-  // Retrieve the previously created environment variables
-  const domain = import.meta.env.VITE_AUTH0_DOMAIN
-  const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID
-  const audience = import.meta.env.VITE_AUTH0_AUDIENCE
-
   // Fail fast if the environment variables aren't set
-  if (!domain || !clientId)
-    throw new Error(
-      'Please set REACT_APP_AUTH0_DOMAIN and REACT_APP_AUTH0_CLIENT_ID env. variables',
-    )
+  if (!AUTH0_DOMAIN || !AUTH0_CLIENT_ID)
+    throw new Error('Please set AUTH0_DOMAIN and AUTH0_CLIENT_ID ENV variables')
 
   /**
    * This is not needed if you're not using a custom router, like `react-router`
@@ -41,11 +35,11 @@ const Auth0ProviderWithHistory = ({ children }: TAuth0ProviderWithHistoryProps):
 
   return (
     <Auth0Provider
-      domain={domain}
-      clientId={clientId}
+      domain={AUTH0_DOMAIN}
+      clientId={AUTH0_CLIENT_ID}
       redirectUri={window.location.origin}
       // onRedirectCallback={onRedirectCallback}
-      audience={audience}
+      audience={AUTH0_AUDIENCE}
       useRefreshTokens
       // Token storage option, `localstorage` gives the feature
       // to not log out your users when they close your application

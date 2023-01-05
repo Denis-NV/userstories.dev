@@ -19,7 +19,7 @@ const ApolloProvider = ({ children }: TApolloProviderProps): JSX.Element => {
 
   const client = useMemo(() => {
     const httpLink = new HttpLink({
-      uri: import.meta.env.VITE_AUTH0_AUDIENCE,
+      uri: import.meta.env.AUTH0_AUDIENCE,
     })
 
     const errorLink = onError(({ graphQLErrors, networkError }) => {
