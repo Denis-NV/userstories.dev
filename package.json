@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "16.17.1",
-    "pnpm": "7.21.0"
+    "node": "16.17.1"
   },
   "scripts": {
     "build:all": "nx run-many --target=build --all",
