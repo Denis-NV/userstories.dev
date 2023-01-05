@@ -1,6 +1,7 @@
-name: 'Build and deploy Business by Numbers'
+name: 'Build Business by Numbers and delpoy to Netlify'
 
 on:
+  # pull_request:
   push:
     branches:
       - main
@@ -50,11 +51,27 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
-    - name: Run linting
-      run: pnpm run lint
+    # Don't forget to create separate lining and testing scripts for each app
+    # - name: Run linting 
+    #   run: pnpm run lint
 
     # - name: Run tests
     # - run: pnpm run test
 
     - name: Build Business by Numbers App and all the dependant packages
       run: pnpm run build:bbn
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.2
+      with:
+        publish-dir: './apps/businessbynumbers/dist'
+        production-branch: main
+        # github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_BBN_SITE_ID }}
+      
