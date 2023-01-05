@@ -19,6 +19,7 @@ const App = (): JSX.Element => {
     <div>Checking Authentication ...</div>
   ) : (
     <div className="App">
+      <h1>Business by Numbers</h1>
       {isAuthenticated ? (
         <div>
           <p className="read-the-docs">Hello {user?.nickname}</p>
