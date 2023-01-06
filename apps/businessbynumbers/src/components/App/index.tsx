@@ -24,15 +24,15 @@ const App = (): JSX.Element => {
         <div>
           <p className="read-the-docs">Hello {user?.nickname}</p>
           <Button onClick={() => logoutWithRedirect()}>Log out</Button>
+          <hr />
+          <div>
+            {loading && 'Loading data ...'}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+          </div>
         </div>
       ) : (
         <Button onClick={() => loginWithRedirect()}>Log in</Button>
       )}
-      <hr />
-      <div>
-        {loading && 'Loading data ...'}
-        {data && JSON.stringify(data)}
-      </div>
     </div>
   )
 }
