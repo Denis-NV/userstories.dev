@@ -1,7 +1,6 @@
-name: 'Build Business by Numbers and delpoy to Netlify'
+name: 'Business by Numbers App: build and delpoy to Netlify on "push" to "main"'
 
 on:
-  # pull_request:
   push:
     branches:
       - main
