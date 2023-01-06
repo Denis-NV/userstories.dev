@@ -1,4 +1,4 @@
-name: 'Business by Numbers App: build and delpoy to Netlify on "push" to "main"'
+name: 'BBN app: delpoy to Netlify on "push" to "main"'
 
 on:
   push:
@@ -68,7 +68,6 @@ jobs:
       with:
         publish-dir: './apps/businessbynumbers/dist'
         production-branch: main
-        # github-token: ${{ secrets.GITHUB_TOKEN }}
         deploy-message: "Deploy from GitHub Actions"
         enable-pull-request-comment: false
         enable-commit-comment: true
