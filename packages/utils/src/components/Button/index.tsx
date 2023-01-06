@@ -1,4 +1,8 @@
 export function Button(props: any) {
-  return <button onClick={() => props.onClick()}>{props.children}</button>
+  return (
+    <button style={{ backgroundColor: 'teal' }} onClick={() => props.onClick()}>
+      {props.children}
+    </button>
+  )
 }
 export default Button
