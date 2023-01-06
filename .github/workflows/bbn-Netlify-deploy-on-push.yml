@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'apps/businessbynumbers/**'
+      - 'packages/utils/**'
+      - 'packages/icons/**'
+      - 'packages/react-components/**'
   workflow_dispatch:
 
 jobs:
