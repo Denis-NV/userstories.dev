@@ -1,5 +1,11 @@
 # @ustrs/react-components
 
+## 1.0.2
+
+### Patch Changes
+
+- Fixed vite config related bugs
+
 ## 1.0.1
 
 ### Patch Changes
