@@ -10,7 +10,8 @@
     "lint": "eslint '{apps,packages}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,packages}/*/src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write '{apps,packages}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pub:npm": "pnpm changeset version && pnpm install && pnpm publish -r --no-git-checks --access public"
   },
   "keywords": [],
   "author": "",
