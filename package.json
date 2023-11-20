@@ -7,14 +7,14 @@
     "build:affected": "nx affected:build",
     "build:bbn": "nx build bbn",
     "dev:bbn": "nx dev bbn",
-    "lint": "eslint '{apps,packages}/*/src/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "eslint --fix '{apps,packages}/*/src/**/*.{jsx,ts,tsx}'",
-    "format": "prettier --write '{apps,packages}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
+    "lint": "eslint '{apps,libs}/*/src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix '{apps,libs}/*/src/**/*.{jsx,ts,tsx}'",
+    "format": "prettier --write '{apps,libs}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
     "prepare": "husky install",
     "pub:npm": "pnpm changeset version && pnpm install && pnpm publish -r --no-git-checks --access public"
   },
   "keywords": [],
-  "author": "",
+  "author": "Denis Nemytov",
   "license": "ISC",
   "pnpm": {
     "peerDependencyRules": {
@@ -30,7 +30,7 @@
     }
   },
   "lint-staged": {
-    "packages/*/src/**/*.{js,jsx,ts,tsx}": [
+    "libs/*/src/**/*.{js,jsx,ts,tsx}": [
       "pnpm run lint",
       "pnpm run format"
     ],
@@ -56,6 +56,6 @@
     "typescript": "^4.8.4"
   },
   "volta": {
-    "node": "16.17.1"
+    "node": "20.9.0"
   }
 }
