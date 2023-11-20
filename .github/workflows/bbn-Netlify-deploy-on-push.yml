@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'apps/businessbynumbers/**'
-      - 'packages/utils/**'
-      - 'packages/icons/**'
-      - 'packages/react-components/**'
+      - 'libs/utils/**'
+      - 'libs/icons/**'
+      - 'libs/react-components/**'
   workflow_dispatch:
 
 jobs:
@@ -60,7 +60,7 @@ jobs:
     # - name: Run tests
     # - run: pnpm run test
 
-    - name: Build Business by Numbers App and all the dependant packages
+    - name: Build Business by Numbers App and all the dependant libraries
       run: pnpm run build:bbn
 
     - name: Deploy to Netlify
