@@ -21,9 +21,9 @@
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^3.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
     "typescript": "^5.2.2",
-    "vite": "^4.0.0",
-    "vite-tsconfig-paths": "^3.5.2"
+    "vite": "^5.0.0",
+    "vite-tsconfig-paths": "^4.2.1"
   }
 }
