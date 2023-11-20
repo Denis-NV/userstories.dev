@@ -1,0 +1,263 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.1.2",
+  "deps": {
+    "@changesets/cli": "^2.26.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.54.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.3.0",
+    "nx": "^17.1.2",
+    "prettier": "^3.1.0",
+    "react-hooks": "^1.0.1",
+    "typescript": "^5.2.2"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".changeset/README.md",
+        "hash": "4888845876018830777"
+      },
+      {
+        "file": ".changeset/config.json",
+        "hash": "2367369710197482262"
+      },
+      {
+        "file": ".eslintrc.js",
+        "hash": "7469362697444923712"
+      },
+      {
+        "file": ".github/workflows/bbn-Netlify-deploy-on-push.yml",
+        "hash": "7297302619025652899"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "8446834311049034496"
+      },
+      {
+        "file": ".husky/pre-commit",
+        "hash": "18373482123571138502"
+      },
+      {
+        "file": ".nx/cache/d/daemon.log",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/d/server-process.json",
+        "hash": "5427965743031877586"
+      },
+      {
+        "file": ".nx/cache/file-map.json",
+        "hash": "812759502548604129"
+      },
+      {
+        "file": ".nx/cache/lockfile.hash",
+        "hash": "10829299989302573342"
+      },
+      {
+        "file": ".nx/cache/parsed-lock-file.json",
+        "hash": "12055481867670300173"
+      },
+      {
+        "file": ".nx/cache/project-graph.json",
+        "hash": "359006622360751896"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "15969736045925249413"
+      },
+      {
+        "file": "README.md",
+        "hash": "10004463293969607622"
+      },
+      {
+        "file": "nx.json",
+        "hash": "18405182382575737658"
+      },
+      {
+        "file": "package.json",
+        "hash": "14269896326806310003"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "hash": "9139930428748358355"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "hash": "1918875060108323681"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "10684170309385744137"
+      }
+    ],
+    "projectFileMap": {
+      "@ustrs/utils": [
+        {
+          "file": "libs/utils/package.json",
+          "hash": "7181019889733611062",
+          "deps": [
+            "npm:@types/react",
+            "npm:react",
+            "npm:@types/styled-components",
+            "npm:react-dom",
+            "npm:react-is",
+            "npm:styled-components",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "libs/utils/src/components/Button/index.tsx",
+          "hash": "766085402784432020"
+        },
+        {
+          "file": "libs/utils/src/components/Svg/index.tsx",
+          "hash": "12301605342196839504"
+        },
+        {
+          "file": "libs/utils/src/index.tsx",
+          "hash": "492396216564488273"
+        },
+        {
+          "file": "libs/utils/src/types/index.ts",
+          "hash": "15015485070964679313"
+        },
+        {
+          "file": "libs/utils/tsconfig.json",
+          "hash": "17180623204963147071"
+        }
+      ],
+      "@ustrs/react-components": [
+        {
+          "file": "libs/react-components/.gitignore",
+          "hash": "13046175384202504187"
+        },
+        {
+          "file": "libs/react-components/CHANGELOG.md",
+          "hash": "10176677921010809453"
+        },
+        {
+          "file": "libs/react-components/package.json",
+          "hash": "2522353361787875057",
+          "deps": [
+            "npm:@types/node",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@types/styled-components",
+            "npm:@vitejs/plugin-react",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-is",
+            "npm:styled-components",
+            "npm:typescript",
+            "npm:vite",
+            "npm:vite-plugin-dts",
+            "npm:vite-plugin-linter",
+            "npm:vite-tsconfig-paths"
+          ]
+        },
+        {
+          "file": "libs/react-components/src/Button/index.tsx",
+          "hash": "12910205578386849813"
+        },
+        {
+          "file": "libs/react-components/src/index.ts",
+          "hash": "2818923708178339858"
+        },
+        {
+          "file": "libs/react-components/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "libs/react-components/tsconfig.json",
+          "hash": "17914705414010531928"
+        },
+        {
+          "file": "libs/react-components/tsconfig.node.json",
+          "hash": "5179172903791890054"
+        },
+        {
+          "file": "libs/react-components/vite.config.ts",
+          "hash": "4993990000690560001"
+        }
+      ],
+      "bbn": [
+        {
+          "file": "apps/businessbynumbers/.gitignore",
+          "hash": "17196094722200841351"
+        },
+        {
+          "file": "apps/businessbynumbers/CHANGELOG.md",
+          "hash": "5985992889135506122"
+        },
+        {
+          "file": "apps/businessbynumbers/index.html",
+          "hash": "8461945451843851111"
+        },
+        {
+          "file": "apps/businessbynumbers/package.json",
+          "hash": "11278142943417962989",
+          "deps": [
+            "npm:@apollo/client",
+            "npm:@auth0/auth0-react",
+            "@ustrs/react-components",
+            "@ustrs/utils",
+            "npm:graphql",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-router-dom",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@vitejs/plugin-react",
+            "npm:typescript",
+            "npm:vite",
+            "npm:vite-tsconfig-paths"
+          ]
+        },
+        {
+          "file": "apps/businessbynumbers/src/components/App/gql.tsx",
+          "hash": "12159235759323204086"
+        },
+        {
+          "file": "apps/businessbynumbers/src/components/App/index.tsx",
+          "hash": "3893413596707288191"
+        },
+        {
+          "file": "apps/businessbynumbers/src/config/ApolloProvider.tsx",
+          "hash": "610837748821069293"
+        },
+        {
+          "file": "apps/businessbynumbers/src/config/Auth0ProviderWithHistory.tsx",
+          "hash": "3260162978974467369"
+        },
+        {
+          "file": "apps/businessbynumbers/src/const/auth0.ts",
+          "hash": "16205862860581793346"
+        },
+        {
+          "file": "apps/businessbynumbers/src/main.tsx",
+          "hash": "9553860386140458675"
+        },
+        {
+          "file": "apps/businessbynumbers/tsconfig.json",
+          "hash": "8574676957387267201"
+        },
+        {
+          "file": "apps/businessbynumbers/tsconfig.node.json",
+          "hash": "9492743665887090209"
+        },
+        {
+          "file": "apps/businessbynumbers/vite.config.ts",
+          "hash": "7043095917749323364"
+        }
+      ]
+    }
+  }
+}
