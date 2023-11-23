@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
-    "@auth0/auth0-react": "^1.12.0",
+    "@auth0/auth0-react": "^2.2.3",
     "@ustrs/react-components": "workspace:*",
     "@ustrs/utils": "workspace:*",
     "graphql": "^16.6.0",
@@ -19,10 +19,10 @@
     "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
+    "@types/react": "^18.2.38",
+    "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0",
+    "vite": "^5.0.2",
     "vite-tsconfig-paths": "^4.2.1"
   }
 }

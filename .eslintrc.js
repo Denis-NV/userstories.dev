@@ -22,7 +22,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier', 'simple-import-sort'],
   rules: {
-    camelcase: ['error', { ignoreImports: true }],
+    camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
     'no-duplicate-imports': 'error',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
