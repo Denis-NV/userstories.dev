@@ -44,10 +44,10 @@ const ApolloProvider = ({ children }: TApolloProviderProps): JSX.Element => {
         },
       }
     })
-
     return new ApolloClient({
       link: from([errorLink, authLink, httpLink]),
       cache: new InMemoryCache(),
+      connectToDevTools: import.meta.env.DEV,
     })
   }, [getAccessTokenSilently])
 
