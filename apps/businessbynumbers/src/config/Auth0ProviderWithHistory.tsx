@@ -48,7 +48,6 @@ const Auth0ProviderWithHistory = ({ children }: TAuth0ProviderWithHistoryProps):
         ...(AUTH0_AUDIENCE ? { audience: AUTH0_AUDIENCE } : null),
       }}
       // onRedirectCallback={onRedirectCallback}
-      audience={AUTH0_AUDIENCE}
       useRefreshTokens
       // Token storage option, `localstorage` gives the feature
       // to not log out your users when they close your application
