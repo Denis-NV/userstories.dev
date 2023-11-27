@@ -1,11 +1,10 @@
 {
-  "exclude": ["dist", "node_modules", "**/*.spec.ts"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "target": "es2019",
-    "module": "es2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -16,9 +15,14 @@
     "isolatedModules": true,
     "outDir": "dist",
     "declaration": true,
+    "declarationMap": true,
     "downlevelIteration": true,
-
-   
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true
 
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
@@ -88,5 +92,18 @@
     /* Advanced Options */
     // "skipLibCheck": true,                        /* Skip type checking of declaration files. */
     // "forceConsistentCasingInFileNames": true     /* Disallow inconsistently-cased references to the same file. */
-  }
+  },
+  "include": ["src"],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx",
+    "**/*.spec.js",
+    "**/*.test.js",
+    "**/*.spec.jsx",
+    "**/*.test.jsx"
+  ]
 }

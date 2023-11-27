@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "baseUrl": ".",
+    "typeRoots": ["node_modules/@types", "src/index.d.ts"],
+    "moduleResolution": "bundler"
+  },
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
