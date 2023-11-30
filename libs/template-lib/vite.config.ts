@@ -20,14 +20,15 @@ export default defineConfig({
       fileName: (format) => `lib.${format}.js`,
     },
     rollupOptions: {
+      // https://rollupjs.org/configuration-options/#external
       external: [...Object.keys(packageJson.peerDependencies)],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'styled-components': 'styled',
-        },
-      },
+      // output: {
+      //   globals: {
+      //     react: 'React',
+      //     'react-dom': 'ReactDOM',
+      //     'styled-components': 'styled',
+      //   },
+      // },
     },
   },
 })
