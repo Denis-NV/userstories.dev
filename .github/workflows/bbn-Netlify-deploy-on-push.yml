@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.17.1]
+        node-version: [20.9.0]
 
     steps:
     - name: Checkout
@@ -25,7 +25,7 @@ jobs:
       name: Install pnpm
       id: pnpm-install
       with:
-        version: 7.21.0
+        version: 8.11.0
         run_install: false
     
     - name: Get pnpm store directory
