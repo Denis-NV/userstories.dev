@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Button = styled.button`
+const StyledButton = styled.button`
   border: none;
   border-radius: 0.5rem;
   background-color: #d53255;
@@ -16,5 +16,14 @@ const Button = styled.button`
     background-color: #0a558c;
   }
 `
+
+type TProps = {
+  onClick: () => void
+  children: any
+}
+
+const Button = ({ onClick, children }: TProps): JSX.Element => {
+  return <StyledButton onClick={onClick}>{children}</StyledButton>
+}
 
 export default Button

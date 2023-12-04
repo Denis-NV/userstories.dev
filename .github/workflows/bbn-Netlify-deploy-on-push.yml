@@ -6,8 +6,6 @@ on:
       - main
     paths:
       - 'apps/businessbynumbers/**'
-      - 'libs/utils/**'
-      - 'libs/icons/**'
       - 'libs/react-components/**'
   workflow_dispatch:
 

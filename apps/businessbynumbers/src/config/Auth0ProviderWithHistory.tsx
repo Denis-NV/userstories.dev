@@ -37,9 +37,17 @@ const Auth0ProviderWithHistory = ({ children }: TAuth0ProviderWithHistoryProps):
     <Auth0Provider
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
-      redirectUri={window.location.origin}
+      // TODO: make sure actions still work with useFormData set to 'true'
+      // https://github.com/auth0/auth0-react/blob/main/MIGRATION_GUIDE.md#applicationx-www-form-urlencoded-used-by-default-instead-of-applicationjson
+      useFormData={false}
+      // TODO: Flipped to 'false' for v2. Investigate if it can work without iframe fallback
+      // https://github.com/auth0/auth0-react/blob/main/MIGRATION_GUIDE.md#no-more-iframe-fallback-by-default-when-using-refresh-tokens
+      useRefreshTokensFallback={true}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        ...(AUTH0_AUDIENCE ? { audience: AUTH0_AUDIENCE } : null),
+      }}
       // onRedirectCallback={onRedirectCallback}
-      audience={AUTH0_AUDIENCE}
       useRefreshTokens
       // Token storage option, `localstorage` gives the feature
       // to not log out your users when they close your application

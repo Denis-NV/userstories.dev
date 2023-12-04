@@ -12,7 +12,9 @@ const App = (): JSX.Element => {
 
   const logoutWithRedirect = () =>
     logout({
-      returnTo: window?.location?.origin,
+      logoutParams: {
+        returnTo: window?.location?.origin,
+      },
     })
 
   return isLoading ? (
