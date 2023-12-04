@@ -33,6 +33,15 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
+      output: {
+        // https://rollupjs.org/configuration-options/#output-globals
+        globals: {
+          ...Object.keys(packageJson.peerDependencies).reduce(
+            (obj, item) => ({ ...obj, [item]: item }),
+            {},
+          ),
+        },
+      },
     },
   },
 }))

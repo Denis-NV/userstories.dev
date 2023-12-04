@@ -11,17 +11,15 @@
   "dependencies": {
     "@apollo/client": "^3.8.7",
     "@auth0/auth0-react": "^2.2.3",
-    "@ustrs/react-components": "workspace:*",
+    "@ustrs/react-components": "workspace:^",
     "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "styled-components": "^6.1.1"
+    "react-router-dom": "^6.20.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
-    "@types/styled-components": "5.1.32",
     "@vitejs/plugin-react": "^4.2.0",
     "vite": "^5.0.2",
     "vite-tsconfig-paths": "^4.2.1"
