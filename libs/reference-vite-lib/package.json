@@ -1,5 +1,6 @@
 {
-  "name": "libs/reference-vite-lib",
+  "name": "@ustrs/reference-vite-lib",
+  "private": true,
   "version": "0.0.1",
   "main": "./index.js",
   "types": "./index.d.ts",
