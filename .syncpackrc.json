@@ -1,0 +1,25 @@
+{
+  "semverGroups": [
+    {
+      "label": "use caret ranges",
+      "packages": ["**"],
+      "dependencyTypes": ["prod", "dev", "peer"],
+      "dependencies": ["**"],
+      "range": "^"
+    }
+  ],
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol when developing local packages",
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Ensure semver are within the same range",
+      "dependencies": ["**"],
+      "dependencyTypes": ["dev", "peer"],
+      "policy": "sameRange"
+    }
+  ]
+}
