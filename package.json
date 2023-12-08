@@ -32,12 +32,14 @@
   },
   "lint-staged": {
     "libs/*/src/**/*.{js,jsx,ts,tsx}": [
-      "pnpm run lint",
-      "pnpm run format"
+      "pnpm lint",
+      "pnpm format",
+      "pnpm syncpack lint"
     ],
     "apps/*/src/**/*.{js,jsx,ts,tsx}": [
-      "pnpm run lint",
-      "pnpm run format"
+      "pnpm lint",
+      "pnpm format",
+      "pnpm syncpack lint"
     ]
   },
   "devDependencies": {
