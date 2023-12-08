@@ -23,6 +23,7 @@ type TProps = {
 }
 
 const Button = ({ onClick, children }: TProps): JSX.Element => {
+  // console.log('Hello')
   return <StyledButton onClick={onClick}>{children}</StyledButton>
 }
 
