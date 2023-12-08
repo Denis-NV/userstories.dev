@@ -31,12 +31,12 @@
     }
   },
   "lint-staged": {
-    "libs/*/src/**/*.{js,jsx,ts,tsx,json}": [
+    "libs/*/src/**/*.{js,jsx,ts,tsx}": [
       "pnpm lint",
       "pnpm format",
       "pnpm syncpack lint"
     ],
-    "apps/*/src/**/*.{js,jsx,ts,tsx,,json}": [
+    "apps/*/src/**/*.{js,jsx,ts,tsx,}": [
       "pnpm lint",
       "pnpm format",
       "pnpm syncpack lint"
