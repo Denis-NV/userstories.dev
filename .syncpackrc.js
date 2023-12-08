@@ -1,5 +1,8 @@
 // @ts-check
 
+// TODO: consider using GH Action
+// https://github.com/marketplace/actions/syncpack-synchronise-monorepo-dependency-versions
+
 /** @type {import("syncpack").RcFile} */
 const config = {
   semverGroups: [

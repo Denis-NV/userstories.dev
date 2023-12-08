@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+overrides:
+  effect: 2.0.0-next.47
+
 importers:
 
   .:
@@ -20,6 +23,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.13.1
         version: 6.13.1(eslint@8.54.0)(typescript@5.3.2)
+      effect:
+        specifier: 2.0.0-next.47
+        version: 2.0.0-next.47
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -67,7 +73,7 @@ importers:
         version: 2.2.3(react-dom@18.2.0)(react@18.2.0)
       '@ustrs/react-components':
         specifier: workspace:*
-        version: file:libs/react-components(@types/react-dom@18.2.17)(@types/react@18.2.38)(@types/styled-components@5.1.32)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)
+        version: link:../../libs/react-components
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
@@ -102,9 +108,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.2.1(typescript@5.3.2)(vite@5.0.2)
-    dependenciesMeta:
-      '@ustrs/react-components':
-        injected: true
 
   libs/react-components:
     devDependencies:
@@ -775,21 +778,21 @@ packages:
       prettier: 2.8.8
     dev: true
 
-  /@effect/match@0.40.0(effect@2.0.0-next.48):
+  /@effect/match@0.40.0(effect@2.0.0-next.47):
     resolution: {integrity: sha512-1v2UpVxbUybx6zmN0R1uraRkCju15xLmHquoNQxPFGrQABq2dRI0nSsVM+/yibggUnQ9QAEx2MxQ6xdrQR+8hg==}
     peerDependencies:
       effect: 2.0.0-next.47
     dependencies:
-      effect: 2.0.0-next.48
+      effect: 2.0.0-next.47
     dev: true
 
-  /@effect/schema@0.43.0(effect@2.0.0-next.48)(fast-check@3.14.0):
+  /@effect/schema@0.43.0(effect@2.0.0-next.47)(fast-check@3.14.0):
     resolution: {integrity: sha512-MvWDyS1u/+X7DYQdhnN/Tu0/NwTlFx2/XgR9+JVrX7hQOzH01li6463rohfiH+NYxx3aruAqA1Oz5MSOCB7hnA==}
     peerDependencies:
-      effect: 2.0.0-next.48
+      effect: 2.0.0-next.47
       fast-check: ^3.13.1
     dependencies:
-      effect: 2.0.0-next.48
+      effect: 2.0.0-next.47
       fast-check: 3.14.0
     dev: true
 
@@ -1906,6 +1909,7 @@ packages:
     dependencies:
       '@types/react': 18.2.38
       hoist-non-react-statics: 3.3.2
+    dev: true
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -1931,11 +1935,13 @@ packages:
 
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
+    dev: true
 
   /@types/react-dom@18.2.17:
     resolution: {integrity: sha512-rvrT/M7Df5eykWFxn6MYt5Pem/Dbyc1N8Y0S9Mrkw2WFCRiqUgw9P7ul2NpwsXCSM1DVdENzdG9J5SreqfAIWg==}
     dependencies:
       '@types/react': 18.2.38
+    dev: true
 
   /@types/react@18.2.38:
     resolution: {integrity: sha512-cBBXHzuPtQK6wNthuVMV6IjHAFkdl/FOPFIlkd81/Cd1+IqkHu/A+w4g43kaQQoYHik/ruaQBDL72HyCy1vuMw==}
@@ -1943,9 +1949,11 @@ packages:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
       csstype: 3.1.2
+    dev: true
 
   /@types/scheduler@0.16.8:
     resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
+    dev: true
 
   /@types/semver@7.5.5:
     resolution: {integrity: sha512-+d+WYC1BxJ6yVOgUgzK8gWvp5qF8ssV5r4nsDcZWKRWcDQLQ619tvWAxJQYGgBrO1MnLJC7a5GtiYsAoQ47dJg==}
@@ -1961,6 +1969,7 @@ packages:
       '@types/hoist-non-react-statics': 3.3.5
       '@types/react': 18.2.38
       csstype: 3.1.2
+    dev: true
 
   /@types/stylis@4.2.4:
     resolution: {integrity: sha512-36ZrGJ8fgtBr6nwNnuJ9jXIj+bn/pF6UoqmrQT7+Y99+tFFeHHsoR54+194dHdyhPjgbeoNz3Qru0oRt0l6ASQ==}
@@ -2979,8 +2988,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /effect@2.0.0-next.48:
-    resolution: {integrity: sha512-vwMIl39m8fMBeXoGIdSwMi2lrg7NltyrGMK0N/liGDl7G9LXvERKOCipNcobSIGO0V7hjaXEWgL6W/KEWEww+g==}
+  /effect@2.0.0-next.47:
+    resolution: {integrity: sha512-H2L1xoaOblZbrTHuUo/ppWVr9R34FyigxXkEn9iD9TMYgCJqSS9RIUOGCTdT4ATyCgVf7dWlJxOtLFSpirVWqA==}
     dev: true
 
   /electron-to-chromium@1.4.588:
@@ -5739,12 +5748,12 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@effect/match': 0.40.0(effect@2.0.0-next.48)
-      '@effect/schema': 0.43.0(effect@2.0.0-next.48)(fast-check@3.14.0)
+      '@effect/match': 0.40.0(effect@2.0.0-next.47)
+      '@effect/schema': 0.43.0(effect@2.0.0-next.47)(fast-check@3.14.0)
       chalk: 4.1.2
       commander: 11.0.0
       cosmiconfig: 8.3.6(typescript@5.3.2)
-      effect: 2.0.0-next.48
+      effect: 2.0.0-next.47
       enquirer: 2.4.1
       globby: 11.1.0
       minimatch: 9.0.3
@@ -6466,24 +6475,4 @@ packages:
 
   /zen-observable@0.8.15:
     resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
-    dev: false
-
-  file:libs/react-components(@types/react-dom@18.2.17)(@types/react@18.2.38)(@types/styled-components@5.1.32)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1):
-    resolution: {directory: libs/react-components, type: directory}
-    id: file:libs/react-components
-    name: '@ustrs/react-components'
-    peerDependencies:
-      '@types/react': ^18.0.0
-      '@types/react-dom': ^18.0.0
-      '@types/styled-components': ^5.0.0
-      react: ^18.0.0 || 18
-      react-dom: ^18.0.0 || 18
-      styled-components: ^6.0.0
-    dependencies:
-      '@types/react': 18.2.38
-      '@types/react-dom': 18.2.17
-      '@types/styled-components': 5.1.32
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      styled-components: 6.1.1(react-dom@18.2.0)(react@18.2.0)
     dev: false

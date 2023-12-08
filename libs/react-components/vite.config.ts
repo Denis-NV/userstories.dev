@@ -32,7 +32,10 @@ export default defineConfig(() => ({
       fileName: (format) => `lib.${format}.js`,
     },
     rollupOptions: {
-      external: [...Object.keys(packageJson.peerDependencies)],
+      external: [
+        ...Object.keys(packageJson.peerDependencies),
+        ...Object.keys(packageJson.devDependencies),
+      ],
       output: {
         // https://rollupjs.org/configuration-options/#output-globals
         globals: {
