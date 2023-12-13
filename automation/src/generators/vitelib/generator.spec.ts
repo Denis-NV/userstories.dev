@@ -6,7 +6,7 @@ import { VitelibGeneratorSchema } from './schema'
 
 describe('vitelib generator', () => {
   let tree: Tree
-  const options: VitelibGeneratorSchema = { name: 'test' }
+  const options: VitelibGeneratorSchema = { name: 'test', author: 'name' }
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace()
