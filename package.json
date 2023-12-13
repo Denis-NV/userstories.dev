@@ -49,6 +49,7 @@
     "@changesets/cli": "^2.27.1",
     "@nx/devkit": "^17.2.3",
     "@nx/js": "^17.2.3",
+    "@nx/plugin": "^17.2.3",
     "@types/node": "^20.10.1",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
