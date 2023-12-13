@@ -12,7 +12,7 @@ import * as packageJson from './package.json'
 export default defineConfig(() => ({
   plugins: [
     react(),
-    tsConfigPaths(),
+    tsConfigPaths({ ignoreConfigErrors: true }),
     dts({
       include: ['src/'],
     }),
