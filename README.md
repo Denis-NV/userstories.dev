@@ -4,7 +4,7 @@ Main mono-repo for all of my projects and code base
 ## Package generation
 ## Generate a new package genrator
 ```
-pnpm nx g @nx/plugin:generator [package_name] --directory temp/src/generators/[package_folder]
+pnpm nx g @nx/plugin:generator [package_name] --directory automation/src/generators/[package_folder]
 ```
 
 ### Generate a new vite-based react lib run
