@@ -89,6 +89,9 @@ importers:
       '@ustrs/react-components':
         specifier: workspace:*
         version: link:../../libs/react-components
+      '@ustrs/utils':
+        specifier: workspace:*
+        version: link:../../libs/utils
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
@@ -151,8 +154,6 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1(typescript@5.3.2)(vite@5.0.6)
 
-  libs/reference-vite-lib: {}
-
   libs/template-lib:
     devDependencies:
       '@types/react':
@@ -176,6 +177,33 @@ importers:
       vite-plugin-dts:
         specifier: ^3.6.3
         version: 3.6.3(@types/node@20.10.1)(typescript@5.3.2)(vite@5.0.2)
+
+  libs/utils:
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.2.38
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.2.17
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.2.1(vite@5.0.6)
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.2.0(react@18.2.0)
+      vite:
+        specifier: ^5.0.6
+        version: 5.0.6(@types/node@20.10.1)
+      vite-plugin-dts:
+        specifier: ^3.6.4
+        version: 3.6.4(@types/node@20.10.1)(typescript@5.3.2)(vite@5.0.6)
+      vite-tsconfig-paths:
+        specifier: ^4.2.1
+        version: 4.2.1(typescript@5.3.2)(vite@5.0.6)
 
 packages:
 

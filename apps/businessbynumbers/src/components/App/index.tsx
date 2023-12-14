@@ -2,8 +2,15 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useQuery } from '@apollo/client'
 
 import { Button } from '@ustrs/react-components'
+import { NestedRecord } from '@ustrs/utils'
 
 import { TEST_QUERY } from './gql'
+
+const rec: NestedRecord = {
+  level1: {
+    leve2: 'working',
+  },
+}
 
 const App = (): JSX.Element => {
   const { user, isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0()
@@ -16,6 +23,8 @@ const App = (): JSX.Element => {
         returnTo: window?.location?.origin,
       },
     })
+
+  console.log(rec, 'hello')
 
   return isLoading ? (
     <div>Checking Authentication ...</div>

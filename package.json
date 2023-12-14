@@ -7,7 +7,7 @@
     "build:all": "nx run-many --target=build --all --verbose",
     "build:affected": "nx affected:build --verbose",
     "build:bbn": "nx build bbn --verbose",
-    "dev:bbn": "npx nx run-many --target=dev --projects=@ustrs/react-components,bbn",
+    "dev:bbn": "npx nx run-many --target=dev --projects=@ustrs/utils,@ustrs/react-components,bbn",
     "lint": "eslint '{apps,libs}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,libs}/*/src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write '{apps,libs}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
