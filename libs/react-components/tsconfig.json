@@ -12,8 +12,6 @@
     "declarationMap": true,
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types", "src/index.d.ts"],
-
-    /* Bundler mode */
     "moduleResolution": "Node",
 
     "resolveJsonModule": true,

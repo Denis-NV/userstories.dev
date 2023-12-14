@@ -26,6 +26,7 @@ module.exports = {
     'no-duplicate-imports': 'error',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     // 'no-console': 'error',
     'no-alert': 'error',

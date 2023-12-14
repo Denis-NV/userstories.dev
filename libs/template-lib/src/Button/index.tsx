@@ -1,5 +1,3 @@
-import React from 'react'
-
 type TProps = {
   onClick: () => void
   children: any

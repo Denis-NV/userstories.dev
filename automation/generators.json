@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "vitelib": {
+      "factory": "./src/generators/vitelib/generator",
+      "schema": "./src/generators/vitelib/schema.json",
+      "description": "vitelib generator"
+    }
+  }
+}
