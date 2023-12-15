@@ -2,7 +2,7 @@
 Main mono-repo for all of my projects and code base
 
 ## Package generation
-## Generate a new package genrator
+### Generate a new package genrator
 ```
 pnpm nx g @nx/plugin:generator [package_name] --directory automation/src/generators/[package_folder]
 ```
@@ -16,4 +16,6 @@ Then generate
 ```
 pnpm nx g automation:vitelib
 ```
+
+## Tailwind CSS
 
