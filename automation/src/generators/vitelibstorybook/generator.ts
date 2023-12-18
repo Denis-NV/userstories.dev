@@ -13,7 +13,9 @@ export async function vitelibstorybookGenerator(tree: Tree, options: VitelibGene
 
   const projectRoot = `libs/${resolvedOptions.name}`
 
-  updateJson(tree, 'package.json', (pkgJson) => {
+  generateFiles(tree, path.join(__dirname, 'files'), projectRoot, resolvedOptions)
+
+  updateJson(tree, `libs/${resolvedOptions.name}/package.json`, (pkgJson) => {
     // if scripts is undefined, set it to an empty object
     pkgJson.scripts = pkgJson.scripts ?? {}
     pkgJson.scripts.storybook = 'storybook dev -p 6006'
@@ -31,7 +33,6 @@ export async function vitelibstorybookGenerator(tree: Tree, options: VitelibGene
     return pkgJson
   })
 
-  generateFiles(tree, path.join(__dirname, 'files'), projectRoot, resolvedOptions)
   await formatFiles(tree)
 }
 
