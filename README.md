@@ -1,6 +1,11 @@
 # userstories.dev (ustrs)
 Main mono-repo for all of my projects and code base
 
+## package.json
+### overrides
+
+### husky
+
 ## ESlint configuration
 
 ## Package generation
