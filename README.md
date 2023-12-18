@@ -24,6 +24,16 @@ Then generate
 pnpm nx g automation:vitelib
 ```
 
+### Generate a new vite-based react lib with storybook run
+Dry run first to see what is going to happen
+```
+pnpm nx g automation:vitelibstorybook --dryRun
+```
+Then generate
+```
+pnpm nx g automation:vitelibstorybook
+```
+
 ## Storybook
 
 ## Tailwind CSS

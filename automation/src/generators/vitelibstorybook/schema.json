@@ -6,12 +6,18 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "",
+      "description": "Library name",
       "$default": {
         "$source": "argv",
         "index": 0
       },
       "x-prompt": "What name would you like to use?"
+    },
+    "author": {
+      "type": "string",
+      "description": "Library author",
+      "default": "Denis Nemytov",
+      "x-prompt": "Who is the author of the package?"
     }
   },
   "required": ["name"]
