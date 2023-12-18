@@ -15,12 +15,12 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/lib.es.js",
-      "require": "./dist/lib.umd.js"
+      "import": "./dist/lib.es.cjs",
+      "require": "./dist/lib.umd.cjs"
     }
   },
-  "main": "./dist/lib.umd.js",
-  "module": "./dist/lib.es.js",
+  "main": "./dist/lib.umd.cjs",
+  "module": "./dist/lib.es.cjs",
   "types": "./dist/index.d.ts",
   "devDependencies": {
     "@types/react": "^18.0.0",

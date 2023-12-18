@@ -22,7 +22,7 @@ export default defineConfig(() => ({
       entry: resolve('src', 'index.ts'),
       name: '@ustrs/react-components',
       formats: ['es', 'umd'],
-      fileName: (format) => `lib.${format}.js`,
+      fileName: (format) => `lib.${format}.cjs`,
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],

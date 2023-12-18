@@ -1,6 +1,8 @@
 # userstories.dev (ustrs)
 Main mono-repo for all of my projects and code base
 
+## ESlint configuration
+
 ## Package generation
 ### Generate a new package genrator
 ```
@@ -16,6 +18,8 @@ Then generate
 ```
 pnpm nx g automation:vitelib
 ```
+
+## Storybook
 
 ## Tailwind CSS
 
