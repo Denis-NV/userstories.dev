@@ -7,5 +7,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require('@ustrs/tailwind/package.json')],
-  content: ['./**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
 }
