@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useQuery } from '@apollo/client'
 
-import { Button } from '@ustrs/react-components'
+import { Button } from '@ustrs/shadcn-ui'
 import { NestedRecord } from '@ustrs/utils'
 
 import { TEST_QUERY } from './gql'
@@ -29,7 +29,7 @@ const App = (): JSX.Element => {
   return isLoading ? (
     <div>Checking Authentication ...</div>
   ) : (
-    <div className="App">
+    <div className="bg-slate-50">
       <h1>Business by Numbers!!!</h1>
       {isAuthenticated ? (
         <div>

@@ -8,8 +8,8 @@ const Button = ({ onClick, children }: TProps) => {
     <button
       onClick={onClick}
       className="
-      rounded-md 
-      bg-slate-500 
+      bg-blue-dark 
+      rounded-md
       p-2 
       font-bold 
       text-white 

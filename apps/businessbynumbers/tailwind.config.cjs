@@ -9,6 +9,6 @@ module.exports = {
   presets: [require('@ustrs/tailwind/tailwind.preset')],
   content: {
     relative: true,
-    files: ['./src/**/*.{js,ts,jsx,tsx}'],
+    files: ['./src/**/*.{js,ts,jsx,tsx}', '../../libs/shadcn-ui/**/*.{js,ts,jsx,tsx}'],
   },
 }
