@@ -2,6 +2,13 @@
 Main mono-repo for all of my projects and code base
 
 ## package.json
+### exports
+All the packages inside "lib" folder encapsulated all the subpaths by specifying "exports" field. More on this here:
+https://nodejs.org/api/packages.html#main-entry-point-export
+
+Conditional exports are being used to provide different ES module exports for require() and import. More on this here:
+https://nodejs.org/api/packages.html#conditional-exports
+
 ### overrides
 
 ### husky
