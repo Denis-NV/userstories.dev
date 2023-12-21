@@ -11,7 +11,8 @@
   "dependencies": {
     "@apollo/client": "^3.8.7",
     "@auth0/auth0-react": "^2.2.3",
-    "@ustrs/react-components": "workspace:*",
+    "@ustrs/tailwind": "workspace:*",
+    "@ustrs/utils": "workspace:*",
     "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

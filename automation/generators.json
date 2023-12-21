@@ -4,6 +4,11 @@
       "factory": "./src/generators/vitelib/generator",
       "schema": "./src/generators/vitelib/schema.json",
       "description": "vitelib generator"
+    },
+    "vitelibstorybook": {
+      "factory": "./src/generators/vitelibstorybook/generator",
+      "schema": "./src/generators/vitelibstorybook/schema.json",
+      "description": "vitelibstorybook generator"
     }
   }
 }
