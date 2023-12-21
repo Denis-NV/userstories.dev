@@ -31,7 +31,6 @@
   },
   "exclude": [
     "dist",
-    "automation",
     "node_modules",
     "**/*.spec.ts",
     "**/*.test.ts",

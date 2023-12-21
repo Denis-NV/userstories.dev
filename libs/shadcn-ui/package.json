@@ -6,11 +6,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm run '/^watch:.*/'",
+    "dev": "rm -rf ./dist && pnpm run '/^watch:.*/'",
     "build": "tsc && vite build && pnpm build:tailwind",
     "build:tailwind": "tailwindcss -i ./src/styles.css -o dist/index.css",
     "watch:tailwind": "pnpm build:tailwind --watch",
-    "watch:build": "vite build --watch",
+    "watch:build": "vite build --emptyOutDir=false --watch",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
