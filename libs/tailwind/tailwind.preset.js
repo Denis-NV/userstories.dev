@@ -22,4 +22,8 @@ module.exports = {
       },
     },
   },
+  content: {
+    relative: true,
+    files: ['**/src/**/*.{js,ts,jsx,tsx}'],
+  },
 }
