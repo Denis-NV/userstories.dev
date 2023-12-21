@@ -7,7 +7,7 @@
     "build:all": "nx run-many --target=build --all --verbose",
     "build:affected": "nx affected:build --verbose",
     "build:bbn": "nx build bbn --verbose",
-    "dev:bbn": "nx run-many --target=dev --projects=@ustrs/utils,@ustrs/react-components,bbn",
+    "dev:bbn": "nx run-many --target=dev --projects=@ustrs/utils,@ustrs/shadcn-ui,bbn",
     "storybook:ui": "nx run @ustrs/shadcn-ui:storybook",
     "lint": "eslint '{apps,libs}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,libs}/*/src/**/*.{jsx,ts,tsx}'",

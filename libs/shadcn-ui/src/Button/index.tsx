@@ -13,7 +13,7 @@ const Button = ({ onClick, children }: TProps) => {
       p-2 
       font-bold 
       text-white 
-      hover:bg-green-600 
+      hover:bg-slate-600 
       active:bg-slate-700"
     >
       {children}
