@@ -8,13 +8,14 @@ const Button = ({ onClick, children }: TProps) => {
     <button
       onClick={onClick}
       className="
-      bg-blue-dark 
-      rounded-md
-      p-2 
-      font-bold 
-      text-white 
-      hover:bg-slate-600 
-      active:bg-slate-700"
+      ui-bg-blue-dark 
+      ui-rounded-md
+      ui-p-2 
+      ui-font-bold 
+      ui-text-white 
+      hover:ui-bg-slate-600 
+      active:ui-bg-slate-700
+      "
     >
       {children}
     </button>

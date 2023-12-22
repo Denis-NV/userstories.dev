@@ -7,7 +7,7 @@ https://pnpm.io/package_json#dependenciesmetainjected
 ```
 {
   "dependenciesMeta": {
-    "@ustrs/react-components": {
+    "@ustrs/shadcn-ui": {
       "injected": true
     }
   },

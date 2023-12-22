@@ -6,7 +6,8 @@ on:
       - main
     paths:
       - 'apps/businessbynumbers/**'
-      - 'libs/react-components/**'
+      - 'libs/shadcn-ui/**'
+      - 'libs/utils/**'
   workflow_dispatch:
 
 jobs:
