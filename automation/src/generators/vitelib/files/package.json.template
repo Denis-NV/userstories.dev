@@ -6,7 +6,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build --emptyOutDir=false --watch",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
