@@ -28,7 +28,6 @@ export async function vitelibstorybookGenerator(tree: Tree, options: VitelibGene
     pkgJson.devDependencies['@storybook/addon-links'] = '^7.6.5'
     pkgJson.devDependencies['@storybook/react'] = '^7.6.5'
     pkgJson.devDependencies['@storybook/react-vite'] = '^7.6.5'
-    pkgJson.devDependencies['eslint-plugin-storybook'] = '^0.6.15'
     // return modified JSON object
     return pkgJson
   })
