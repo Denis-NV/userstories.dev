@@ -8,5 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
+  "exclude": ["automation"],
   "include": ["vite.config.ts", "package.json"]
 }
