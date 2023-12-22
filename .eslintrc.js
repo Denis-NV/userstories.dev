@@ -11,6 +11,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:storybook/recommended',
+    'turbo',
   ],
   ignorePatterns: ['dist', '.eslintrc.js', '.eslintrc.cjs'],
   overrides: [],
@@ -29,6 +30,7 @@ module.exports = {
     'prettier',
     'simple-import-sort',
     'react-refresh',
+    'turbo',
   ],
   rules: {
     camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
@@ -48,6 +50,7 @@ module.exports = {
     'react/no-unknown-property': 'off',
     'react/no-unescaped-entities ': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'turbo/no-undeclared-env-vars': 'error',
   },
   settings: {
     react: {

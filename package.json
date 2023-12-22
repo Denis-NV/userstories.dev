@@ -4,11 +4,10 @@
   "version": "0.0.0",
   "description": "A pnpm monorepo with some nx scripts for build acceleration",
   "scripts": {
-    "build:all": "nx run-many --target=build --all --verbose",
-    "build:affected": "nx affected:build --verbose",
-    "build:bbn": "nx build bbn --verbose",
-    "dev:bbn": "nx run-many --target=dev --projects=@ustrs/utils,@ustrs/shadcn-ui,bbn",
-    "storybook:ui": "nx run @ustrs/shadcn-ui:storybook",
+    "build:all": "turbo build --log-order=grouped",
+    "build:bbn": "turbo build --filter=bbn --log-order=grouped",
+    "dev:bbn": "turbo dev --filter=bbn --filter=@ustrs/utils --filter=@ustrs/shadcn-ui",
+    "storybook:ui": "turbo storybook --filter=@ustrs/shadcn-ui",
     "lint": "eslint '{apps,libs}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,libs}/*/src/**/*.{jsx,ts,tsx}'",
     "format": "prettier --write '{apps,libs}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
@@ -59,6 +58,7 @@
     "@typescript-eslint/parser": "^6.13.1",
     "effect": "2.0.0-next.47",
     "eslint": "^8.54.0",
+    "eslint-config-turbo": "^1.11.2",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -72,6 +72,7 @@
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "syncpack": "12.0.0-alpha.0",
+    "turbo": "^1.11.2",
     "typescript": "^5.3.2"
   },
   "volta": {
