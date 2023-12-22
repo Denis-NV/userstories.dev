@@ -43,5 +43,14 @@ pnpm nx g automation:vitelibstorybook
 
 ## Storybook
 
-## Tailwind CSS
+## @ustrs/shadcn-ui package
+
+This is a vite-based react component package that uses Tailwind CSS to style its components. A `ui-` prefix is being used for the package's Tailwind classes to separate them from the main app's classes.
+
+### Importing and using the package
+
+In addition to the trinspiles JS components code @ustrs/shadcn-ui package has two more exports:
+1. `styles` - these are tailwind-processed final styles that must be imported inside the entry point of the consumer app.
+2. `tailwind.preset` - this is a preset that can be used inside the `tailwind.config.ts` of the consumer app to share the theme and the rest of the config with the lib.
+
 

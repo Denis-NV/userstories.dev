@@ -20,7 +20,7 @@ export default defineConfig(() => ({
   build: {
     lib: {
       entry: resolve('src', 'index.ts'),
-      name: '@ustrs/react-components',
+      name: '@ustrs/shadcn-ui',
       formats: ['es', 'umd'],
       fileName: (format) => `lib.${format}.cjs`,
     },

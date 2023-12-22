@@ -5,7 +5,8 @@ import Auth0ProviderWithHistory from '@config/Auth0ProviderWithHistory'
 import ApolloProvider from '@config/ApolloProvider'
 import App from '@components/App'
 
-import '@ustrs/tailwind/tailwind.css'
+import './styles.css'
+import '@ustrs/shadcn-ui/styles'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
