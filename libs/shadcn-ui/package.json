@@ -6,9 +6,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "rm -rf ./dist && pnpm run '/^watch:.*/'",
+    "dev": "pnpm run '/^watch:.*/'",
     "build": "tsc && vite build && pnpm build:tailwind",
-    "build:tailwind": "tailwindcss -i ./src/styles.css -o dist/index.css",
+    "build:tailwind": "tailwindcss -i ./src/styles.css -o dist-css/index.css",
     "watch:tailwind": "pnpm build:tailwind --watch",
     "watch:build": "vite build --emptyOutDir=false --watch",
     "preview": "vite preview",
@@ -26,7 +26,7 @@
       },
       "require": "./dist/lib.umd.cjs"
     },
-    "./styles": "./dist/index.css",
+    "./styles": "./dist-css/index.css",
     "./tailwind.preset": "./tailwind.preset.ts"
   },
   "main": "./dist/lib.umd.cjs",
