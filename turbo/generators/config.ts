@@ -23,22 +23,24 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
       },
       {
-        type: 'list',
-        name: 'type',
-        message: 'What type of file should be created?',
-        choices: ['.md', '.txt'],
+        type: 'input',
+        name: 'scope',
+        message: 'Package scope:',
+        default: 'ustrs',
       },
       {
         type: 'input',
-        name: 'title',
-        message: 'What should be the title of the new file?',
+        name: 'author',
+        message: 'Author',
+        default: 'Denis Nemytov',
       },
     ],
     actions: [
       {
-        type: 'add',
-        path: '{{ turbo.paths.root }}/libs/{{ dashCase name }}/testFile{{ type }}',
-        templateFile: 'templates/vitelib/turborepo-generators.hbs',
+        type: 'addMany',
+        destination: '{{ turbo.paths.root }}/libs/{{ name }}',
+        base: `templates/vitelib`,
+        templateFiles: `templates/vitelib/**/*`,
       },
     ],
   })
