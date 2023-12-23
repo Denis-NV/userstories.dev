@@ -1,4 +1,7 @@
 import { PlopTypes } from '@turbo/gen'
+import { getScope } from './utils'
+
+// Promts docs: https://github.com/SBoudrias/Inquirer.js/#question
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator('vitelib', {
@@ -24,18 +27,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'input',
-        name: 'scope',
-        message: 'Package scope:',
-        default: 'ustrs',
-      },
-      {
-        type: 'input',
         name: 'author',
         message: 'Author',
         default: 'Denis Nemytov',
       },
     ],
     actions: [
+      getScope,
       {
         type: 'addMany',
         destination: '{{ turbo.paths.root }}/libs/{{ name }}',

@@ -31,10 +31,10 @@ module.exports = {
     'simple-import-sort',
     'react-refresh',
     'turbo',
+    'import',
   ],
   rules: {
     camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
-    'no-duplicate-imports': 'error',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-uses-react': 'off',
@@ -51,13 +51,23 @@ module.exports = {
     'react/no-unescaped-entities ': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'turbo/no-undeclared-env-vars': 'error',
+    'import/no-duplicates': 'warn',
+    'import/no-unresolved': 'warn',
   },
   settings: {
     react: {
       version: 'detect',
     },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
     'import/resolver': {
-      typescript: {},
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+
+        // use an array of glob patterns
+        project: ['tsconfig.json', 'apps/*/tsconfig.json', 'libs/*/tsconfig.json'],
+      },
     },
   },
 }
