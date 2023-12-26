@@ -13,7 +13,7 @@ module.exports = {
     'plugin:storybook/recommended',
     'turbo',
   ],
-  ignorePatterns: ['dist', '.eslintrc.js', '.eslintrc.cjs'],
+  ignorePatterns: ['node_modules', 'dist', '.eslintrc.js', '.eslintrc.cjs', '**/*.css'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -64,6 +64,9 @@ module.exports = {
     'import/resolver': {
       typescript: {
         project: ['tsconfig.json', 'apps/*/tsconfig.json', 'libs/*/tsconfig.json'],
+      },
+      node: {
+        extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },

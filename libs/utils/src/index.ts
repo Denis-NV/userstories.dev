@@ -6,3 +6,4 @@ export type {
   DeepOmit,
   DeepOmitArray,
 } from './types'
+export { add } from './math'

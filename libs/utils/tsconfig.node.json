@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": "./",
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
@@ -7,5 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "include": ["vite.config.ts", "package.json"]
+  "include": ["vite.config.ts", "package.json"],
+  "exclude": ["automation"]
 }

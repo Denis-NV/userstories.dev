@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useQuery } from '@apollo/client'
 
 import { Button } from '@ustrs/shadcn-ui'
-import { NestedRecord } from '@ustrs/utils'
+import { NestedRecord, add } from '@ustrs/utils'
 
 import { TEST_QUERY } from './gql'
 
@@ -11,6 +11,8 @@ const rec: NestedRecord = {
     leve2: 'working',
   },
 }
+
+console.log(add(2, 2))
 
 const App = (): JSX.Element => {
   const { user, isAuthenticated, loginWithRedirect, logout, isLoading } = useAuth0()
