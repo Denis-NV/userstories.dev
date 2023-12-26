@@ -7,6 +7,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -51,7 +53,7 @@ module.exports = {
     'react/no-unescaped-entities ': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'turbo/no-undeclared-env-vars': 'error',
-    'import/no-duplicates': 'warn',
+    'import/no-duplicates': 'error',
     'import/no-unresolved': 'warn',
   },
   settings: {
@@ -65,9 +67,9 @@ module.exports = {
       typescript: {
         project: ['tsconfig.json', 'apps/*/tsconfig.json', 'libs/*/tsconfig.json'],
       },
-      node: {
-        extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
-      },
+      // node: {
+      //   extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
+      // },
     },
   },
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 
 import Auth0ProviderWithHistory from '@config/Auth0ProviderWithHistory'
 import ApolloProvider from '@config/ApolloProvider'
@@ -8,7 +8,7 @@ import App from '@components/App'
 import './styles.css'
 import '@ustrs/shadcn-ui/styles'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Auth0ProviderWithHistory>
       <ApolloProvider>
