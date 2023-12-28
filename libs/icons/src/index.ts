@@ -1,3 +1,4 @@
+export { default as Button } from './Button'
 export type {
   NestedRecord,
   NestedPartial,
@@ -6,4 +7,3 @@ export type {
   DeepOmit,
   DeepOmitArray,
 } from './types'
-export { add } from './math'

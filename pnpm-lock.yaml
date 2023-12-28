@@ -117,12 +117,12 @@ importers:
       '@auth0/auth0-react':
         specifier: ^2.2.3
         version: 2.2.3(react-dom@18.2.0)(react@18.2.0)
+      '@ustrs/icons':
+        specifier: workspace:*
+        version: link:../../libs/icons
       '@ustrs/shadcn-ui':
         specifier: workspace:*
         version: link:../../libs/shadcn-ui
-      '@ustrs/utils':
-        specifier: workspace:*
-        version: link:../../libs/utils
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
@@ -160,6 +160,33 @@ importers:
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.2.1(typescript@5.3.2)(vite@5.0.2)
+
+  libs/icons:
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.2.38
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.2.17
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.2.1(vite@5.0.6)
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.2.0(react@18.2.0)
+      vite:
+        specifier: ^5.0.6
+        version: 5.0.6(@types/node@20.10.1)
+      vite-plugin-dts:
+        specifier: ^3.6.4
+        version: 3.6.4(@types/node@20.10.1)(typescript@5.3.2)(vite@5.0.6)
+      vite-tsconfig-paths:
+        specifier: ^4.2.1
+        version: 4.2.1(typescript@5.3.2)(vite@5.0.6)
 
   libs/shadcn-ui:
     devDependencies:
@@ -3126,14 +3153,6 @@ packages:
       - nx
     dev: true
 
-  /@nrwl/devkit@17.2.3(nx@17.2.3):
-    resolution: {integrity: sha512-EG08AaA/kP/nam1Bt8dEJ2raftHedOvJIuEyh4mXXSdioA+H4ILU/m0/51cTwjjkv4wfoe/gxKCwqbei5VK1oQ==}
-    dependencies:
-      '@nx/devkit': 17.2.3(nx@17.2.3)
-    transitivePeerDependencies:
-      - nx
-    dev: true
-
   /@nrwl/jest@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.1)(nx@17.1.3)(typescript@5.3.2):
     resolution: {integrity: sha512-hOpJqcJmj+3B2hgwvanhTx7Z9zoAMFekNx5CFZxOvpgNog+urzJ8T+5gjjSSM23/yVLjkizEGjUT4ih7FnY3MA==}
     dependencies:
@@ -3150,23 +3169,6 @@ packages:
       - nx
       - supports-color
       - ts-node
-      - typescript
-      - verdaccio
-    dev: true
-
-  /@nrwl/js@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.1)(nx@17.1.3)(typescript@5.2.2):
-    resolution: {integrity: sha512-eH0UxhOac2HeFJLWTzPp4IuNah59vWWeE37VYrpSdBaw6U+Jixe0L6D89S8NT/AOW1aJOVglKbNc0MzVFC6QUQ==}
-    dependencies:
-      '@nx/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.1)(nx@17.1.3)(typescript@5.2.2)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@swc-node/register'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - debug
-      - nx
-      - supports-color
       - typescript
       - verdaccio
     dev: true
@@ -3264,7 +3266,7 @@ packages:
     peerDependencies:
       nx: '>= 16 <= 18'
     dependencies:
-      '@nrwl/devkit': 17.2.3(nx@17.2.3)
+      '@nrwl/devkit': 17.2.3(nx@17.1.3)
       ejs: 3.1.9
       enquirer: 2.3.6
       ignore: 5.3.0
@@ -3350,7 +3352,7 @@ packages:
       '@babel/preset-env': 7.23.6(@babel/core@7.23.5)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.5)
       '@babel/runtime': 7.23.4
-      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.1)(nx@17.1.3)(typescript@5.2.2)
+      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.1)(nx@17.1.3)(typescript@5.3.2)
       '@nx/devkit': 17.2.3(nx@17.1.3)
       '@nx/workspace': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.2.2)
