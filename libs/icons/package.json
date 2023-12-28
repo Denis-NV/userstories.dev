@@ -1,7 +1,7 @@
 {
   "author": "Denis Nemytov",
   "license": "MIT",
-  "name": "@ustrs/icons",
+  "name": "@ustrs/utils",
   "private": true,
   "version": "0.0.0",
   "type": "module",

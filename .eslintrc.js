@@ -54,7 +54,7 @@ module.exports = {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'turbo/no-undeclared-env-vars': 'error',
     'import/no-duplicates': 'error',
-    'import/no-unresolved': 'warn',
+    'import/no-unresolved': 'error',
   },
   settings: {
     react: {
@@ -67,9 +67,6 @@ module.exports = {
       typescript: {
         project: ['tsconfig.json', 'apps/*/tsconfig.json', 'libs/*/tsconfig.json'],
       },
-      // node: {
-      //   extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
-      // },
     },
   },
 }

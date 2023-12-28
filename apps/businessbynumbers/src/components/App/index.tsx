@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useQuery } from '@apollo/client'
 
 import { Button } from '@ustrs/shadcn-ui'
-import { Button as Button2, NestedRecord } from '@ustrs/icons'
+import { NestedRecord } from '@ustrs/utils'
 
 import { TEST_QUERY } from './gql'
 
@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
       {isAuthenticated ? (
         <div>
           <p className="read-the-docs">Hello {user?.nickname}</p>
-          <Button2 onClick={() => logoutWithRedirect()}>Log out</Button2>
+          <Button onClick={() => logoutWithRedirect()}>Log out</Button>
           <hr />
           <div>
             {loading && 'Loading data ...'}
