@@ -24,10 +24,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "useDefineForClassFields": true,
-    "paths": {
-      "automation": ["automation/src/index.ts"]
-    }
+    "useDefineForClassFields": true
   },
   "exclude": [
     "dist",
