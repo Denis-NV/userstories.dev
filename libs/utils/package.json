@@ -2,7 +2,7 @@
   "author": "Denis Nemytov",
   "license": "MIT",
   "name": "@ustrs/utils",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -22,8 +22,8 @@
       "require": "./dist/lib.umd.cjs"
     }
   },
-  "main": "./dist/lib.umd.js",
-  "module": "./dist/lib.es.js",
+  "main": "./dist/lib.umd.cjs",
+  "module": "./dist/lib.es.cjs",
   "types": "./dist/index.d.ts",
   "devDependencies": {
     "@types/react": "^18.0.0",

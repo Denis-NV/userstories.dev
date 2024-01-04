@@ -7,12 +7,15 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:storybook/recommended',
+    'turbo',
   ],
-  ignorePatterns: ['dist', '.eslintrc.js', '.eslintrc.cjs'],
+  ignorePatterns: ['node_modules', 'dist', '.eslintrc.js', '.eslintrc.cjs', '**/*.css'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -29,10 +32,11 @@ module.exports = {
     'prettier',
     'simple-import-sort',
     'react-refresh',
+    'turbo',
+    'import',
   ],
   rules: {
     camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
-    'no-duplicate-imports': 'error',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-uses-react': 'off',
@@ -48,13 +52,21 @@ module.exports = {
     'react/no-unknown-property': 'off',
     'react/no-unescaped-entities ': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'turbo/no-undeclared-env-vars': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-unresolved': 'error',
   },
   settings: {
     react: {
       version: 'detect',
     },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
     'import/resolver': {
-      typescript: {},
+      typescript: {
+        project: ['tsconfig.json', 'apps/*/tsconfig.json', 'libs/*/tsconfig.json'],
+      },
     },
   },
 }

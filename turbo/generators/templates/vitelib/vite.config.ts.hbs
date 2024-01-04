@@ -20,7 +20,7 @@ export default defineConfig(() => ({
   build: {
     lib: {
       entry: resolve('src', 'index.ts'),
-      name: '@<%= scope %>/<%= name %>',
+      name: '@{{scope}}/{{name}}',
       formats: ['es', 'umd'],
       fileName: (format) => `lib.${format}.cjs`,
     },

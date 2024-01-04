@@ -4,9 +4,6 @@ dist
 dist-ssr
 *.local
 
-# NX
-.nx/cache
-
 # Logs
 logs
 *.log
