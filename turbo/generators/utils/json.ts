@@ -36,7 +36,7 @@ export function serializeJson<T extends object = object>(input: T): string {
 }
 
 export function writeJson<T extends object = object>(path: string, value: T): void {
-  // tree.write(path, serializeJson(value))
+  fs.writeFileSync(path, serializeJson(value))
 
   console.log('updated value:', serializeJson(value))
 }

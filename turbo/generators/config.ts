@@ -72,21 +72,20 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     ],
     actions: [
       getScope,
-      // {
-      //   type: 'addMany',
-      //   destination: '{{ turbo.paths.root }}/libs/{{ name }}',
-      //   base: `templates/vitelib`,
-      //   templateFiles: `templates/vitelib/**/*`,
-      // },
-      // {
-      //   type: 'addMany',
-      //   destination: '{{ turbo.paths.root }}/libs/{{ name }}',
-      //   base: `templates/vitelibstorybook`,
-      //   templateFiles: `templates/vitelibstorybook/**/*`,
-      // },
-      function appendJSON(): Promise<string> | string {
-        // updateJson(`libs/${answers.name}/package.json`, (pkgJson) => {
-        updateJson(`./package.json`, (pkgJson) => {
+      {
+        type: 'addMany',
+        destination: '{{ turbo.paths.root }}/libs/{{ name }}',
+        base: `templates/vitelib`,
+        templateFiles: `templates/vitelib/**/*`,
+      },
+      {
+        type: 'addMany',
+        destination: '{{ turbo.paths.root }}/libs/{{ name }}',
+        base: `templates/vitelibstorybook`,
+        templateFiles: `templates/vitelibstorybook/**/*`,
+      },
+      function appendJSON(answers: any): Promise<string> | string {
+        updateJson(`./libs/${answers.name}/package.json`, (pkgJson) => {
           // if scripts is undefined, set it to an empty object
           pkgJson.scripts = pkgJson.scripts ?? {}
           pkgJson.scripts.storybook = 'storybook dev -p 6006'
