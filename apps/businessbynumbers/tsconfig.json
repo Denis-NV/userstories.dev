@@ -1,6 +1,10 @@
 {
   "extends": "@ustrs/typescript-config/react-vite.json",
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "typeRoots": ["node_modules/@types", "src/index.d.ts"],
+    "moduleResolution": "bundler",
     "paths": {
       "@const/*": ["./src/const/*"],
       "@config/*": ["./src/config/*"],
