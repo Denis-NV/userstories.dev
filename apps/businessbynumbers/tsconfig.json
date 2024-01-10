@@ -1,8 +1,6 @@
 {
   "extends": "@ustrs/typescript-config/react-vite.json",
   "compilerOptions": {
-    "baseUrl": "./",
-    "rootDir": "./src",
     "paths": {
       "@const/*": ["./src/const/*"],
       "@config/*": ["./src/config/*"],
