@@ -1,11 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@ustrs/typescript-config/react-vite.json",
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./src",
-    "allowJs": false,
-    "typeRoots": ["node_modules/@types", "src/index.d.ts"],
-    "moduleResolution": "bundler",
     "paths": {
       "@const/*": ["./src/const/*"],
       "@config/*": ["./src/config/*"],

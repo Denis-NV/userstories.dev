@@ -1,12 +1,7 @@
 {
+  "extends": "@ustrs/typescript-config/node.json",
   "compilerOptions": {
-    "rootDir": "./",
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "rootDir": "./"
   },
-  "include": ["vite.config.ts", "package.json"]
+  "include": ["vite.config.ts", "package.json", "tailwind.config.ts"]
 }

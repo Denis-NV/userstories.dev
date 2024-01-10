@@ -33,6 +33,7 @@
   "module": "./dist/lib.es.cjs",
   "types": "./dist/index.d.ts",
   "devDependencies": {
+    "@ustrs/typescript-config": "workspace:*",
     "@storybook/addon-essentials": "^7.6.5",
     "@storybook/addon-interactions": "^7.6.5",
     "@storybook/addon-links": "^7.6.5",
