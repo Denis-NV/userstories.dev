@@ -13,6 +13,10 @@ https://nodejs.org/api/packages.html#conditional-exports
 
 ### husky
 
+### Typescript configuration
+All the configs typescript configuration live inside `@ustrs/typescript-config` package and each app or library can take advantage of extending the appropriate `typescript.json`.
+
+
 ## ESlint configuration
 
 ## Package generation
