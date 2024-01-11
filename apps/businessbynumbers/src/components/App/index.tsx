@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useQuery } from '@apollo/client'
 
-import { Button } from '@ustrs/shadcn-ui'
+import { Button, Alert, AlertDescription, AlertTitle } from '@ustrs/shadcn-ui'
 import { NestedRecord } from '@ustrs/utils'
 
 import { TEST_QUERY } from './gql'
@@ -31,6 +31,10 @@ const App = (): JSX.Element => {
   ) : (
     <div className="bg-slate-300">
       <h1>Business by Numbers!!!</h1>
+      <Alert>
+        <AlertTitle>Heads up!</AlertTitle>
+        <AlertDescription>This Alert component comes from local shadcn-ui library</AlertDescription>
+      </Alert>
       {isAuthenticated ? (
         <div>
           <p className="read-the-docs">Hello {user?.nickname}</p>
