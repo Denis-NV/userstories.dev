@@ -4,27 +4,32 @@ import type { Config } from 'tailwindcss'
 const config: Omit<Config, 'content'> = {
   theme: {
     extend: {
-      colors: {
-        blue: {
-          light: '#85d7ff',
-          DEFAULT: '#1fb6ff',
-          dark: '#009eeb',
+      container: {
+        center: true,
+        padding: '2rem',
+        screens: {
+          '2xl': '1400px',
         },
-        pink: {
-          light: '#ff7ce5',
-          DEFAULT: '#ff49db',
-          dark: '#ff16d1',
+      },
+      extend: {
+        keyframes: {
+          'accordion-down': {
+            from: { height: '0' },
+            to: { height: 'var(--radix-accordion-content-height)' },
+          },
+          'accordion-up': {
+            from: { height: 'var(--radix-accordion-content-height)' },
+            to: { height: '0' },
+          },
         },
-        gray: {
-          darkest: '#1f2d3d',
-          dark: '#3c4858',
-          DEFAULT: '#c0ccda',
-          light: '#e0e6ed',
-          lightest: '#f9fafc',
+        animation: {
+          'accordion-down': 'accordion-down 0.2s ease-out',
+          'accordion-up': 'accordion-up 0.2s ease-out',
         },
       },
     },
   },
-  plugins: [],
+  darkMode: ['class'],
+  plugins: [require('tailwindcss-animate')],
 }
 export default config
