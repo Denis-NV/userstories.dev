@@ -35,13 +35,13 @@ const config = {
     //   dependencyTypes: ['prod', 'dev', 'peer'],
     //   policy: 'sameRange',
     // },
-    {
-      label: 'Ensure semver are within the same range for all (remaining) packages',
-      dependencies: ['**'],
-      packages: ['**'],
-      dependencyTypes: ['prod', 'dev', 'peer'],
-      policy: 'sameRange',
-    },
+    // {
+    //   label: 'Ensure semver are within the same range for all (remaining) packages',
+    //   dependencies: ['**'],
+    //   packages: ['**'],
+    //   dependencyTypes: ['prod', 'dev', 'peer'],
+    //   policy: 'sameRange',
+    // },
   ],
 }
 

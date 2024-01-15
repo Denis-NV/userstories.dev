@@ -24,6 +24,8 @@ All the configs typescript configuration live inside `@ustrs/typescript-config` 
 pnpm turbo gen
 ```
 
+## Unit testing with Vitest
+
 ## Storybook
 
 ## @ustrs/shadcn-ui package
