@@ -3,7 +3,6 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowJs": false,
-    "typeRoots": ["node_modules/@types", "src/index.d.ts"],
     "moduleResolution": "bundler",
     "paths": {
       "@const/*": ["./src/const/*"],

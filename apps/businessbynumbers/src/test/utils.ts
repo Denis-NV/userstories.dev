@@ -1,11 +1,8 @@
-// import { cleanup, render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
 import { afterEach } from 'vitest'
-import * as rtl from '@testing-library/react'
-
-const { render, ...rest } = rtl
 
 afterEach(() => {
-  rest.cleanup()
+  cleanup()
 })
 
 function customRender(ui: React.ReactElement, options = {}): ReturnType<typeof render> {
@@ -16,6 +13,7 @@ function customRender(ui: React.ReactElement, options = {}): ReturnType<typeof r
   })
 }
 
+export * from '@testing-library/react' // eslint-disable-line
 export { default as userEvent } from '@testing-library/user-event'
 // override render export
-export { customRender as render, rest }
+export { customRender as render } // eslint-disable-line

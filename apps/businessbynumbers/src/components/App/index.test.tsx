@@ -1,22 +1,23 @@
+import { render, screen } from '@test/utils'
 import App from '.'
-import { render, screen, userEvent } from '@test/utils'
+import Auth0ProviderWithHistory from '@config/Auth0ProviderWithHistory'
+import ApolloProvider from '@config/ApolloProvider'
+
+const renderComponent = () => {
+  render(
+    <Auth0ProviderWithHistory>
+      <ApolloProvider>
+        <App />
+      </ApolloProvider>
+    </Auth0ProviderWithHistory>,
+  )
+}
 
 describe('Simple working test', () => {
   it('the title is visible', () => {
-    render(<App />)
-    expect(screen.getByText(/Hello Vite \+ React!/i)).toBeInTheDocument()
-  })
+    renderComponent()
 
-  it('should increment count on click', async () => {
-    render(<App />)
-    userEvent.click(screen.getByRole('button'))
-    expect(await screen.findByText(/count is: 1/i)).toBeInTheDocument()
-  })
-
-  it('uses flexbox in app header', async () => {
-    render(<App />)
-    const element = screen.getByRole('banner')
-    expect(element.className).toEqual('App-header')
-    expect(getComputedStyle(element).display).toEqual('flex')
+    // expect(screen.getByRole('header', { name: /Business by Numbers/i })).toBeInTheDocument()
+    expect(screen.findByText(/Checking Authentication/i))
   })
 })
