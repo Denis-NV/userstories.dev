@@ -5,10 +5,7 @@
     "allowJs": false,
     "moduleResolution": "bundler",
     "paths": {
-      "@const/*": ["./src/const/*"],
-      "@config/*": ["./src/config/*"],
-      "@test/*": ["./src/test/*"],
-      "@components/*": ["./src/components/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],
