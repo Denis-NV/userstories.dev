@@ -52,12 +52,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # Don't forget to create separate lining and testing scripts for each app
-      # - name: Run linting
-      #   run: pnpm run lint
+      - name: Run linting
+        run: pnpm run lint
 
-      # - name: Run tests
-      # - run: pnpm run test
+      - name: Run vitest unit and integration tests
+        run: pnpm run test:bbn
 
       - name: Build Business by Numbers App and all the dependant libraries
         run: pnpm run build:bbn
