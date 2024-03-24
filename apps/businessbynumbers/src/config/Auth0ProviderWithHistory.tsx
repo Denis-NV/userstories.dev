@@ -4,7 +4,7 @@ import {
   Auth0Provider,
   // Auth0ProviderOptions
 } from '@auth0/auth0-react'
-import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '@const/auth0'
+import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '@/const/auth0'
 
 export type TAuth0ProviderWithHistoryProps = {
   children: React.ReactNode

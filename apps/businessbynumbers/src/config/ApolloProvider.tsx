@@ -9,7 +9,7 @@ import {
 import { onError } from '@apollo/client/link/error'
 import { setContext } from '@apollo/client/link/context'
 import { useAuth0 } from '@auth0/auth0-react'
-import { AUTH0_AUDIENCE } from '@const/auth0'
+import { AUTH0_AUDIENCE } from '@/const/auth0'
 
 export type TApolloProviderProps = {
   children: ReactNode
