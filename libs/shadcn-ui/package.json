@@ -12,7 +12,8 @@
     "watch:tailwind": "pnpm build:tailwind --watch",
     "watch:build": "vite build --emptyOutDir=false --watch",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

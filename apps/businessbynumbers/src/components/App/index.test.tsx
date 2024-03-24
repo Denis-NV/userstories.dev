@@ -17,6 +17,6 @@ describe('Simple working test', () => {
   it('the title is visible', () => {
     renderComponent()
 
-    expect(screen.findByText(/Checking Authentication/i))
+    expect(screen.getByText(/Checking Authentication/i)).toBeVisible()
   })
 })

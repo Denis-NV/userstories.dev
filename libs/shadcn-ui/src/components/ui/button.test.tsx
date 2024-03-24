@@ -5,6 +5,6 @@ describe('Button component', () => {
   it('should render', () => {
     render(<Button>Click me</Button>)
 
-    expect(screen.findByRole('button', { name: /Click me/i }))
+    expect(screen.getByRole('button', { name: /Click me/i })).toBeVisible()
   })
 })
