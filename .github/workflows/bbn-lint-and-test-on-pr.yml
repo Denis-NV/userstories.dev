@@ -1,17 +1,17 @@
-name: 'BBN app: delpoy to Netlify on "push" to "main"'
+name: Lint and Test
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches-ignore: [gh-pages]
     paths:
       - 'apps/businessbynumbers/**'
       - 'libs/shadcn-ui/**'
       - 'libs/utils/**'
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
-  build:
+  lint:
+    name: Run lint and unit tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -52,18 +52,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Business by Numbers App and all the dependant libraries
-        run: pnpm run build:bbn
+      - name: Run linting
+        run: pnpm run lint
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
-        with:
-          publish-dir: './apps/businessbynumbers/dist'
-          production-branch: main
-          deploy-message: 'Deploy from GitHub Actions'
-          enable-pull-request-comment: false
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_BBN_SITE_ID }}
+      - name: Run vitest unit and integration tests
+        run: pnpm run test:bbn
