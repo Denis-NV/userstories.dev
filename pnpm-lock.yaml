@@ -5,7 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  effect: 2.0.0-next.47
   '@storybook/react-vite>@vitejs/plugin-react': ^4.2.1
 
 importers:
@@ -2038,13 +2037,13 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@effect/schema@0.56.1(effect@2.0.0-next.47)(fast-check@3.15.0):
+  /@effect/schema@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
     resolution: {integrity: sha512-cfEyHLXPdzSKzJU/yYrPjFd0iVHPydh+NT0sgTe4bzXbcvOsKZuvQ86cAAwXN7lxY0N5cPes9ACxUxTdkEaNlw==}
     peerDependencies:
-      effect: 2.0.0-next.47
+      effect: 2.0.0-next.62
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.0.0-next.47
+      effect: 2.0.0-next.62
       fast-check: 3.15.0
     dev: true
 
@@ -6891,8 +6890,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.0.0-next.47:
-    resolution: {integrity: sha512-H2L1xoaOblZbrTHuUo/ppWVr9R34FyigxXkEn9iD9TMYgCJqSS9RIUOGCTdT4ATyCgVf7dWlJxOtLFSpirVWqA==}
+  /effect@2.0.0-next.62:
+    resolution: {integrity: sha512-fJhLzf5oouL4WZP314ZJgZz5Bel7OHTY+YFxO06sW1mSvqJz0s28y7jDHr5zhtTNM1YRvzbeLYUYfNaJYKqx1A==}
     dev: true
 
   /ejs@3.1.9:
@@ -11745,11 +11744,11 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@effect/schema': 0.56.1(effect@2.0.0-next.47)(fast-check@3.15.0)
+      '@effect/schema': 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
       chalk: 4.1.2
       commander: 11.1.0
       cosmiconfig: 9.0.0(typescript@5.3.3)
-      effect: 2.0.0-next.47
+      effect: 2.0.0-next.62
       enquirer: 2.4.1
       fast-check: 3.15.0
       globby: 11.1.0
