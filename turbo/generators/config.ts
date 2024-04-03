@@ -137,7 +137,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         templateFiles: `templates/vitestrtl/**/*`,
       },
       function appendJSON(answers: any): Promise<string> | string {
-        updateJson(`./${answers.name}/package.json`, (pkgJson) => {
+        updateJson(`./${answers.packageName}/package.json`, (pkgJson) => {
           // if scripts is undefined, set it to an empty object
           pkgJson.scripts = pkgJson.scripts ?? {}
           pkgJson.scripts.test = 'vitest run'
