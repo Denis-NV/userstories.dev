@@ -52,6 +52,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build Business by Numbers App and all the dependant libraries
+        run: pnpm run build:bbn
+
       - name: Run linting
         run: pnpm run lint
 
