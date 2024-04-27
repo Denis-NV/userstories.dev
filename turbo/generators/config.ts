@@ -186,6 +186,17 @@ export default function generator(plop: TPlop): void {
 
         return 'JSON Updated'
       },
+      function appendTsconfig(answers: any): Promise<string> | string {
+        updateJson(`./${answers.category}/${answers.packageName}/tsconfig.json`, (tsJson) => {
+          tsJson.compilerOptions = tsJson.compilerOptions ?? {}
+          tsJson.compilerOptions.types = tsJson.compilerOptions.types ?? []
+          tsJson.compilerOptions.types = [...tsJson.compilerOptions.types, 'vitest/globals']
+
+          return tsJson
+        })
+
+        return 'JSON Updated'
+      },
     ],
   })
 }
