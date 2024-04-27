@@ -9,7 +9,7 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 import * as packageJson from './package.json'
 
 // https://vitejs.dev/config/
-export default defineConfig(() => ({
+export default defineConfig({
   plugins: [
     react(),
     tsConfigPaths({ ignoreConfigErrors: true }),
@@ -37,4 +37,4 @@ export default defineConfig(() => ({
       },
     },
   },
-}))
+})

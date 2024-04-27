@@ -2,7 +2,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2024: true,
     node: true,
     jest: true,
   },
@@ -56,6 +56,7 @@ module.exports = {
     'turbo/no-undeclared-env-vars': 'error',
     'import/no-duplicates': 'error',
     'import/no-unresolved': 'error',
+    'import/export': 'warn',
   },
   settings: {
     react: {
