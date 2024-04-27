@@ -2,9 +2,36 @@ import { PlopTypes } from '@turbo/gen'
 import { getScope } from './utils'
 import { updateJson } from './utils/json'
 
+import autocompletePrompt from 'inquirer-autocomplete-prompt'
+import { readdirSync } from 'fs'
+import path from 'path'
+
 // Promts docs: https://github.com/SBoudrias/Inquirer.js/#question
 
-export default function generator(plop: PlopTypes.NodePlopAPI): void {
+type TCategoryAnswer = { category: string }
+
+type TPromptQuestion =
+  | PlopTypes.PromptQuestion
+  | {
+      type: 'getPackageName'
+      name: string
+      message: string
+      source: (answersSoFar: TCategoryAnswer) => string
+    }
+
+type TPrompts = PlopTypes.DynamicPromptsFunction | TPromptQuestion[]
+
+type TPlopGeneratorConfig = PlopTypes.PlopGeneratorConfig & {
+  prompts: TPrompts
+}
+
+type TPlop = PlopTypes.NodePlopAPI & {
+  setGenerator(name: string, config: TPlopGeneratorConfig): PlopTypes.PlopGenerator
+}
+
+export default function generator(plop: TPlop): void {
+  plop.setPrompt('getPackageName', autocompletePrompt as any)
+
   plop.setGenerator('vite-lib', {
     description: 'Buildable Vite library',
     prompts: [
@@ -108,23 +135,25 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
   })
 
   plop.setGenerator('add-vitest-rtl', {
-    description: 'Add Vitest-based and RTL testing setup to an existing Vite-based lib or app',
+    description: 'Add Vitest and RTL testing setup to an existing Vite-based lib or app',
     prompts: [
       {
-        type: 'input',
+        type: 'list',
+        name: 'category',
+        message: 'Choose the package category',
+        choices: ['libs', 'apps'],
+        default: 0,
+      },
+      {
+        type: 'getPackageName',
         name: 'packageName',
-        message: 'Package name:',
-        validate: (input: string) => {
-          if (input.includes('.')) {
-            return 'name cannot include an extension'
-          }
-          if (input.includes(' ')) {
-            return 'name cannot include spaces'
-          }
-          if (!input) {
-            return 'Package name is required'
-          }
-          return true
+        message: 'Choose the package name',
+        source: function (answersSoFar) {
+          const packagePath = path.resolve('./', answersSoFar.category)
+
+          return readdirSync(packagePath, { withFileTypes: true })
+            .filter((dirent) => dirent.isDirectory())
+            .map((dirent) => dirent.name)
         },
       },
     ],
@@ -132,12 +161,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       getScope,
       {
         type: 'addMany',
-        destination: '{{ turbo.paths.root }}/{{ packageName }}',
+        destination: '{{ turbo.paths.root }}/{{ category }}/{{ packageName }}',
         base: `templates/vitestrtl`,
         templateFiles: `templates/vitestrtl/**/*`,
       },
       function appendJSON(answers: any): Promise<string> | string {
-        updateJson(`./${answers.packageName}/package.json`, (pkgJson) => {
+        updateJson(`./${answers.category}/${answers.packageName}/package.json`, (pkgJson) => {
           // if scripts is undefined, set it to an empty object
           pkgJson.scripts = pkgJson.scripts ?? {}
           pkgJson.scripts.test = 'vitest run'
