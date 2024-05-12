@@ -3,11 +3,8 @@ name: Lint and Test
 on:
   pull_request:
     branches-ignore: [gh-pages]
-    paths:
-      - 'apps/businessbynumbers/**'
-      - 'libs/shadcn-ui/**'
-      - 'libs/utils/**'
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -26,7 +23,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.15.6
+          version: 9.1.0
           run_install: false
 
       - name: Get pnpm store directory
