@@ -64,9 +64,6 @@
         "react": "18",
         "react-dom": "18"
       }
-    },
-    "overrides": {
-      "@storybook/react-vite>@vitejs/plugin-react": "^4.2.1"
     }
   },
   "private": true,

@@ -119,12 +119,13 @@ export default function generator(plop: TPlop): void {
           pkgJson.scripts['build-storybook'] = 'storybook build'
 
           pkgJson.devDependencies = pkgJson.devDependencies ?? {}
-          pkgJson.devDependencies['storybook'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-essentials'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-interactions'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-links'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/react'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/react-vite'] = '^7.6.5'
+          pkgJson.devDependencies['@babel/core'] = '^7.24.5'
+          pkgJson.devDependencies['storybook'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-essentials'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-interactions'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-links'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/react'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/react-vite'] = '^8.0.10'
           // return modified JSON object
           return pkgJson
         })
