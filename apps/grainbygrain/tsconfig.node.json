@@ -1,0 +1,7 @@
+{
+  "extends": "@ustrs/typescript-config/node.json",
+  "compilerOptions": {
+    "rootDir": "./"
+  },
+  "include": ["vite.config.ts", "package.json"]
+}

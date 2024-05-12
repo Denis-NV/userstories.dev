@@ -21,6 +21,13 @@ const config = {
       dependencyTypes: ['prod', 'dev'],
       pinVersion: 'workspace:*',
     },
+    {
+      label: 'Ensure semver are within the same range for grain-by-grain packages',
+      dependencies: ['**'],
+      packages: ['grain-by-grain'],
+      dependencyTypes: ['prod', 'dev', 'peer'],
+      policy: 'sameRange',
+    },
     // {
     //   label: 'Ensure some packages are ignored',
     //   dependencies: ['**'],

@@ -1,0 +1,23 @@
+{
+  "name": "grain-by-grain",
+  "version": "0.0.0",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@ustrs/typescript-config": "workspace:*",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.0",
+    "vite-tsconfig-paths": "^4.2.3"
+  },
+  "private": true,
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "type": "module"
+}
