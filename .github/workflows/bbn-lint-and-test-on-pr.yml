@@ -3,11 +3,8 @@ name: Lint and Test
 on:
   pull_request:
     branches-ignore: [gh-pages]
-    paths:
-      - 'apps/businessbynumbers/**'
-      - 'libs/shadcn-ui/**'
-      - 'libs/utils/**'
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   lint:
