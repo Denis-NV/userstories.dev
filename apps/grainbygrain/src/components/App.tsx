@@ -1,21 +1,14 @@
-import { useAuthenticationStatus, useUserRoles } from '@nhost/react'
+import { useAuthenticationStatus } from '@nhost/react'
 
 import SignIn from './SignIn'
+import Landing from './Landing'
 
 function App() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
-  const userRoles = useUserRoles()
 
-  if (isLoading) return <div>Loding...</div>
+  if (isLoading) return <div>Loading...</div>
 
-  return isAuthenticated ? (
-    <div>
-      <h1>grain-by-grain</h1>
-      <span>User roles: {userRoles}</span>
-    </div>
-  ) : (
-    <SignIn />
-  )
+  return isAuthenticated ? <Landing /> : <SignIn />
 }
 
 export default App
