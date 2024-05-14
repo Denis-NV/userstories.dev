@@ -9,6 +9,7 @@ import App from '@/components/App'
 const nhost = new NhostClient({
   subdomain: 'aqntrlqfforjhsoobrbn',
   region: 'eu-west-2',
+  autoSignIn: false,
 })
 
 const client = createApolloClient({
