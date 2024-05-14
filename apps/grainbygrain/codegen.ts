@@ -1,5 +1,5 @@
-import { CodegenConfig } from '@graphql-codegen/cli'
 import 'dotenv/config'
+import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: [
@@ -18,6 +18,12 @@ const config: CodegenConfig = {
       documents: ['src/**/*.tsx', 'src/**/*.ts'],
       preset: 'client',
       plugins: [],
+      presetConfig: {
+        fragmentMasking: false,
+      },
+      config: {
+        useTypeImports: true,
+      },
     },
   },
 }
