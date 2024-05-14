@@ -1,5 +1,5 @@
 import { PlopTypes } from '@turbo/gen'
-import { getScope } from './utils'
+import { appendViteReactDeps, getScope } from './utils'
 import { updateJson } from './utils/json'
 
 import autocompletePrompt from 'inquirer-autocomplete-prompt'
@@ -32,9 +32,75 @@ type TPlop = PlopTypes.NodePlopAPI & {
 export default function generator(plop: TPlop): void {
   plop.setPrompt('getPackageName', autocompletePrompt as any)
 
+  plop.setGenerator('vite-app', {
+    description: 'Vite React app',
+    prompts: [
+      {
+        type: 'input',
+        name: 'folderName',
+        message: 'Folder name:',
+        validate: (input: string) => {
+          if (input.includes('.')) {
+            return 'name cannot include an extension'
+          }
+          if (input.includes(' ')) {
+            return 'name cannot include spaces'
+          }
+          if (!input) {
+            return 'name is required'
+          }
+          return true
+        },
+      },
+      {
+        type: 'input',
+        name: 'name',
+        message: 'App (package) name:',
+        validate: (input: string) => {
+          if (input.includes('.')) {
+            return 'name cannot include an extension'
+          }
+          if (input.includes(' ')) {
+            return 'name cannot include spaces'
+          }
+          if (!input) {
+            return 'name is required'
+          }
+          return true
+        },
+      },
+    ],
+    actions: [
+      {
+        type: 'addMany',
+        destination: '{{ turbo.paths.root }}/apps/{{ folderName }}',
+        base: `templates/viteapp`,
+        templateFiles: `templates/viteapp/**/*`,
+      },
+      appendViteReactDeps('apps', 'folderName'),
+    ],
+  })
+
   plop.setGenerator('vite-lib', {
     description: 'Buildable Vite library',
     prompts: [
+      {
+        type: 'input',
+        name: 'folderName',
+        message: 'Folder name:',
+        validate: (input: string) => {
+          if (input.includes('.')) {
+            return 'name cannot include an extension'
+          }
+          if (input.includes(' ')) {
+            return 'name cannot include spaces'
+          }
+          if (!input) {
+            return 'name is required'
+          }
+          return true
+        },
+      },
       {
         type: 'input',
         name: 'name',
@@ -52,21 +118,16 @@ export default function generator(plop: TPlop): void {
           return true
         },
       },
-      {
-        type: 'input',
-        name: 'author',
-        message: 'Author',
-        default: 'Denis Nemytov',
-      },
     ],
     actions: [
       getScope,
       {
         type: 'addMany',
-        destination: '{{ turbo.paths.root }}/libs/{{ name }}',
+        destination: '{{ turbo.paths.root }}/libs/{{ folderName }}',
         base: `templates/vitelib`,
         templateFiles: `templates/vitelib/**/*`,
       },
+      appendViteReactDeps('libs', 'folderName'),
     ],
   })
 
@@ -119,12 +180,13 @@ export default function generator(plop: TPlop): void {
           pkgJson.scripts['build-storybook'] = 'storybook build'
 
           pkgJson.devDependencies = pkgJson.devDependencies ?? {}
-          pkgJson.devDependencies['storybook'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-essentials'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-interactions'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/addon-links'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/react'] = '^7.6.5'
-          pkgJson.devDependencies['@storybook/react-vite'] = '^7.6.5'
+          pkgJson.devDependencies['@babel/core'] = '^7.24.5'
+          pkgJson.devDependencies['storybook'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-essentials'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-interactions'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/addon-links'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/react'] = '^8.0.10'
+          pkgJson.devDependencies['@storybook/react-vite'] = '^8.0.10'
           // return modified JSON object
           return pkgJson
         })

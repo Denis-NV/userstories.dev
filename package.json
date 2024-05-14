@@ -64,9 +64,6 @@
         "react": "18",
         "react-dom": "18"
       }
-    },
-    "overrides": {
-      "@storybook/react-vite>@vitejs/plugin-react": "^4.2.1"
     }
   },
   "private": true,
@@ -75,6 +72,7 @@
     "build:bbn": "turbo build --filter=bbn --log-order=grouped",
     "dev:bbn": "turbo dev --filter=bbn --filter=@ustrs/utils --filter=@ustrs/shadcn-ui",
     "format": "prettier --write '{apps,libs}/*/src/**/*.{ts,tsx,css}' --config ./.prettierrc",
+    "gen": "turbo gen",
     "lint": "eslint '{apps,libs}/*/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix '{apps,libs}/*/src/**/*.{jsx,ts,tsx}'",
     "prepare": "husky install",
