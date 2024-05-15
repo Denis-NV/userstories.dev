@@ -1,17 +1,24 @@
 import { FormEvent, useState } from 'react'
 import { useSignInEmailPassword } from '@nhost/react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
   const { signInEmailPassword, needsEmailVerification, isLoading, isError, error } =
     useSignInEmailPassword()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const from = location.state?.from?.pathname || '/'
 
   const handleSignIn = async (event: FormEvent) => {
     event.preventDefault()
 
     await signInEmailPassword(email, password)
+
+    navigate(from, { replace: true })
   }
 
   return (
