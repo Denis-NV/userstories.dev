@@ -7709,38 +7709,28 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
-export type GetCustomerQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersQueryQueryVariables = Exact<{ [key: string]: never }>
 
-export type GetCustomerQuery = {
+export type CustomersQueryQuery = {
   __typename?: 'query_root'
   customer: Array<{
-    __typename?: 'customer'
+    __typename: 'customer'
     id: any
     name: string
+    address: string
     delivery_start_time: any
     delivery_end_time: any
     district?: { __typename?: 'district'; id: any; name: string } | null
-    orders: Array<{
-      __typename?: 'order'
-      id: any
-      comment?: string | null
-      delivery_date: any
-      delivery_method?: { __typename?: 'delivery_method'; id: any; name: string } | null
-      order_products: Array<{
-        __typename?: 'order_product'
-        product: { __typename?: 'product'; id: any; name: string }
-      }>
-    }>
   }>
 }
 
-export const GetCustomerDocument = {
+export const CustomersQueryDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetCustomer' },
+      name: { kind: 'Name', value: 'CustomersQuery' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -7750,8 +7740,10 @@ export const GetCustomerDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
                 {
@@ -7765,49 +7757,6 @@ export const GetCustomerDocument = {
                     ],
                   },
                 },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'orders' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'delivery_method' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                          ],
-                        },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'order_products' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'product' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -7815,4 +7764,4 @@ export const GetCustomerDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<GetCustomerQuery, GetCustomerQueryVariables>
+} as unknown as DocumentNode<CustomersQueryQuery, CustomersQueryQueryVariables>

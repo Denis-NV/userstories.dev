@@ -1,4 +1,4 @@
-const Customers = () => {
-  return <div>Customers</div>
+const Products = () => {
+  return <div>Products</div>
 }
-export default Customers
+export default Products

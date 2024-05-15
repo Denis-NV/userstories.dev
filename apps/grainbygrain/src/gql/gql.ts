@@ -13,8 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  query GetCustomer {\n    customer {\n      id\n      name\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n\n      orders {\n        id\n        comment\n\n        delivery_date\n        delivery_method {\n          id\n          name\n        }\n\n        order_products {\n          product {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n':
-    types.GetCustomerDocument,
+  '\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
+    types.CustomersQueryDocument,
 }
 
 /**
@@ -35,8 +35,8 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetCustomer {\n    customer {\n      id\n      name\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n\n      orders {\n        id\n        comment\n\n        delivery_date\n        delivery_method {\n          id\n          name\n        }\n\n        order_products {\n          product {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query GetCustomer {\n    customer {\n      id\n      name\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n\n      orders {\n        id\n        comment\n\n        delivery_date\n        delivery_method {\n          id\n          name\n        }\n\n        order_products {\n          product {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n']
+  source: '\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

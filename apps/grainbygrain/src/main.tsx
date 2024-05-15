@@ -5,8 +5,10 @@ import { createApolloClient } from '@nhost/apollo'
 import { ApolloProvider } from '@apollo/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Root from '@/routes/Root'
 import ErrorPage from '@/components/ErrorPage'
+import Root from '@/routes/Root'
+import Customers from '@/routes/Customers'
+import Customer from '@/routes/Customer'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
@@ -23,6 +25,16 @@ const router = createBrowserRouter([
     path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'customers',
+        element: <Customers />,
+      },
+      {
+        path: 'customers/:customerId',
+        element: <Customer />,
+      },
+    ],
   },
 ])
 
