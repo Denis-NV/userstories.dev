@@ -9,6 +9,7 @@ import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
 import Customer from '@/routes/Customer'
+import SignIn from '@/routes/SignIn'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
@@ -29,12 +30,19 @@ const router = createBrowserRouter([
       {
         path: 'customers',
         element: <Customers />,
-      },
-      {
-        path: 'customers/:customerId',
-        element: <Customer />,
+        children: [
+          { index: true, element: <Customer /> },
+          {
+            path: ':customerId',
+            element: <Customer />,
+          },
+        ],
       },
     ],
+  },
+  {
+    path: 'signin',
+    element: <SignIn />,
   },
 ])
 

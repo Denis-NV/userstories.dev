@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import { CUSTOMERS_QUERY } from './gql'
 
@@ -13,22 +13,26 @@ const Customers = () => {
     },
   })
 
+  const customers = data?.customer
+
   return (
     <div>
       Customers
-      <ul>
-        <li>
-          <Link to={`/customers/1`}>Customers 1</Link>
-        </li>
-        <li>
-          <Link to={`/customers/2`}>Customers 2</Link>
-        </li>
-      </ul>
       {loading ? (
         <span>Loading query ...</span>
       ) : (
-        <div>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <ul style={{ borderRight: '1px solid grey', paddingRight: '10px', marginRight: '10px' }}>
+            {customers?.map((customer, index) => (
+              <li key={customer.id}>
+                <Link to={`/customers/${customer.id}`}>
+                  {index + 1}. {customer.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <Outlet />
         </div>
       )}
     </div>

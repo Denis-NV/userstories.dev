@@ -1,7 +1,5 @@
 import { useAuthenticationStatus, useSignOut, useUserDefaultRole, useUserRoles } from '@nhost/react'
-import { Outlet, Link } from 'react-router-dom'
-
-import SignIn from '../../components/SignIn'
+import { Outlet, Link, redirect } from 'react-router-dom'
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
@@ -11,8 +9,9 @@ function Root() {
   const userDeafaultRole = useUserDefaultRole()
 
   if (isLoading) return <div>Loading...</div>
+  if (!isAuthenticated) redirect('/signin')
 
-  return isAuthenticated ? (
+  return (
     <div>
       <ul>
         <li>
@@ -40,8 +39,6 @@ function Root() {
 
       <Outlet />
     </div>
-  ) : (
-    <SignIn />
   )
 }
 

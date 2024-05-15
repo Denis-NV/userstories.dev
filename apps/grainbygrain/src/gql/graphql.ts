@@ -7709,6 +7709,23 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
+export type CustomerQueryQueryVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type CustomerQueryQuery = {
+  __typename?: 'query_root'
+  customer_by_pk?: {
+    __typename: 'customer'
+    id: any
+    name: string
+    address: string
+    delivery_start_time: any
+    delivery_end_time: any
+    district?: { __typename?: 'district'; id: any; name: string } | null
+  } | null
+}
+
 export type CustomersQueryQueryVariables = Exact<{ [key: string]: never }>
 
 export type CustomersQueryQuery = {
@@ -7724,6 +7741,64 @@ export type CustomersQueryQuery = {
   }>
 }
 
+export const CustomerQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'CustomerQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'customer_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'district' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CustomerQueryQuery, CustomerQueryQueryVariables>
 export const CustomersQueryDocument = {
   kind: 'Document',
   definitions: [
