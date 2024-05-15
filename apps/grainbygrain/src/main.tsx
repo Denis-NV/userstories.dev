@@ -3,8 +3,10 @@ import { createRoot } from 'react-dom/client'
 import { NhostClient, NhostProvider } from '@nhost/react'
 import { createApolloClient } from '@nhost/apollo'
 import { ApolloProvider } from '@apollo/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import App from '@/components/App'
+import Root from '@/routes/Root'
+import ErrorPage from '@/components/ErrorPage'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
@@ -16,11 +18,19 @@ const client = createApolloClient({
   nhost,
 })
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    errorElement: <ErrorPage />,
+  },
+])
+
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <NhostProvider nhost={nhost}>
       <ApolloProvider client={client}>
-        <App />
+        <RouterProvider router={router} />
       </ApolloProvider>
     </NhostProvider>
   </React.StrictMode>,

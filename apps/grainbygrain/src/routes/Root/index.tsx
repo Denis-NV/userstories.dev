@@ -1,9 +1,9 @@
 import { useAuthenticationStatus } from '@nhost/react'
 
-import SignIn from './SignIn'
-import Landing from './Landing'
+import SignIn from '../../components/SignIn'
+import Landing from '../../components/Landing'
 
-function App() {
+function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
 
   if (isLoading) return <div>Loading...</div>
@@ -11,4 +11,4 @@ function App() {
   return isAuthenticated ? <Landing /> : <SignIn />
 }
 
-export default App
+export default Root
