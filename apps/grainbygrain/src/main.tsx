@@ -7,8 +7,8 @@ import { ApolloProvider } from '@apollo/client'
 import App from '@/components/App'
 
 const nhost = new NhostClient({
-  subdomain: 'aqntrlqfforjhsoobrbn',
-  region: 'eu-west-2',
+  subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
+  region: import.meta.env.VITE_NHOST_REGION,
   autoSignIn: false,
 })
 

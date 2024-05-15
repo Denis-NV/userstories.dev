@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client'
+import { graphql } from '@/gql'
 
-export const LANDING_QUERY = gql`
-  query {
+export const LANDING_QUERY = graphql(`
+  query GetCustomer {
     customer {
       id
       name
@@ -33,4 +33,4 @@ export const LANDING_QUERY = gql`
       }
     }
   }
-`
+`)
