@@ -10,6 +10,8 @@ import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
 import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
+import Products from '@/routes/Products'
+import Orders from '@/routes/Orders'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
             element: <Customer />,
           },
         ],
+      },
+      {
+        path: 'products',
+        element: <Products />,
+      },
+      {
+        path: 'orders',
+        element: <Orders />,
       },
     ],
   },
