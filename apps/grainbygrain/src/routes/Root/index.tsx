@@ -1,17 +1,17 @@
 import { useAuthenticationStatus, useSignOut, useUserDefaultRole, useUserRoles } from '@nhost/react'
-import { Outlet, Link, redirect } from 'react-router-dom'
+import { Outlet, Link, Navigate, useLocation } from 'react-router-dom'
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
   const { signOut } = useSignOut()
+  const location = useLocation()
 
   const userRoles = useUserRoles()
   const userDeafaultRole = useUserDefaultRole()
 
   if (isLoading) return <div>Loading...</div>
-  if (!isAuthenticated) redirect('/signin')
 
-  return (
+  return isAuthenticated ? (
     <div>
       <ul>
         <li>
@@ -39,6 +39,8 @@ function Root() {
 
       <Outlet />
     </div>
+  ) : (
+    <Navigate to="/signin" state={{ from: location }} replace />
   )
 }
 
