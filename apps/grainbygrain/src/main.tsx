@@ -5,6 +5,7 @@ import { createApolloClient } from '@nhost/apollo'
 import { ApolloProvider } from '@apollo/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { ThemeProvider } from './context/ThemeModeProvider'
 import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
@@ -12,6 +13,8 @@ import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
 import Products from '@/routes/Products'
 import Orders from '@/routes/Orders'
+
+import './styles.css'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
@@ -58,10 +61,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <NhostProvider nhost={nhost}>
-      <ApolloProvider client={client}>
-        <RouterProvider router={router} />
-      </ApolloProvider>
-    </NhostProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <NhostProvider nhost={nhost}>
+        <ApolloProvider client={client}>
+          <RouterProvider router={router} />
+        </ApolloProvider>
+      </NhostProvider>
+    </ThemeProvider>
   </React.StrictMode>,
 )
