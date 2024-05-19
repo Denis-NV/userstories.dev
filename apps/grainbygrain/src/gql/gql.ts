@@ -17,6 +17,10 @@ const documents = {
     types.CustomerQueryDocument,
   '\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
     types.CustomersQueryDocument,
+  '\n  query OrderQuery($id: uuid!) {\n    order_by_pk(id: $id) {\n      id\n      created_at\n      updated_at\n      order_nr\n      comment\n      delivery_date\n      delivery_method {\n        id\n        name\n      }\n      customer {\n        id\n        name\n        district {\n          id\n          name\n        }\n      }\n      order_products {\n        id\n        product {\n          id\n          name\n        }\n      }\n    }\n  }\n':
+    types.OrderQueryDocument,
+  '\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n':
+    types.OrdersQueryDocument,
 }
 
 /**
@@ -45,6 +49,18 @@ export function graphql(
 export function graphql(
   source: '\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query OrderQuery($id: uuid!) {\n    order_by_pk(id: $id) {\n      id\n      created_at\n      updated_at\n      order_nr\n      comment\n      delivery_date\n      delivery_method {\n        id\n        name\n      }\n      customer {\n        id\n        name\n        district {\n          id\n          name\n        }\n      }\n      order_products {\n        id\n        product {\n          id\n          name\n        }\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query OrderQuery($id: uuid!) {\n    order_by_pk(id: $id) {\n      id\n      created_at\n      updated_at\n      order_nr\n      comment\n      delivery_date\n      delivery_method {\n        id\n        name\n      }\n      customer {\n        id\n        name\n        district {\n          id\n          name\n        }\n      }\n      order_products {\n        id\n        product {\n          id\n          name\n        }\n      }\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
