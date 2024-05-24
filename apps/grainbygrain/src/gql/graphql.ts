@@ -7900,6 +7900,7 @@ export type OrderQueryQuery = {
 }
 
 export type OrdersQueryQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>
   filters?: InputMaybe<Order_Bool_Exp>
 }>
 
@@ -8125,6 +8126,11 @@ export const OrdersQueryDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_bool_exp' } },
         },
@@ -8139,7 +8145,7 @@ export const OrdersQueryDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'limit' },
-                value: { kind: 'IntValue', value: '2' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
               },
               {
                 kind: 'Argument',

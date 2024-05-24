@@ -19,7 +19,7 @@ const documents = {
     types.CustomersQueryDocument,
   '\n  query OrderQuery($id: uuid!) {\n    order_by_pk(id: $id) {\n      id\n      created_at\n      updated_at\n      order_nr\n      comment\n      delivery_date\n      delivery_method {\n        id\n        name\n      }\n      customer {\n        id\n        name\n        district {\n          id\n          name\n        }\n      }\n      order_products {\n        id\n        product {\n          id\n          name\n        }\n      }\n    }\n  }\n':
     types.OrderQueryDocument,
-  '\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n':
+  '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order(limit: $limit, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrdersQueryDocument,
 }
 
@@ -59,8 +59,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query OrdersQuery($filters: order_bool_exp) {\n    order(limit: 2, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n']
+  source: '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order(limit: $limit, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order(limit: $limit, where: $filters) {\n      id\n      created_at\n      order_nr\n      delivery_date\n\n      customer {\n        id\n        name\n      }\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

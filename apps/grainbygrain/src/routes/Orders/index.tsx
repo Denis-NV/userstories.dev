@@ -1,50 +1,38 @@
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
-
-import { Button } from '@/components/ui/button'
+import { useSearchParams } from 'react-router-dom'
 
 import { ORDERS_QUERY } from './gql'
-import { TypographyH2 } from '@/components/typography'
 
-/* eslint-disable */
-const currentFilter = {
-  order_nr: {
-    _eq: 1,
-  },
-  delivery_date: {
-    _eq: '2024-05-19',
-  },
-  order_products: {
-    product: {
-      id: {
-        _in: ['f42265e1-01fe-4be8-868b-18cf76a3b193', 'f57c15b8-ade0-4022-a771-c8311c0d8047'],
-      },
-    },
-  },
-  delivery_method: {
-    id: {
-      _eq: 'afd3eb20-dfaf-4882-8ca5-d033452e74d1',
-    },
-  },
-  created_at: {
-    _gt: '0000-01-01T00:00:00+00:00',
-  },
-}
-/* eslint-enable */
+import { Button } from '@/components/ui/button'
+import { TypographyH2 } from '@/components/typography'
+import { getCurrentFilter, updateCursor } from './utils'
+import { useCallback } from 'react'
+
+const limit = 1
 
 const Orders = () => {
   const accessToken = useAccessToken()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const { data, loading } = useQuery(ORDERS_QUERY, {
+  const query = useQuery(ORDERS_QUERY, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
     variables: {
-      filters: currentFilter,
+      limit,
+      filters: getCurrentFilter(searchParams),
     },
   })
 
+  const { data, loading } = query
   const orders = data?.order
+
+  const handleLoadMore = useCallback(() => {
+    if (orders) {
+      setSearchParams(updateCursor(orders))
+    }
+  }, [setSearchParams, orders])
 
   if (loading) console.log('loading...')
   else console.log(orders)
@@ -52,7 +40,7 @@ const Orders = () => {
   return (
     <div>
       <TypographyH2 text="Orders" />
-      <Button>Click me</Button>
+      <Button onClick={handleLoadMore}>Load more</Button>
     </div>
   )
 }
