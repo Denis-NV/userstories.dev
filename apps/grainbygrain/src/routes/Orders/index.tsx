@@ -6,7 +6,7 @@ import { ORDERS_QUERY } from './gql'
 
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
-import { getCurrentFilter, updateCursor } from './utils'
+import { getParamsFilter, getCursorFilter } from './utils'
 import { useCallback } from 'react'
 
 const limit = 1
@@ -21,26 +21,51 @@ const Orders = () => {
     },
     variables: {
       limit,
-      filters: getCurrentFilter(searchParams),
+      filters: {
+        ...getCursorFilter(),
+        ...getParamsFilter(searchParams),
+      },
     },
   })
 
   const { data, loading } = query
   const orders = data?.order
+  const count = data?.order_aggregate?.aggregate?.count
 
   const handleLoadMore = useCallback(() => {
     if (orders) {
-      setSearchParams(updateCursor(orders))
+      query.fetchMore({
+        variables: {
+          limit,
+          filters: {
+            ...getCursorFilter(orders),
+            ...getParamsFilter(searchParams),
+          },
+        },
+      })
     }
   }, [setSearchParams, orders])
-
-  if (loading) console.log('loading...')
-  else console.log(orders)
 
   return (
     <div>
       <TypographyH2 text="Orders" />
-      <Button onClick={handleLoadMore}>Load more</Button>
+      {orders ? (
+        <ul>
+          {[...orders]
+            .sort((order) => (order.order_nr ? -1 : 1))
+            .map((order) => (
+              <li key={order.id}>
+                <span>{`${order?.order_nr} - ${order?.customer?.name}`}</span>
+              </li>
+            ))}
+        </ul>
+      ) : (
+        <div>{loading && 'loading...'}</div>
+      )}
+
+      {orders?.length && count && orders?.length < count && (
+        <Button onClick={handleLoadMore}>Load more</Button>
+      )}
     </div>
   )
 }

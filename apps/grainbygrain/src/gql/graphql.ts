@@ -7906,6 +7906,10 @@ export type OrdersQueryQueryVariables = Exact<{
 
 export type OrdersQueryQuery = {
   __typename?: 'query_root'
+  order_aggregate: {
+    __typename?: 'order_aggregate'
+    aggregate?: { __typename?: 'order_aggregate_fields'; count: number } | null
+  }
   order: Array<{
     __typename?: 'order'
     id: any
@@ -8140,6 +8144,23 @@ export const OrdersQueryDocument = {
         selections: [
           {
             kind: 'Field',
+            name: { kind: 'Name', value: 'order_aggregate' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
             name: { kind: 'Name', value: 'order' },
             arguments: [
               {
@@ -8151,6 +8172,25 @@ export const OrdersQueryDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'created_at' },
+                          value: { kind: 'EnumValue', value: 'asc' },
+                        },
+                      ],
+                    },
+                  ],
+                },
               },
             ],
             selectionSet: {

@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { NhostClient, NhostProvider } from '@nhost/react'
 import { createApolloClient } from '@nhost/apollo'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloProvider, InMemoryCache } from '@apollo/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { ThemeProvider } from './context/ThemeModeProvider'
@@ -13,6 +13,7 @@ import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
 import Products from '@/routes/Products'
 import Orders from '@/routes/Orders'
+import typePolicies from '@/utils/typePolicies'
 
 import './styles.css'
 
@@ -24,6 +25,7 @@ const nhost = new NhostClient({
 
 const client = createApolloClient({
   nhost,
+  cache: new InMemoryCache({ typePolicies }),
 })
 
 const router = createBrowserRouter([
