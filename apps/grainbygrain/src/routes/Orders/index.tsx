@@ -1,6 +1,6 @@
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 
 import { ORDERS_QUERY } from './gql'
 
@@ -11,7 +11,7 @@ import { useCallback } from 'react'
 
 const limit = 1
 
-const Orders = () => {
+const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -55,7 +55,12 @@ const Orders = () => {
             .sort((order) => (order.order_nr ? -1 : 1))
             .map((order) => (
               <li key={order.id}>
-                <span>{`${order?.order_nr} - ${order?.customer?.name}`}</span>
+                <Link
+                  to={`/order/${order?.id}`}
+                  className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+                >
+                  <span>{`${order?.order_nr} - ${order?.customer?.name}`}</span>
+                </Link>
               </li>
             ))}
         </ul>

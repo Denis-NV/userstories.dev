@@ -13,6 +13,8 @@ import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
 import Products from '@/routes/Products'
 import Orders from '@/routes/Orders'
+import Order from '@/routes/Order'
+import { TOrderRouteParams } from '@/routes/Order/types'
 import typePolicies from '@/utils/typePolicies'
 
 import './styles.css'
@@ -27,6 +29,8 @@ const client = createApolloClient({
   nhost,
   cache: new InMemoryCache({ typePolicies }),
 })
+
+const orderParamKey: keyof TOrderRouteParams = 'orderId'
 
 const router = createBrowserRouter([
   {
@@ -52,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: 'orders',
         element: <Orders />,
+      },
+      {
+        path: `order/:${orderParamKey}`,
+        element: <Order />,
       },
     ],
   },
