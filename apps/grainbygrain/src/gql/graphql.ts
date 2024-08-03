@@ -4644,12 +4644,14 @@ export type Mutation_RootUpdate_Files_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_OrderArgs = {
+  _inc?: InputMaybe<Order_Inc_Input>
   _set?: InputMaybe<Order_Set_Input>
   where: Order_Bool_Exp
 }
 
 /** mutation root */
 export type Mutation_RootUpdate_Order_By_PkArgs = {
+  _inc?: InputMaybe<Order_Inc_Input>
   _set?: InputMaybe<Order_Set_Input>
   pk_columns: Order_Pk_Columns_Input
 }
@@ -4731,6 +4733,7 @@ export type Order = {
   delivery_method?: Maybe<Delivery_Method>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
   id: Scalars['uuid']['output']
+  order_nr: Scalars['Int']['output']
   /** An array relationship */
   order_products: Array<Order_Product>
   /** An aggregate relationship */
@@ -4777,9 +4780,17 @@ export type Order_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "order" */
 export type Order_Aggregate_Fields = {
   __typename?: 'order_aggregate_fields'
+  avg?: Maybe<Order_Avg_Fields>
   count: Scalars['Int']['output']
   max?: Maybe<Order_Max_Fields>
   min?: Maybe<Order_Min_Fields>
+  stddev?: Maybe<Order_Stddev_Fields>
+  stddev_pop?: Maybe<Order_Stddev_Pop_Fields>
+  stddev_samp?: Maybe<Order_Stddev_Samp_Fields>
+  sum?: Maybe<Order_Sum_Fields>
+  var_pop?: Maybe<Order_Var_Pop_Fields>
+  var_samp?: Maybe<Order_Var_Samp_Fields>
+  variance?: Maybe<Order_Variance_Fields>
 }
 
 /** aggregate fields of "order" */
@@ -4790,9 +4801,17 @@ export type Order_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "order" */
 export type Order_Aggregate_Order_By = {
+  avg?: InputMaybe<Order_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<Order_Max_Order_By>
   min?: InputMaybe<Order_Min_Order_By>
+  stddev?: InputMaybe<Order_Stddev_Order_By>
+  stddev_pop?: InputMaybe<Order_Stddev_Pop_Order_By>
+  stddev_samp?: InputMaybe<Order_Stddev_Samp_Order_By>
+  sum?: InputMaybe<Order_Sum_Order_By>
+  var_pop?: InputMaybe<Order_Var_Pop_Order_By>
+  var_samp?: InputMaybe<Order_Var_Samp_Order_By>
+  variance?: InputMaybe<Order_Variance_Order_By>
 }
 
 /** input type for inserting array relation for remote table "order" */
@@ -4800,6 +4819,17 @@ export type Order_Arr_Rel_Insert_Input = {
   data: Array<Order_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<Order_On_Conflict>
+}
+
+/** aggregate avg on columns */
+export type Order_Avg_Fields = {
+  __typename?: 'order_avg_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by avg() on columns of table "order" */
+export type Order_Avg_Order_By = {
+  order_nr?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "order". All fields are combined with a logical 'AND'. */
@@ -4815,6 +4845,7 @@ export type Order_Bool_Exp = {
   delivery_method?: InputMaybe<Delivery_Method_Bool_Exp>
   delivery_method_id?: InputMaybe<Uuid_Comparison_Exp>
   id?: InputMaybe<Uuid_Comparison_Exp>
+  order_nr?: InputMaybe<Int_Comparison_Exp>
   order_products?: InputMaybe<Order_Product_Bool_Exp>
   order_products_aggregate?: InputMaybe<Order_Product_Aggregate_Bool_Exp>
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>
@@ -4838,8 +4869,15 @@ export enum Order_By {
 
 /** unique or primary key constraints on table "order" */
 export enum Order_Constraint {
+  /** unique or primary key constraint on columns "order_nr" */
+  OrderOrderNrKey = 'order_order_nr_key',
   /** unique or primary key constraint on columns "id" */
   OrderPkey = 'order_pkey',
+}
+
+/** input type for incrementing numeric columns in table "order" */
+export type Order_Inc_Input = {
+  order_nr?: InputMaybe<Scalars['Int']['input']>
 }
 
 /** input type for inserting data into table "order" */
@@ -4852,6 +4890,7 @@ export type Order_Insert_Input = {
   delivery_method?: InputMaybe<Delivery_Method_Obj_Rel_Insert_Input>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  order_nr?: InputMaybe<Scalars['Int']['input']>
   order_products?: InputMaybe<Order_Product_Arr_Rel_Insert_Input>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
 }
@@ -4865,6 +4904,7 @@ export type Order_Max_Fields = {
   delivery_date?: Maybe<Scalars['date']['output']>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
   id?: Maybe<Scalars['uuid']['output']>
+  order_nr?: Maybe<Scalars['Int']['output']>
   updated_at?: Maybe<Scalars['timestamptz']['output']>
 }
 
@@ -4876,6 +4916,7 @@ export type Order_Max_Order_By = {
   delivery_date?: InputMaybe<Order_By>
   delivery_method_id?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
+  order_nr?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
 
@@ -4888,6 +4929,7 @@ export type Order_Min_Fields = {
   delivery_date?: Maybe<Scalars['date']['output']>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
   id?: Maybe<Scalars['uuid']['output']>
+  order_nr?: Maybe<Scalars['Int']['output']>
   updated_at?: Maybe<Scalars['timestamptz']['output']>
 }
 
@@ -4899,6 +4941,7 @@ export type Order_Min_Order_By = {
   delivery_date?: InputMaybe<Order_By>
   delivery_method_id?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
+  order_nr?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
 
@@ -4935,6 +4978,7 @@ export type Order_Order_By = {
   delivery_method?: InputMaybe<Delivery_Method_Order_By>
   delivery_method_id?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
+  order_nr?: InputMaybe<Order_By>
   order_products_aggregate?: InputMaybe<Order_Product_Aggregate_Order_By>
   updated_at?: InputMaybe<Order_By>
 }
@@ -5181,6 +5225,8 @@ export enum Order_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  OrderNr = 'order_nr',
+  /** column name */
   UpdatedAt = 'updated_at',
 }
 
@@ -5192,7 +5238,41 @@ export type Order_Set_Input = {
   delivery_date?: InputMaybe<Scalars['date']['input']>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  order_nr?: InputMaybe<Scalars['Int']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
+}
+
+/** aggregate stddev on columns */
+export type Order_Stddev_Fields = {
+  __typename?: 'order_stddev_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev() on columns of table "order" */
+export type Order_Stddev_Order_By = {
+  order_nr?: InputMaybe<Order_By>
+}
+
+/** aggregate stddev_pop on columns */
+export type Order_Stddev_Pop_Fields = {
+  __typename?: 'order_stddev_pop_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev_pop() on columns of table "order" */
+export type Order_Stddev_Pop_Order_By = {
+  order_nr?: InputMaybe<Order_By>
+}
+
+/** aggregate stddev_samp on columns */
+export type Order_Stddev_Samp_Fields = {
+  __typename?: 'order_stddev_samp_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev_samp() on columns of table "order" */
+export type Order_Stddev_Samp_Order_By = {
+  order_nr?: InputMaybe<Order_By>
 }
 
 /** Streaming cursor of the table "order" */
@@ -5211,7 +5291,19 @@ export type Order_Stream_Cursor_Value_Input = {
   delivery_date?: InputMaybe<Scalars['date']['input']>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  order_nr?: InputMaybe<Scalars['Int']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
+}
+
+/** aggregate sum on columns */
+export type Order_Sum_Fields = {
+  __typename?: 'order_sum_fields'
+  order_nr?: Maybe<Scalars['Int']['output']>
+}
+
+/** order by sum() on columns of table "order" */
+export type Order_Sum_Order_By = {
+  order_nr?: InputMaybe<Order_By>
 }
 
 /** update columns of table "order" */
@@ -5229,14 +5321,51 @@ export enum Order_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  OrderNr = 'order_nr',
+  /** column name */
   UpdatedAt = 'updated_at',
 }
 
 export type Order_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Order_Inc_Input>
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Order_Set_Input>
   /** filter the rows which have to be updated */
   where: Order_Bool_Exp
+}
+
+/** aggregate var_pop on columns */
+export type Order_Var_Pop_Fields = {
+  __typename?: 'order_var_pop_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by var_pop() on columns of table "order" */
+export type Order_Var_Pop_Order_By = {
+  order_nr?: InputMaybe<Order_By>
+}
+
+/** aggregate var_samp on columns */
+export type Order_Var_Samp_Fields = {
+  __typename?: 'order_var_samp_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by var_samp() on columns of table "order" */
+export type Order_Var_Samp_Order_By = {
+  order_nr?: InputMaybe<Order_By>
+}
+
+/** aggregate variance on columns */
+export type Order_Variance_Fields = {
+  __typename?: 'order_variance_fields'
+  order_nr?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by variance() on columns of table "order" */
+export type Order_Variance_Order_By = {
+  order_nr?: InputMaybe<Order_By>
 }
 
 /** columns and relationships of "product" */
@@ -7741,6 +7870,56 @@ export type CustomersQueryQuery = {
   }>
 }
 
+export type OrderQueryQueryVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type OrderQueryQuery = {
+  __typename?: 'query_root'
+  order_by_pk?: {
+    __typename?: 'order'
+    id: any
+    created_at: any
+    updated_at: any
+    order_nr: number
+    comment?: string | null
+    delivery_date: any
+    delivery_method?: { __typename?: 'delivery_method'; id: any; name: string } | null
+    customer: {
+      __typename?: 'customer'
+      id: any
+      name: string
+      district?: { __typename?: 'district'; id: any; name: string } | null
+    }
+    order_products: Array<{
+      __typename?: 'order_product'
+      id: any
+      product: { __typename?: 'product'; id: any; name: string }
+    }>
+  } | null
+}
+
+export type OrdersQueryQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>
+  filters?: InputMaybe<Order_Bool_Exp>
+}>
+
+export type OrdersQueryQuery = {
+  __typename?: 'query_root'
+  order_aggregate: {
+    __typename?: 'order_aggregate'
+    aggregate?: { __typename?: 'order_aggregate_fields'; count: number } | null
+  }
+  order: Array<{
+    __typename?: 'order'
+    id: any
+    created_at: any
+    order_nr: number
+    delivery_date: any
+    customer: { __typename?: 'customer'; id: any; name: string }
+  }>
+}
+
 export const CustomerQueryDocument = {
   kind: 'Document',
   definitions: [
@@ -7840,3 +8019,203 @@ export const CustomersQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<CustomersQueryQuery, CustomersQueryQueryVariables>
+export const OrderQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'OrderQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updated_at' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'delivery_method' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'customer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'district' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'order_products' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'product' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OrderQueryQuery, OrderQueryQueryVariables>
+export const OrdersQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'OrdersQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_bool_exp' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_aggregate' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'created_at' },
+                          value: { kind: 'EnumValue', value: 'asc' },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'customer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OrdersQueryQuery, OrdersQueryQueryVariables>

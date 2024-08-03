@@ -37,7 +37,7 @@ module.exports = {
     'import',
   ],
   rules: {
-    camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
+    // camelcase: ['error', { ignoreImports: true, allow: ['redirect_uri'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-uses-react': 'off',
