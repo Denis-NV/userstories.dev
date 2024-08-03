@@ -1,38 +1,23 @@
+import { useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
 import { useAccessToken } from '@nhost/react'
-import { useQuery } from '@apollo/client'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+import { removeNulls } from '@/utils'
 
 import { TOrderRouteParams } from './types'
-import { ORDER_QUERY } from './gql'
-
-const FormSchema = z.object({
-  comment: z.string(),
-})
+import { ORDER_QUERY, UPDATE_ORDER_MUTATION } from './gql'
+import OrderForm, { TFormData } from './components/OrderForm'
 
 const Order = (): JSX.Element => {
   const { orderId } = useParams<TOrderRouteParams>()
   const accessToken = useAccessToken()
   const navigate = useNavigate()
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      comment: '',
+  const [updateOrder] = useMutation(UPDATE_ORDER_MUTATION, {
+    context: {
+      headers: { authorization: `Bearer ${accessToken}` },
     },
   })
 
@@ -48,16 +33,17 @@ const Order = (): JSX.Element => {
   const { data, loading } = query
   const order = data?.order_by_pk
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
-  }
+  const handleSubmit = useCallback(
+    ({ comment }: TFormData) => {
+      updateOrder({
+        variables: {
+          id: orderId,
+          comment: comment,
+        },
+      })
+    },
+    [updateOrder, orderId],
+  )
 
   return (
     <div>
@@ -66,24 +52,7 @@ const Order = (): JSX.Element => {
       {order ? (
         <div>
           Order nr: {order?.order_nr}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-              <FormField
-                control={form.control}
-                name="comment"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Comment</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Short comment about the order" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
+          <OrderForm values={{ comment: removeNulls(order.comment) }} onSubmit={handleSubmit} />
         </div>
       ) : (
         <div>{loading && 'loading...'}</div>
