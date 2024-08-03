@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/toaster'
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
@@ -77,6 +78,8 @@ function Root() {
       <hr />
 
       <Outlet />
+
+      <Toaster />
     </div>
   ) : (
     <Navigate to="/signin" state={{ from: location }} replace />
