@@ -4,6 +4,7 @@ import { useAccessToken } from '@nhost/react'
 import { useMutation, useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { removeNulls } from '@/utils'
 
 import { TOrderRouteParams } from './types'
@@ -15,7 +16,7 @@ const Order = (): JSX.Element => {
   const accessToken = useAccessToken()
   const navigate = useNavigate()
 
-  const [updateOrder] = useMutation(UPDATE_ORDER_MUTATION, {
+  const [updateOrder, mutation] = useMutation(UPDATE_ORDER_MUTATION, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
@@ -33,7 +34,7 @@ const Order = (): JSX.Element => {
   const { data, loading } = query
   const order = data?.order_by_pk
 
-  const handleSubmit = useCallback(
+  const handleUpdate = useCallback(
     ({ comment }: TFormData) => {
       updateOrder({
         variables: {
@@ -51,8 +52,20 @@ const Order = (): JSX.Element => {
       <br />
       {order ? (
         <div>
-          Order nr: {order?.order_nr}
-          <OrderForm values={{ comment: removeNulls(order.comment) }} onSubmit={handleSubmit} />
+          <div className="flex w-full py-2">
+            <div className="flex-1">Order nr: {order?.order_nr}</div>
+            <div className="flex-1 text-right">{mutation.loading && 'Saving changes...'}</div>
+          </div>
+          <Tabs defaultValue="details" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="details">Details</TabsTrigger>
+              <TabsTrigger value="products">Products</TabsTrigger>
+            </TabsList>
+            <TabsContent value="details">
+              <OrderForm values={{ comment: removeNulls(order.comment) }} onUpdate={handleUpdate} />
+            </TabsContent>
+            <TabsContent value="products">Product list</TabsContent>
+          </Tabs>
         </div>
       ) : (
         <div>{loading && 'loading...'}</div>

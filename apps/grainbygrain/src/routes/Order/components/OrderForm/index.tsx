@@ -24,14 +24,18 @@ export type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
   values: TFormData
-  onSubmit: (values: TFormData) => void
+  onUpdate: (valuUs: TFormData) => void
 }
 
-const OrderForm = ({ values, onSubmit }: TProps) => {
+const OrderForm = ({ values, onUpdate }: TProps) => {
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
     values,
   })
+
+  const {
+    formState: { isDirty },
+  } = form
 
   const handleSubmit = useCallback(
     (data: TFormData) => {
@@ -44,14 +48,17 @@ const OrderForm = ({ values, onSubmit }: TProps) => {
       //   ),
       // })
 
-      onSubmit(data)
+      onUpdate(data)
     },
-    [onSubmit],
+    [onUpdate],
   )
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-2/3 space-y-6">
+        <Button type="submit" disabled={!isDirty}>
+          {isDirty ? 'Save changes' : 'No changes to save'}
+        </Button>
         <FormField
           control={form.control}
           name="comment"
@@ -65,7 +72,6 @@ const OrderForm = ({ values, onSubmit }: TProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
       </form>
     </Form>
   )
