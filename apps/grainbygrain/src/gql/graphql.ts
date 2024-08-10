@@ -4663,12 +4663,14 @@ export type Mutation_RootUpdate_Order_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Order_ProductArgs = {
+  _inc?: InputMaybe<Order_Product_Inc_Input>
   _set?: InputMaybe<Order_Product_Set_Input>
   where: Order_Product_Bool_Exp
 }
 
 /** mutation root */
 export type Mutation_RootUpdate_Order_Product_By_PkArgs = {
+  _inc?: InputMaybe<Order_Product_Inc_Input>
   _set?: InputMaybe<Order_Product_Set_Input>
   pk_columns: Order_Product_Pk_Columns_Input
 }
@@ -4999,6 +5001,7 @@ export type Order_Product = {
   /** An object relationship */
   product: Product
   product_id: Scalars['uuid']['output']
+  quantity: Scalars['Int']['output']
   updated_at: Scalars['timestamptz']['output']
 }
 
@@ -5023,9 +5026,17 @@ export type Order_Product_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "order_product" */
 export type Order_Product_Aggregate_Fields = {
   __typename?: 'order_product_aggregate_fields'
+  avg?: Maybe<Order_Product_Avg_Fields>
   count: Scalars['Int']['output']
   max?: Maybe<Order_Product_Max_Fields>
   min?: Maybe<Order_Product_Min_Fields>
+  stddev?: Maybe<Order_Product_Stddev_Fields>
+  stddev_pop?: Maybe<Order_Product_Stddev_Pop_Fields>
+  stddev_samp?: Maybe<Order_Product_Stddev_Samp_Fields>
+  sum?: Maybe<Order_Product_Sum_Fields>
+  var_pop?: Maybe<Order_Product_Var_Pop_Fields>
+  var_samp?: Maybe<Order_Product_Var_Samp_Fields>
+  variance?: Maybe<Order_Product_Variance_Fields>
 }
 
 /** aggregate fields of "order_product" */
@@ -5036,9 +5047,17 @@ export type Order_Product_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "order_product" */
 export type Order_Product_Aggregate_Order_By = {
+  avg?: InputMaybe<Order_Product_Avg_Order_By>
   count?: InputMaybe<Order_By>
   max?: InputMaybe<Order_Product_Max_Order_By>
   min?: InputMaybe<Order_Product_Min_Order_By>
+  stddev?: InputMaybe<Order_Product_Stddev_Order_By>
+  stddev_pop?: InputMaybe<Order_Product_Stddev_Pop_Order_By>
+  stddev_samp?: InputMaybe<Order_Product_Stddev_Samp_Order_By>
+  sum?: InputMaybe<Order_Product_Sum_Order_By>
+  var_pop?: InputMaybe<Order_Product_Var_Pop_Order_By>
+  var_samp?: InputMaybe<Order_Product_Var_Samp_Order_By>
+  variance?: InputMaybe<Order_Product_Variance_Order_By>
 }
 
 /** input type for inserting array relation for remote table "order_product" */
@@ -5046,6 +5065,17 @@ export type Order_Product_Arr_Rel_Insert_Input = {
   data: Array<Order_Product_Insert_Input>
   /** upsert condition */
   on_conflict?: InputMaybe<Order_Product_On_Conflict>
+}
+
+/** aggregate avg on columns */
+export type Order_Product_Avg_Fields = {
+  __typename?: 'order_product_avg_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by avg() on columns of table "order_product" */
+export type Order_Product_Avg_Order_By = {
+  quantity?: InputMaybe<Order_By>
 }
 
 /** Boolean expression to filter rows from the table "order_product". All fields are combined with a logical 'AND'. */
@@ -5059,6 +5089,7 @@ export type Order_Product_Bool_Exp = {
   order_id?: InputMaybe<Uuid_Comparison_Exp>
   product?: InputMaybe<Product_Bool_Exp>
   product_id?: InputMaybe<Uuid_Comparison_Exp>
+  quantity?: InputMaybe<Int_Comparison_Exp>
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>
 }
 
@@ -5066,6 +5097,11 @@ export type Order_Product_Bool_Exp = {
 export enum Order_Product_Constraint {
   /** unique or primary key constraint on columns "id" */
   OrderProductPkey = 'order_product_pkey',
+}
+
+/** input type for incrementing numeric columns in table "order_product" */
+export type Order_Product_Inc_Input = {
+  quantity?: InputMaybe<Scalars['Int']['input']>
 }
 
 /** input type for inserting data into table "order_product" */
@@ -5076,6 +5112,7 @@ export type Order_Product_Insert_Input = {
   order_id?: InputMaybe<Scalars['uuid']['input']>
   product?: InputMaybe<Product_Obj_Rel_Insert_Input>
   product_id?: InputMaybe<Scalars['uuid']['input']>
+  quantity?: InputMaybe<Scalars['Int']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
 }
 
@@ -5086,6 +5123,7 @@ export type Order_Product_Max_Fields = {
   id?: Maybe<Scalars['uuid']['output']>
   order_id?: Maybe<Scalars['uuid']['output']>
   product_id?: Maybe<Scalars['uuid']['output']>
+  quantity?: Maybe<Scalars['Int']['output']>
   updated_at?: Maybe<Scalars['timestamptz']['output']>
 }
 
@@ -5095,6 +5133,7 @@ export type Order_Product_Max_Order_By = {
   id?: InputMaybe<Order_By>
   order_id?: InputMaybe<Order_By>
   product_id?: InputMaybe<Order_By>
+  quantity?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
 
@@ -5105,6 +5144,7 @@ export type Order_Product_Min_Fields = {
   id?: Maybe<Scalars['uuid']['output']>
   order_id?: Maybe<Scalars['uuid']['output']>
   product_id?: Maybe<Scalars['uuid']['output']>
+  quantity?: Maybe<Scalars['Int']['output']>
   updated_at?: Maybe<Scalars['timestamptz']['output']>
 }
 
@@ -5114,6 +5154,7 @@ export type Order_Product_Min_Order_By = {
   id?: InputMaybe<Order_By>
   order_id?: InputMaybe<Order_By>
   product_id?: InputMaybe<Order_By>
+  quantity?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
 
@@ -5141,6 +5182,7 @@ export type Order_Product_Order_By = {
   order_id?: InputMaybe<Order_By>
   product?: InputMaybe<Product_Order_By>
   product_id?: InputMaybe<Order_By>
+  quantity?: InputMaybe<Order_By>
   updated_at?: InputMaybe<Order_By>
 }
 
@@ -5160,6 +5202,8 @@ export enum Order_Product_Select_Column {
   /** column name */
   ProductId = 'product_id',
   /** column name */
+  Quantity = 'quantity',
+  /** column name */
   UpdatedAt = 'updated_at',
 }
 
@@ -5169,7 +5213,41 @@ export type Order_Product_Set_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>
   order_id?: InputMaybe<Scalars['uuid']['input']>
   product_id?: InputMaybe<Scalars['uuid']['input']>
+  quantity?: InputMaybe<Scalars['Int']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
+}
+
+/** aggregate stddev on columns */
+export type Order_Product_Stddev_Fields = {
+  __typename?: 'order_product_stddev_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev() on columns of table "order_product" */
+export type Order_Product_Stddev_Order_By = {
+  quantity?: InputMaybe<Order_By>
+}
+
+/** aggregate stddev_pop on columns */
+export type Order_Product_Stddev_Pop_Fields = {
+  __typename?: 'order_product_stddev_pop_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev_pop() on columns of table "order_product" */
+export type Order_Product_Stddev_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>
+}
+
+/** aggregate stddev_samp on columns */
+export type Order_Product_Stddev_Samp_Fields = {
+  __typename?: 'order_product_stddev_samp_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by stddev_samp() on columns of table "order_product" */
+export type Order_Product_Stddev_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>
 }
 
 /** Streaming cursor of the table "order_product" */
@@ -5186,7 +5264,19 @@ export type Order_Product_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>
   order_id?: InputMaybe<Scalars['uuid']['input']>
   product_id?: InputMaybe<Scalars['uuid']['input']>
+  quantity?: InputMaybe<Scalars['Int']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
+}
+
+/** aggregate sum on columns */
+export type Order_Product_Sum_Fields = {
+  __typename?: 'order_product_sum_fields'
+  quantity?: Maybe<Scalars['Int']['output']>
+}
+
+/** order by sum() on columns of table "order_product" */
+export type Order_Product_Sum_Order_By = {
+  quantity?: InputMaybe<Order_By>
 }
 
 /** update columns of table "order_product" */
@@ -5200,14 +5290,51 @@ export enum Order_Product_Update_Column {
   /** column name */
   ProductId = 'product_id',
   /** column name */
+  Quantity = 'quantity',
+  /** column name */
   UpdatedAt = 'updated_at',
 }
 
 export type Order_Product_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Order_Product_Inc_Input>
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Order_Product_Set_Input>
   /** filter the rows which have to be updated */
   where: Order_Product_Bool_Exp
+}
+
+/** aggregate var_pop on columns */
+export type Order_Product_Var_Pop_Fields = {
+  __typename?: 'order_product_var_pop_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by var_pop() on columns of table "order_product" */
+export type Order_Product_Var_Pop_Order_By = {
+  quantity?: InputMaybe<Order_By>
+}
+
+/** aggregate var_samp on columns */
+export type Order_Product_Var_Samp_Fields = {
+  __typename?: 'order_product_var_samp_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by var_samp() on columns of table "order_product" */
+export type Order_Product_Var_Samp_Order_By = {
+  quantity?: InputMaybe<Order_By>
+}
+
+/** aggregate variance on columns */
+export type Order_Product_Variance_Fields = {
+  __typename?: 'order_product_variance_fields'
+  quantity?: Maybe<Scalars['Float']['output']>
+}
+
+/** order by variance() on columns of table "order_product" */
+export type Order_Product_Variance_Order_By = {
+  quantity?: InputMaybe<Order_By>
 }
 
 /** select columns of table "order" */
@@ -7870,6 +7997,19 @@ export type CustomersQueryQuery = {
   }>
 }
 
+export type OrderProduct_On_OrderProductFragment = {
+  __typename?: 'order_product'
+  id: any
+  quantity: number
+  product: {
+    __typename?: 'product'
+    id: any
+    name: string
+    weight: any
+    department?: { __typename?: 'department'; id: any; name: string } | null
+  }
+}
+
 export type Order_OrderFragmentFragment = {
   __typename?: 'order'
   id: any
@@ -7888,7 +8028,14 @@ export type Order_OrderFragmentFragment = {
   order_products: Array<{
     __typename?: 'order_product'
     id: any
-    product: { __typename?: 'product'; id: any; name: string }
+    quantity: number
+    product: {
+      __typename?: 'product'
+      id: any
+      name: string
+      weight: any
+      department?: { __typename?: 'department'; id: any; name: string } | null
+    }
   }>
 }
 
@@ -7916,42 +8063,105 @@ export type OrderQueryQuery = {
     order_products: Array<{
       __typename?: 'order_product'
       id: any
-      product: { __typename?: 'product'; id: any; name: string }
+      quantity: number
+      product: {
+        __typename?: 'product'
+        id: any
+        name: string
+        weight: any
+        department?: { __typename?: 'department'; id: any; name: string } | null
+      }
     }>
   } | null
 }
 
 export type UpdateOrderMutationVariables = Exact<{
   id: Scalars['uuid']['input']
-  comment?: InputMaybe<Scalars['String']['input']>
+  input?: InputMaybe<Order_Set_Input>
 }>
 
 export type UpdateOrderMutation = {
   __typename?: 'mutation_root'
-  update_order?: {
-    __typename?: 'order_mutation_response'
-    returning: Array<{
-      __typename?: 'order'
+  update_order_by_pk?: {
+    __typename?: 'order'
+    id: any
+    created_at: any
+    updated_at: any
+    order_nr: number
+    comment?: string | null
+    delivery_date: any
+    delivery_method?: { __typename?: 'delivery_method'; id: any; name: string } | null
+    customer: {
+      __typename?: 'customer'
       id: any
-      created_at: any
-      updated_at: any
-      order_nr: number
-      comment?: string | null
-      delivery_date: any
-      delivery_method?: { __typename?: 'delivery_method'; id: any; name: string } | null
-      customer: {
-        __typename?: 'customer'
+      name: string
+      district?: { __typename?: 'district'; id: any; name: string } | null
+    }
+    order_products: Array<{
+      __typename?: 'order_product'
+      id: any
+      quantity: number
+      product: {
+        __typename?: 'product'
         id: any
         name: string
-        district?: { __typename?: 'district'; id: any; name: string } | null
+        weight: any
+        department?: { __typename?: 'department'; id: any; name: string } | null
       }
-      order_products: Array<{
-        __typename?: 'order_product'
-        id: any
-        product: { __typename?: 'product'; id: any; name: string }
-      }>
     }>
   } | null
+}
+
+export type UpdateOrderProductMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+  quantity: Scalars['Int']['input']
+}>
+
+export type UpdateOrderProductMutation = {
+  __typename?: 'mutation_root'
+  update_order_product_by_pk?: {
+    __typename?: 'order_product'
+    id: any
+    quantity: number
+    product: {
+      __typename?: 'product'
+      id: any
+      name: string
+      weight: any
+      department?: { __typename?: 'department'; id: any; name: string } | null
+    }
+  } | null
+}
+
+export type AddOrderProductMutationVariables = Exact<{
+  order_id: Scalars['uuid']['input']
+  quantity: Scalars['Int']['input']
+  product_id: Scalars['uuid']['input']
+}>
+
+export type AddOrderProductMutation = {
+  __typename?: 'mutation_root'
+  insert_order_product_one?: {
+    __typename?: 'order_product'
+    id: any
+    quantity: number
+    product: {
+      __typename?: 'product'
+      id: any
+      name: string
+      weight: any
+      department?: { __typename?: 'department'; id: any; name: string } | null
+    }
+  } | null
+}
+
+export type DeleteOrderProductMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type DeleteOrderProductMutation = {
+  __typename?: 'mutation_root'
+  delete_order_product_by_pk?: { __typename?: 'order_product'; id: any } | null
 }
 
 export type OrdersQueryQueryVariables = Exact<{
@@ -7975,6 +8185,46 @@ export type OrdersQueryQuery = {
   }>
 }
 
+export const OrderProduct_On_OrderProductFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'department' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OrderProduct_On_OrderProductFragment, unknown>
 export const Order_OrderFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -8030,10 +8280,37 @@ export const Order_OrderFragmentFragmentDoc = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'product' },
+                  name: { kind: 'Name', value: 'department' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -8191,156 +8468,30 @@ export const OrderQueryDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'Order_OrderFragment' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'updated_at' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'delivery_method' },
+            name: { kind: 'Name', value: 'product' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'customer' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
+                  name: { kind: 'Name', value: 'department' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'order_products' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'product' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<OrderQueryQuery, OrderQueryQueryVariables>
-export const UpdateOrderDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'UpdateOrder' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-          },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'update_order' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: '_eq' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: '_set' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'comment' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'returning' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'FragmentSpread',
-                        name: { kind: 'Name', value: 'Order_OrderFragment' },
-                      },
                     ],
                   },
                 },
@@ -8402,10 +8553,271 @@ export const UpdateOrderDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OrderQueryQuery, OrderQueryQueryVariables>
+export const UpdateOrderDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateOrder' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_set_input' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_order_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Order_OrderFragment' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'product' },
+                  name: { kind: 'Name', value: 'department' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Order_OrderFragment' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updated_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'delivery_method' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'customer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'district' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_products' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateOrderMutation, UpdateOrderMutationVariables>
+export const UpdateOrderProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateOrderProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'quantity' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_order_product_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'quantity' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'quantity' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'department' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -8421,7 +8833,162 @@ export const UpdateOrderDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<UpdateOrderMutation, UpdateOrderMutationVariables>
+} as unknown as DocumentNode<UpdateOrderProductMutation, UpdateOrderProductMutationVariables>
+export const AddOrderProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddOrderProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'order_id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'quantity' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'product_id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_order_product_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'order_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'order_id' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'quantity' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'quantity' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'product_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'product_id' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'orderProduct_on_OrderProduct' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'department' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddOrderProductMutation, AddOrderProductMutationVariables>
+export const DeleteOrderProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteOrderProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'delete_order_product_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteOrderProductMutation, DeleteOrderProductMutationVariables>
 export const OrdersQueryDocument = {
   kind: 'Document',
   definitions: [

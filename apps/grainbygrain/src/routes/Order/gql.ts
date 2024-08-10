@@ -1,5 +1,21 @@
 import { graphql } from '@/gql'
 
+export const ORDER_PRODUCT_FRAGMENT = graphql(`
+  fragment orderProduct_on_OrderProduct on order_product {
+    id
+    quantity
+    product {
+      id
+      name
+      weight
+      department {
+        id
+        name
+      }
+    }
+  }
+`)
+
 export const ORDER_FRAGMENT = graphql(`
   fragment Order_OrderFragment on order {
     id
@@ -21,11 +37,7 @@ export const ORDER_FRAGMENT = graphql(`
       }
     }
     order_products {
-      id
-      product {
-        id
-        name
-      }
+      ...orderProduct_on_OrderProduct
     }
   }
 `)
@@ -39,11 +51,35 @@ export const ORDER_QUERY = graphql(`
 `)
 
 export const UPDATE_ORDER_MUTATION = graphql(`
-  mutation UpdateOrder($id: uuid!, $comment: String) {
-    update_order(where: { id: { _eq: $id } }, _set: { comment: $comment }) {
-      returning {
-        ...Order_OrderFragment
-      }
+  mutation UpdateOrder($id: uuid!, $input: order_set_input) {
+    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {
+      ...Order_OrderFragment
+    }
+  }
+`)
+
+export const UPDATE_ORDER_PRODUCT_MUTATION = graphql(`
+  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {
+    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {
+      ...orderProduct_on_OrderProduct
+    }
+  }
+`)
+
+export const ADD_ORDER_PRODUCT_MUTATION = graphql(`
+  mutation AddOrderProduct($order_id: uuid!, $quantity: Int!, $product_id: uuid!) {
+    insert_order_product_one(
+      object: { order_id: $order_id, quantity: $quantity, product_id: $product_id }
+    ) {
+      ...orderProduct_on_OrderProduct
+    }
+  }
+`)
+
+export const DELETE_ORDER_PRODUCT_MUTATION = graphql(`
+  mutation DeleteOrderProduct($id: uuid!) {
+    delete_order_product_by_pk(id: $id) {
+      id
     }
   }
 `)
