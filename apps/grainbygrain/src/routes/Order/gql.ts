@@ -36,7 +36,7 @@ export const ORDER_FRAGMENT = graphql(`
         name
       }
     }
-    order_products {
+    order_products(order_by: { created_at: asc }) {
       ...orderProduct_on_OrderProduct
     }
   }
@@ -46,6 +46,20 @@ export const ORDER_QUERY = graphql(`
   query OrderQuery($id: uuid!) {
     order_by_pk(id: $id) {
       ...Order_OrderFragment
+    }
+  }
+`)
+
+export const PRODUCST_BY_DEPARTMENT_QUERY = graphql(`
+  query ProductsByDepartmentQuery {
+    department(order_by: { name: asc }) {
+      id
+      name
+      products(order_by: { name: asc }) {
+        id
+        name
+        weight
+      }
     }
   }
 `)

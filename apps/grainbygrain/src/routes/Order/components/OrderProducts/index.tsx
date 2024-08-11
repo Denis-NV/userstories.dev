@@ -3,8 +3,6 @@ import { OrderProduct_On_OrderProductFragment } from '@/gql/graphql'
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableFooter,
   TableHead,
   TableHeader,
@@ -12,22 +10,22 @@ import {
 } from '@/components/ui/table'
 
 import OrderProduct from '../OrderProduct'
+import AddOrderProduct from '../AddOrderProduct'
 
 type TProps = {
   products?: OrderProduct_On_OrderProductFragment[]
   orderId?: string
 }
 
-const OrderProducts = ({ products }: TProps) => {
+const OrderProducts = ({ products, orderId }: TProps) => {
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Product</TableHead>
+          <TableHead>Department</TableHead>
+          <TableHead className="min-w-44">Quantity</TableHead>
+          <TableHead className="text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -40,10 +38,7 @@ const OrderProducts = ({ products }: TProps) => {
         ))}
       </TableBody>
       <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
+        <AddOrderProduct orderId={orderId} />
       </TableFooter>
     </Table>
   )

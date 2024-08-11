@@ -27,7 +27,7 @@ type TProps = {
 const OrderProduct = ({ values, orderProduct }: TProps) => {
   const accessToken = useAccessToken()
 
-  const [updateProduct, updateMutation] = useMutation(UPDATE_ORDER_PRODUCT_MUTATION, {
+  const [updateProduct] = useMutation(UPDATE_ORDER_PRODUCT_MUTATION, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
@@ -71,6 +71,12 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       variables: {
         id: orderProduct?.id,
       },
+      update: (cache, { data }) => {
+        if (data?.delete_order_product_by_pk) {
+          cache.evict({ id: cache.identify(data?.delete_order_product_by_pk) })
+          cache.gc()
+        }
+      },
     })
   }, [deleteProduct, orderProduct?.id])
 
@@ -82,7 +88,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       <TableCell>{department?.name}</TableCell>
       <TableCell>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleUpdate)} className="w-full">
+          <form onSubmit={form.handleSubmit(handleUpdate)}>
             <div className="flex flex-row">
               <FormField
                 control={form.control}
@@ -91,14 +97,20 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
                   <FormItem>
                     <FormLabel className="hidden">Quantity</FormLabel>
                     <FormControl>
-                      <Input type="number" min={1} style={{ margin: 0 }} {...field} />
+                      <Input
+                        className="w-16"
+                        type="number"
+                        min={1}
+                        style={{ margin: 0 }}
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
               />
               {isDirty && (
                 <Button type="submit" disabled={!isDirty}>
-                  {updateMutation.loading ? 'Saving...' : 'Save'}
+                  Save
                 </Button>
               )}
             </div>
@@ -106,7 +118,9 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
         </Form>
       </TableCell>
       <TableCell className="text-right">
-        <Button onClick={handleDelete}>{deleteMutation.loading ? 'Deleting...' : 'Delete'}</Button>
+        <Button onClick={handleDelete} disabled={deleteMutation.loading}>
+          Delete
+        </Button>
       </TableCell>
     </TableRow>
   )

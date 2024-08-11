@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '@/components/ui/button'
-// import { toast } from '@/components/ui/use-toast'
 
 import {
   Form,
@@ -24,7 +23,7 @@ const FormSchema = z.object({
   comment: z.string().optional(),
 })
 
-export type TFormData = z.infer<typeof FormSchema>
+type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
   values: TFormData
@@ -51,15 +50,6 @@ const OrderForm = ({ values, orderId }: TProps) => {
 
   const handleSubmit = useCallback(
     (data: TFormData) => {
-      // toast({
-      //   title: 'You submitted the following values:',
-      //   description: (
-      //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-      //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-      //     </pre>
-      //   ),
-      // })
-
       // TODO: Do validation here
 
       if (orderId) {

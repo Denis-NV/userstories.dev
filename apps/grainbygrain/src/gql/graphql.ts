@@ -8075,6 +8075,18 @@ export type OrderQueryQuery = {
   } | null
 }
 
+export type ProductsByDepartmentQueryQueryVariables = Exact<{ [key: string]: never }>
+
+export type ProductsByDepartmentQueryQuery = {
+  __typename?: 'query_root'
+  department: Array<{
+    __typename?: 'department'
+    id: any
+    name: string
+    products: Array<{ __typename?: 'product'; id: any; name: string; weight: any }>
+  }>
+}
+
 export type UpdateOrderMutationVariables = Exact<{
   id: Scalars['uuid']['input']
   input?: InputMaybe<Order_Set_Input>
@@ -8277,6 +8289,22 @@ export const Order_OrderFragmentFragmentDoc = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'order_products' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'created_at' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -8550,6 +8578,22 @@ export const OrderQueryDocument = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'order_products' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'created_at' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -8565,6 +8609,79 @@ export const OrderQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<OrderQueryQuery, OrderQueryQueryVariables>
+export const ProductsByDepartmentQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'ProductsByDepartmentQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'products' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'order_by' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'name' },
+                            value: { kind: 'EnumValue', value: 'asc' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ProductsByDepartmentQueryQuery,
+  ProductsByDepartmentQueryQueryVariables
+>
 export const UpdateOrderDocument = {
   kind: 'Document',
   definitions: [
@@ -8708,6 +8825,22 @@ export const UpdateOrderDocument = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'order_products' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'created_at' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
