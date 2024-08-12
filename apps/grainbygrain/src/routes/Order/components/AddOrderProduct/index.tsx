@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from '@apollo/client'
+import { PlusIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
@@ -19,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import {
+  OrderProduct_On_OrderProductFragment,
   OrderProduct_On_OrderProductFragmentDoc,
   Order_OrderFragmentFragmentDoc,
 } from '@/gql/graphql'
@@ -45,9 +47,10 @@ type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
   orderId?: string
+  addedOrderProducts?: OrderProduct_On_OrderProductFragment[]
 }
 
-const AddOrderProduct = ({ orderId }: TProps) => {
+const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
   const accessToken = useAccessToken()
 
   const form = useForm<TFormData>({
@@ -108,6 +111,10 @@ const AddOrderProduct = ({ orderId }: TProps) => {
     [orderId, addProduct],
   )
 
+  // TODO: add error handling strategy
+
+  const addedIds = addedOrderProducts?.map(({ product }) => product.id)
+
   return (
     <Form {...form}>
       <TableRow>
@@ -127,11 +134,14 @@ const AddOrderProduct = ({ orderId }: TProps) => {
                   </FormControl>
                   <SelectContent className="max-h-60">
                     {departments?.map(({ id: depId, name, products }) => {
+                      const uniqueProducts = addedIds
+                        ? products.filter(({ id }) => !addedIds.includes(id))
+                        : products
                       return (
                         <SelectGroup key={depId}>
                           <SelectLabel>{name}</SelectLabel>
 
-                          {products?.map(({ id: prodId, name, weight }) => (
+                          {uniqueProducts?.map(({ id: prodId, name, weight }) => (
                             <SelectItem key={prodId} value={prodId} className="ml-3">
                               {name} {weight}g
                             </SelectItem>
@@ -165,7 +175,7 @@ const AddOrderProduct = ({ orderId }: TProps) => {
             form="addOrderProductForm"
             disabled={!isValid || addProductMutation.loading}
           >
-            Add
+            <PlusIcon />
           </Button>
         </TableCell>
       </TableRow>

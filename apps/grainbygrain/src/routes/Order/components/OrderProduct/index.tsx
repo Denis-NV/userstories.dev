@@ -4,6 +4,7 @@ import { useAccessToken } from '@nhost/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
+import { TrashIcon, CheckIcon } from '@radix-ui/react-icons'
 
 import { OrderProduct_On_OrderProductFragment } from '@/gql/graphql'
 import { TableCell, TableRow } from '@/components/ui/table'
@@ -54,8 +55,6 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
 
   const handleUpdate = useCallback(
     (data: TFormData) => {
-      // TODO: Do validation here
-
       updateProduct({
         variables: {
           id: orderProduct?.id,
@@ -79,6 +78,8 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       },
     })
   }, [deleteProduct, orderProduct?.id])
+
+  // TODO: add error handling strategy
 
   return (
     <TableRow>
@@ -109,8 +110,8 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
                 )}
               />
               {isDirty && (
-                <Button type="submit" disabled={!isDirty}>
-                  Save
+                <Button type="submit" disabled={!isDirty} className="ml-2">
+                  <CheckIcon />
                 </Button>
               )}
             </div>
@@ -119,7 +120,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       </TableCell>
       <TableCell className="text-right">
         <Button onClick={handleDelete} disabled={deleteMutation.loading}>
-          Delete
+          <TrashIcon />
         </Button>
       </TableCell>
     </TableRow>

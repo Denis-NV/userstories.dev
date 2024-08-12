@@ -19,13 +19,13 @@ type TProps = {
 
 const OrderProducts = ({ products, orderId }: TProps) => {
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeader>
         <TableRow>
           <TableHead>Product</TableHead>
-          <TableHead>Department</TableHead>
-          <TableHead className="min-w-44">Quantity</TableHead>
-          <TableHead className="text-right">Action</TableHead>
+          <TableHead className="w-24">Department</TableHead>
+          <TableHead className="w-32">Quantity</TableHead>
+          <TableHead className="w-16 text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -38,7 +38,7 @@ const OrderProducts = ({ products, orderId }: TProps) => {
         ))}
       </TableBody>
       <TableFooter>
-        <AddOrderProduct orderId={orderId} />
+        <AddOrderProduct orderId={orderId} addedOrderProducts={products} />
       </TableFooter>
     </Table>
   )
