@@ -31,25 +31,27 @@ const Order = (): JSX.Element => {
 
   return (
     <div>
-      <Button onClick={() => navigate(-1)}>Back</Button>
-      <br />
-      {order ? (
-        <div>
-          <div>Order nr: {order?.order_nr}</div>
+      <div className="flex w-full py-2 ">
+        <div className="flex flex-1 flex-row items-center">Order nr: {order?.order_nr}</div>
+        <Button onClick={() => navigate(-1)}>Back</Button>
+      </div>
 
-          <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="products">Products</TabsTrigger>
-            </TabsList>
-            <TabsContent value="details">
-              <OrderDetails values={{ comment: removeNulls(order.comment) }} orderId={orderId} />
-            </TabsContent>
-            <TabsContent value="products">
-              <Products products={products} orderId={orderId} />
-            </TabsContent>
-          </Tabs>
-        </div>
+      {order ? (
+        <Tabs defaultValue="details" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="details">Details</TabsTrigger>
+            <TabsTrigger value="products">Products</TabsTrigger>
+          </TabsList>
+          <TabsContent value="details">
+            <OrderDetails
+              values={{ comment: removeNulls(order.comment), delivery_date: order.delivery_date }}
+              orderId={orderId}
+            />
+          </TabsContent>
+          <TabsContent value="products">
+            <Products products={products} orderId={orderId} />
+          </TabsContent>
+        </Tabs>
       ) : (
         <div>{loading && 'loading...'}</div>
       )}

@@ -21,13 +21,6 @@ const policies: TypePolicies = {
     fields: {
       order_products: {
         merge: false,
-        // merge: (existing = [], incoming = []) => {
-        //   console.log('merge order.order_products')
-        //   console.log('existing:', existing)
-        //   console.log('incoming:', incoming)
-
-        //   return [...incoming]
-        // },
       },
     },
   },
