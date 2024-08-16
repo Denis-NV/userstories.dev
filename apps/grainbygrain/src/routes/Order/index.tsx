@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { removeNulls } from '@/utils'
 
 import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
@@ -43,10 +42,7 @@ const Order = (): JSX.Element => {
             <TabsTrigger value="products">Products</TabsTrigger>
           </TabsList>
           <TabsContent value="details">
-            <OrderDetails
-              values={{ comment: removeNulls(order.comment), delivery_date: order.delivery_date }}
-              orderId={orderId}
-            />
+            <OrderDetails order={order} />
           </TabsContent>
           <TabsContent value="products">
             <Products products={products} orderId={orderId} />

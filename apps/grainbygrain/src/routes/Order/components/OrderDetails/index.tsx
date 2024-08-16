@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
+import { useAccessToken } from '@nhost/react'
+import { useMutation, useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
-
 import {
   Form,
   FormControl,
@@ -14,33 +15,57 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { useAccessToken } from '@nhost/react'
-import { useMutation } from '@apollo/client'
-
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { cn } from '@/utils'
-import { CalendarIcon } from '@radix-ui/react-icons'
-
-import { UPDATE_ORDER_MUTATION } from '../../gql'
 import { Calendar } from '@/components/ui/calendar'
+import { CalendarIcon } from '@radix-ui/react-icons'
+import { cn, removeNulls } from '@/utils'
+import { Order_OrderFragmentFragment } from '@/gql/graphql'
+
+import {
+  CUSTOMERS_BY_DISTRICT_QUERY,
+  DELIVERY_METHODS_QUERY,
+  UPDATE_ORDER_MUTATION,
+} from '../../gql'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 
 const FormSchema = z.object({
   comment: z.string().optional(),
-  delivery_date: z.date({
-    required_error: 'Delivery date is required.',
-  }),
+  delivery_date: z.date().optional(),
+  delivery_method_id: z.string().optional(),
+  customer_id: z.string(),
 })
 
 type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
-  values: TFormData
-  orderId?: string
+  order: Order_OrderFragmentFragment
 }
 
-const OrderDetails = ({ values, orderId }: TProps) => {
+const OrderDetails = ({ order }: TProps) => {
   const accessToken = useAccessToken()
+
+  const { data: methodsData } = useQuery(DELIVERY_METHODS_QUERY, {
+    context: {
+      headers: { authorization: `Bearer ${accessToken}` },
+    },
+  })
+  const methods = methodsData?.delivery_method
+
+  const { data: customersData } = useQuery(CUSTOMERS_BY_DISTRICT_QUERY, {
+    context: {
+      headers: { authorization: `Bearer ${accessToken}` },
+    },
+  })
+  const districts = customersData?.district
 
   const [updateOrder, { loading, error }] = useMutation(UPDATE_ORDER_MUTATION, {
     context: {
@@ -50,24 +75,30 @@ const OrderDetails = ({ values, orderId }: TProps) => {
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
-    values,
+    values: {
+      comment: removeNulls(order.comment),
+      delivery_date: new Date(order.delivery_date),
+      delivery_method_id: order.delivery_method?.id,
+      customer_id: order.customer?.id,
+    },
   })
 
   const {
     formState: { isDirty },
   } = form
 
-  const handleSubmit = useCallback(
-    ({ comment, delivery_date }: TFormData) => {
-      console.log()
+  const orderId = order.id
 
+  const handleSubmit = useCallback(
+    ({ comment, delivery_date, delivery_method_id }: TFormData) => {
       if (orderId) {
         updateOrder({
           variables: {
             id: orderId,
             input: {
               comment,
-              delivery_date: format(delivery_date, 'yyyy-MM-dd'),
+              delivery_date,
+              delivery_method_id,
             },
           },
         })
@@ -83,14 +114,32 @@ const OrderDetails = ({ values, orderId }: TProps) => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full space-y-6">
         <FormField
           control={form.control}
-          name="comment"
+          name="customer_id"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Comment</FormLabel>
-              <FormControl>
-                <Input placeholder="Short comment about the order" {...field} />
-              </FormControl>
-              <FormMessage />
+              <FormLabel>Customer</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger disabled={!districts} className="max-w-96">
+                    <SelectValue placeholder="Select customer" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="max-h-60 max-w-96">
+                  {districts?.map(({ id: distId, name, customers }) => {
+                    return (
+                      <SelectGroup key={distId}>
+                        <SelectLabel>{name}</SelectLabel>
+
+                        {customers?.map(({ id: custId, name }) => (
+                          <SelectItem key={custId} value={custId} className="ml-3">
+                            {name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    )
+                  })}
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
         />
@@ -107,7 +156,7 @@ const OrderDetails = ({ values, orderId }: TProps) => {
                     <Button
                       variant={'outline'}
                       className={cn(
-                        'w-[240px] pl-3 text-left font-normal',
+                        'max-w-96 pl-3 text-left font-normal',
                         !field.value && 'text-muted-foreground',
                       )}
                     >
@@ -129,6 +178,49 @@ const OrderDetails = ({ values, orderId }: TProps) => {
                   />
                 </PopoverContent>
               </Popover>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="delivery_method_id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Delivery method</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className="max-w-96" disabled={!methods}>
+                    <SelectValue placeholder="Select delivery method" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="max-h-60 max-w-96">
+                  {methods?.map(({ id, name }) => (
+                    <SelectItem key={id} value={id}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="comment"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Comment</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Short comment about the order"
+                  className="max-w-96 resize-none"
+                  {...field}
+                />
+              </FormControl>
 
               <FormMessage />
             </FormItem>

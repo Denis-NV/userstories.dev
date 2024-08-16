@@ -25,6 +25,10 @@ const documents = {
     types.OrderQueryDocument,
   '\n  query ProductsByDepartmentQuery {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n':
     types.ProductsByDepartmentQueryDocument,
+  '\n  query DeliveryMethodsQuery {\n    delivery_method {\n      id\n      name\n    }\n  }\n':
+    types.DeliveryMethodsQueryDocument,
+  '\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n':
+    types.CustomersByDistrictQueryDocument,
   '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...Order_OrderFragment\n    }\n  }\n':
     types.UpdateOrderDocument,
   '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {\n    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
@@ -87,6 +91,18 @@ export function graphql(
 export function graphql(
   source: '\n  query ProductsByDepartmentQuery {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  query ProductsByDepartmentQuery {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query DeliveryMethodsQuery {\n    delivery_method {\n      id\n      name\n    }\n  }\n',
+): (typeof documents)['\n  query DeliveryMethodsQuery {\n    delivery_method {\n      id\n      name\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

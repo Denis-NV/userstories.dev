@@ -8087,6 +8087,25 @@ export type ProductsByDepartmentQueryQuery = {
   }>
 }
 
+export type DeliveryMethodsQueryQueryVariables = Exact<{ [key: string]: never }>
+
+export type DeliveryMethodsQueryQuery = {
+  __typename?: 'query_root'
+  delivery_method: Array<{ __typename?: 'delivery_method'; id: any; name: string }>
+}
+
+export type CustomersByDistrictQueryQueryVariables = Exact<{ [key: string]: never }>
+
+export type CustomersByDistrictQueryQuery = {
+  __typename?: 'query_root'
+  district: Array<{
+    __typename?: 'district'
+    id: any
+    name: string
+    customers: Array<{ __typename?: 'customer'; id: any; name: string }>
+  }>
+}
+
 export type UpdateOrderMutationVariables = Exact<{
   id: Scalars['uuid']['input']
   input?: InputMaybe<Order_Set_Input>
@@ -8682,6 +8701,101 @@ export const ProductsByDepartmentQueryDocument = {
   ProductsByDepartmentQueryQuery,
   ProductsByDepartmentQueryQueryVariables
 >
+export const DeliveryMethodsQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'DeliveryMethodsQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'delivery_method' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeliveryMethodsQueryQuery, DeliveryMethodsQueryQueryVariables>
+export const CustomersByDistrictQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'CustomersByDistrictQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'customers' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'order_by' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'name' },
+                            value: { kind: 'EnumValue', value: 'asc' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CustomersByDistrictQueryQuery, CustomersByDistrictQueryQueryVariables>
 export const UpdateOrderDocument = {
   kind: 'Document',
   definitions: [
