@@ -17,7 +17,7 @@ export const ORDER_PRODUCT_FRAGMENT = graphql(`
 `)
 
 export const ORDER_FRAGMENT = graphql(`
-  fragment Order_OrderFragment on order {
+  fragment fullOrder_on_Order on order {
     id
     created_at
     updated_at
@@ -45,7 +45,7 @@ export const ORDER_FRAGMENT = graphql(`
 export const ORDER_QUERY = graphql(`
   query OrderQuery($id: uuid!) {
     order_by_pk(id: $id) {
-      ...Order_OrderFragment
+      ...fullOrder_on_Order
     }
   }
 `)
@@ -76,7 +76,7 @@ export const DELIVERY_METHODS_QUERY = graphql(`
 export const UPDATE_ORDER_MUTATION = graphql(`
   mutation UpdateOrder($id: uuid!, $input: order_set_input) {
     update_order_by_pk(pk_columns: { id: $id }, _set: $input) {
-      ...Order_OrderFragment
+      ...fullOrder_on_Order
     }
   }
 `)

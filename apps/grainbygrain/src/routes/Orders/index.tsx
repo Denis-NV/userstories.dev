@@ -10,7 +10,7 @@ import { getParamsFilter, getCursorFilter } from './utils'
 import { useCallback } from 'react'
 import AddOrder from './components/AddOrder'
 
-const limit = 1
+const limit = 3
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()

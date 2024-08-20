@@ -8008,7 +8008,7 @@ export type OrderProduct_On_OrderProductFragment = {
   }
 }
 
-export type Order_OrderFragmentFragment = {
+export type FullOrder_On_OrderFragment = {
   __typename?: 'order'
   id: any
   created_at: any
@@ -8181,6 +8181,15 @@ export type DeleteOrderProductMutation = {
   delete_order_product_by_pk?: { __typename?: 'order_product'; id: any } | null
 }
 
+export type ListOrder_On_OrderFragment = {
+  __typename?: 'order'
+  id: any
+  created_at: any
+  order_nr: number
+  delivery_date: any
+  customer: { __typename?: 'customer'; id: any; name: string }
+}
+
 export type OrdersQueryQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>
   filters?: InputMaybe<Order_Bool_Exp>
@@ -8200,6 +8209,23 @@ export type OrdersQueryQuery = {
     delivery_date: any
     customer: { __typename?: 'customer'; id: any; name: string }
   }>
+}
+
+export type AddOrderMutationVariables = Exact<{
+  customer_id?: InputMaybe<Scalars['uuid']['input']>
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>
+}>
+
+export type AddOrderMutation = {
+  __typename?: 'mutation_root'
+  insert_order_one?: {
+    __typename?: 'order'
+    id: any
+    created_at: any
+    order_nr: number
+    delivery_date: any
+    customer: { __typename?: 'customer'; id: any; name: string }
+  } | null
 }
 
 export const OrderProduct_On_OrderProductFragmentDoc = {
@@ -8242,12 +8268,12 @@ export const OrderProduct_On_OrderProductFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<OrderProduct_On_OrderProductFragment, unknown>
-export const Order_OrderFragmentFragmentDoc = {
+export const FullOrder_On_OrderFragmentDoc = {
   kind: 'Document',
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'Order_OrderFragment' },
+      name: { kind: 'Name', value: 'fullOrder_on_Order' },
       typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
       selectionSet: {
         kind: 'SelectionSet',
@@ -8359,7 +8385,37 @@ export const Order_OrderFragmentFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<Order_OrderFragmentFragment, unknown>
+} as unknown as DocumentNode<FullOrder_On_OrderFragment, unknown>
+export const ListOrder_On_OrderFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'listOrder_on_Order' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'customer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ListOrder_On_OrderFragment, unknown>
 export const CustomersByDistrictQueryDocument = {
   kind: 'Document',
   definitions: [
@@ -8561,7 +8617,7 @@ export const OrderQueryDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Order_OrderFragment' } },
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'fullOrder_on_Order' } },
               ],
             },
           },
@@ -8605,7 +8661,7 @@ export const OrderQueryDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'Order_OrderFragment' },
+      name: { kind: 'Name', value: 'fullOrder_on_Order' },
       typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
       selectionSet: {
         kind: 'SelectionSet',
@@ -8834,7 +8890,7 @@ export const UpdateOrderDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Order_OrderFragment' } },
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'fullOrder_on_Order' } },
               ],
             },
           },
@@ -8878,7 +8934,7 @@ export const UpdateOrderDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'Order_OrderFragment' },
+      name: { kind: 'Name', value: 'fullOrder_on_Order' },
       typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
       selectionSet: {
         kind: 'SelectionSet',
@@ -9298,21 +9354,32 @@ export const OrdersQueryDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'listOrder_on_Order' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'listOrder_on_Order' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'customer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'customer' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
               ],
             },
           },
@@ -9321,3 +9388,86 @@ export const OrdersQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<OrdersQueryQuery, OrdersQueryQueryVariables>
+export const AddOrderDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddOrder' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'timestamptz' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_order_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'customer_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'delivery_date' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'listOrder_on_Order' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'listOrder_on_Order' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'customer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddOrderMutation, AddOrderMutationVariables>

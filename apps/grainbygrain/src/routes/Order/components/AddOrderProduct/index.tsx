@@ -22,20 +22,20 @@ import {
 import {
   OrderProduct_On_OrderProductFragment,
   OrderProduct_On_OrderProductFragmentDoc,
-  Order_OrderFragmentFragmentDoc,
+  FullOrder_On_OrderFragmentDoc,
 } from '@/gql/graphql'
 
 import { ADD_ORDER_PRODUCT_MUTATION, PRODUCST_BY_DEPARTMENT_QUERY } from '../../gql'
 
 const orderFragmentOptions = {
   fragment: {
-    ...Order_OrderFragmentFragmentDoc,
+    ...FullOrder_On_OrderFragmentDoc,
     definitions: [
-      ...Order_OrderFragmentFragmentDoc.definitions,
+      ...FullOrder_On_OrderFragmentDoc.definitions,
       ...OrderProduct_On_OrderProductFragmentDoc.definitions,
     ],
   },
-  fragmentName: 'Order_OrderFragment',
+  fragmentName: 'fullOrder_on_Order',
 }
 
 const FormSchema = z.object({

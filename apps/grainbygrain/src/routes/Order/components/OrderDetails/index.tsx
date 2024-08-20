@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { removeNulls } from '@/utils'
-import { Order_OrderFragmentFragment } from '@/gql/graphql'
+import { FullOrder_On_OrderFragment } from '@/gql/graphql'
 
 import { DELIVERY_METHODS_QUERY, UPDATE_ORDER_MUTATION } from '../../gql'
 import {
@@ -39,7 +39,7 @@ const FormSchema = z.object({
 type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
-  order: Order_OrderFragmentFragment
+  order: FullOrder_On_OrderFragment
 }
 
 const OrderDetails = ({ order }: TProps) => {
