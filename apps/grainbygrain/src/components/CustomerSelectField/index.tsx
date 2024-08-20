@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select'
 import { CUSTOMERS_BY_DISTRICT_QUERY } from './gql'
 
-interface TProps<T extends FieldValues> {
+type TProps<T extends FieldValues> = {
   control: Control<T, any>
   name: Path<T>
 }
@@ -38,11 +38,11 @@ const CustomerSelectField = <T extends FieldValues>({ control, name }: TProps<T>
           <FormLabel>Customer</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
-              <SelectTrigger disabled={!districts} className="max-w-96">
+              <SelectTrigger disabled={!districts}>
                 <SelectValue placeholder="Select customer" />
               </SelectTrigger>
             </FormControl>
-            <SelectContent className="max-h-60 max-w-96">
+            <SelectContent className="max-h-60">
               {districts?.map(({ id: distId, name, customers }) => {
                 return (
                   <SelectGroup key={distId}>

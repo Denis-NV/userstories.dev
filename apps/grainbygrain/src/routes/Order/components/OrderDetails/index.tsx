@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { format } from 'date-fns'
 import { useAccessToken } from '@nhost/react'
 import { useMutation, useQuery } from '@apollo/client'
 
@@ -15,10 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { cn, removeNulls } from '@/utils'
+import { removeNulls } from '@/utils'
 import { Order_OrderFragmentFragment } from '@/gql/graphql'
 
 import { DELIVERY_METHODS_QUERY, UPDATE_ORDER_MUTATION } from '../../gql'
@@ -31,6 +27,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import CustomerSelectField from '@/components/CustomerSelectField'
+import DeliveryDateSelectField from '@/components/DeliveryDateSelectField'
 
 const FormSchema = z.object({
   comment: z.string().optional(),
@@ -78,7 +75,7 @@ const OrderDetails = ({ order }: TProps) => {
   const orderId = order.id
 
   const handleSubmit = useCallback(
-    ({ comment, delivery_date, delivery_method_id }: TFormData) => {
+    ({ comment, delivery_date, delivery_method_id, customer_id }: TFormData) => {
       if (orderId) {
         updateOrder({
           variables: {
@@ -87,6 +84,7 @@ const OrderDetails = ({ order }: TProps) => {
               comment,
               delivery_date,
               delivery_method_id,
+              customer_id,
             },
           },
         })
@@ -95,52 +93,12 @@ const OrderDetails = ({ order }: TProps) => {
     [updateOrder, orderId],
   )
 
-  const [calendarOpen, setCalendarOpen] = useState(false)
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-96 space-y-6">
         <CustomerSelectField<TFormData> control={form.control} name="customer_id" />
 
-        <FormField
-          control={form.control}
-          name="delivery_date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Delivery date</FormLabel>
-              <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={'outline'}
-                      className={cn(
-                        'max-w-96 pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground',
-                      )}
-                    >
-                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={(e) => {
-                      field.onChange(e)
-                      setCalendarOpen(false)
-                    }}
-                    disabled={{ before: new Date() }}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <DeliveryDateSelectField<TFormData> control={form.control} name="delivery_date" />
 
         <FormField
           control={form.control}
@@ -150,11 +108,11 @@ const OrderDetails = ({ order }: TProps) => {
               <FormLabel>Delivery method</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="max-w-96" disabled={!methods}>
+                  <SelectTrigger disabled={!methods}>
                     <SelectValue placeholder="Select delivery method" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="max-h-60 max-w-96">
+                <SelectContent className="max-h-60">
                   {methods?.map(({ id, name }) => (
                     <SelectItem key={id} value={id}>
                       {name}
@@ -175,7 +133,7 @@ const OrderDetails = ({ order }: TProps) => {
               <FormControl>
                 <Textarea
                   placeholder="Short comment about the order"
-                  className="max-w-96 resize-none"
+                  className="resize-none"
                   {...field}
                 />
               </FormControl>
