@@ -73,20 +73,6 @@ export const DELIVERY_METHODS_QUERY = graphql(`
   }
 `)
 
-export const CUSTOMERS_BY_DISTRICT_QUERY = graphql(`
-  query CustomersByDistrictQuery {
-    district(order_by: { name: asc }) {
-      id
-      name
-
-      customers(order_by: { name: asc }) {
-        id
-        name
-      }
-    }
-  }
-`)
-
 export const UPDATE_ORDER_MUTATION = graphql(`
   mutation UpdateOrder($id: uuid!, $input: order_set_input) {
     update_order_by_pk(pk_columns: { id: $id }, _set: $input) {

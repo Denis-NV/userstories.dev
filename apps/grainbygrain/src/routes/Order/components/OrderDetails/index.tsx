@@ -21,21 +21,16 @@ import { CalendarIcon } from '@radix-ui/react-icons'
 import { cn, removeNulls } from '@/utils'
 import { Order_OrderFragmentFragment } from '@/gql/graphql'
 
-import {
-  CUSTOMERS_BY_DISTRICT_QUERY,
-  DELIVERY_METHODS_QUERY,
-  UPDATE_ORDER_MUTATION,
-} from '../../gql'
+import { DELIVERY_METHODS_QUERY, UPDATE_ORDER_MUTATION } from '../../gql'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import CustomerSelectField from '@/components/CustomerSelectField'
 
 const FormSchema = z.object({
   comment: z.string().optional(),
@@ -59,13 +54,6 @@ const OrderDetails = ({ order }: TProps) => {
     },
   })
   const methods = methodsData?.delivery_method
-
-  const { data: customersData } = useQuery(CUSTOMERS_BY_DISTRICT_QUERY, {
-    context: {
-      headers: { authorization: `Bearer ${accessToken}` },
-    },
-  })
-  const districts = customersData?.district
 
   const [updateOrder, { loading, error }] = useMutation(UPDATE_ORDER_MUTATION, {
     context: {
@@ -112,37 +100,7 @@ const OrderDetails = ({ order }: TProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full space-y-6">
-        <FormField
-          control={form.control}
-          name="customer_id"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Customer</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <FormControl>
-                  <SelectTrigger disabled={!districts} className="max-w-96">
-                    <SelectValue placeholder="Select customer" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="max-h-60 max-w-96">
-                  {districts?.map(({ id: distId, name, customers }) => {
-                    return (
-                      <SelectGroup key={distId}>
-                        <SelectLabel>{name}</SelectLabel>
-
-                        {customers?.map(({ id: custId, name }) => (
-                          <SelectItem key={custId} value={custId} className="ml-3">
-                            {name}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    )
-                  })}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+        <CustomerSelectField<TFormData> control={form.control} name="customer_id" />
 
         <FormField
           control={form.control}

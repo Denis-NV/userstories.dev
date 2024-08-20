@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import { getParamsFilter, getCursorFilter } from './utils'
 import { useCallback } from 'react'
+import AddOrder from './components/AddOrder'
 
 const limit = 1
 
@@ -48,7 +49,10 @@ const Orders = (): JSX.Element => {
 
   return (
     <div>
-      <TypographyH2 text="Orders" />
+      <div className="flex justify-between">
+        <TypographyH2 text="Orders" />
+        <AddOrder />
+      </div>
       {orders ? (
         <ul>
           {[...orders]
