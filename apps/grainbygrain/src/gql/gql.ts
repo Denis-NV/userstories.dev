@@ -15,6 +15,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 const documents = {
   '\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n':
     types.CustomersByDistrictQueryDocument,
+  '\n  mutation DeleteOrder($id: uuid!) {\n    delete_order_by_pk(id: $id) {\n      id\n    }\n  }\n':
+    types.DeleteOrderDocument,
   '\n  query CustomerQuery($id: uuid!) {\n    customer_by_pk(id: $id) {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
     types.CustomerQueryDocument,
   '\n  query CustomersQuery {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
@@ -65,6 +67,12 @@ export function graphql(source: string): unknown
 export function graphql(
   source: '\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  query CustomersByDistrictQuery {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation DeleteOrder($id: uuid!) {\n    delete_order_by_pk(id: $id) {\n      id\n    }\n  }\n',
+): (typeof documents)['\n  mutation DeleteOrder($id: uuid!) {\n    delete_order_by_pk(id: $id) {\n      id\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

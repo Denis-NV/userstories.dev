@@ -7963,6 +7963,15 @@ export type CustomersByDistrictQueryQuery = {
   }>
 }
 
+export type DeleteOrderMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type DeleteOrderMutation = {
+  __typename?: 'mutation_root'
+  delete_order_by_pk?: { __typename?: 'order'; id: any } | null
+}
+
 export type CustomerQueryQueryVariables = Exact<{
   id: Scalars['uuid']['input']
 }>
@@ -8485,6 +8494,46 @@ export const CustomersByDistrictQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<CustomersByDistrictQueryQuery, CustomersByDistrictQueryQueryVariables>
+export const DeleteOrderDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteOrder' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'delete_order_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteOrderMutation, DeleteOrderMutationVariables>
 export const CustomerQueryDocument = {
   kind: 'Document',
   definitions: [
