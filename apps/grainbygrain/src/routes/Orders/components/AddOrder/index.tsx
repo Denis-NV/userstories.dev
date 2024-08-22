@@ -67,6 +67,10 @@ const AddOrder = () => {
 
             return [...existing, newOrder]
           },
+          order_aggregate: (existing) => ({
+            ...existing,
+            aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count + 1 },
+          }),
         },
       })
     },

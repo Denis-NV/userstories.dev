@@ -45,6 +45,10 @@ const DeleteOrder = ({ orderId, trigger = <Button>Delete</Button> }: TProps) => 
             fields: {
               order: (existing = []) =>
                 existing.filter((o: Reference) => cache.identify(o) !== deletedId),
+              order_aggregate: (existing) => ({
+                ...existing,
+                aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count - 1 },
+              }),
             },
           })
           cache.gc()

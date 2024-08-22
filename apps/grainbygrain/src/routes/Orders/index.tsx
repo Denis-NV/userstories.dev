@@ -36,8 +36,6 @@ const Orders = (): JSX.Element => {
   const orders = data?.order
   const count = data?.order_aggregate?.aggregate?.count
 
-  // console.log(orders?.length, count)
-
   const handleLoadMore = useCallback(() => {
     if (orders) {
       query.fetchMore({
