@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useState } from 'react'
-import { useMutation } from '@apollo/client'
+import { type Reference, useMutation } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
 
 import { Button } from '@/components/ui/button'
@@ -38,7 +38,15 @@ const DeleteOrder = ({ orderId, trigger = <Button>Delete</Button> }: TProps) => 
       onCompleted: () => setIsOpen(false),
       update: (cache, { data }) => {
         if (data?.delete_order_by_pk) {
-          cache.evict({ id: cache.identify(data?.delete_order_by_pk) })
+          const deletedId = cache.identify(data?.delete_order_by_pk)
+
+          cache.evict({ id: deletedId })
+          cache.modify({
+            fields: {
+              order: (existing = []) =>
+                existing.filter((o: Reference) => cache.identify(o) !== deletedId),
+            },
+          })
           cache.gc()
         }
       },
@@ -48,6 +56,8 @@ const DeleteOrder = ({ orderId, trigger = <Button>Delete</Button> }: TProps) => 
   const handleCancel = useCallback(() => {
     setIsOpen(false)
   }, [setIsOpen])
+
+  // TODO: implement error handling
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
