@@ -28,7 +28,11 @@ const FormSchema = z.object({
 
 type TFormData = z.infer<typeof FormSchema>
 
-const AddOrder = () => {
+type TProps = {
+  onAdded?: (orderId: string) => void
+}
+
+const AddOrder = ({ onAdded }: TProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const accessToken = useAccessToken()
@@ -49,10 +53,12 @@ const AddOrder = () => {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
-    onCompleted: () => {
+    onCompleted: ({ insert_order_one }) => {
       reset()
 
       setIsOpen(false)
+
+      if (onAdded && insert_order_one) onAdded(insert_order_one.id)
     },
     update: (cache, { data }) => {
       if (!data?.insert_order_one) return

@@ -1,9 +1,11 @@
+import { useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import DeleteOrder from '@/components/DeleteOrder'
 
 import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
@@ -28,11 +30,25 @@ const Order = (): JSX.Element => {
   const order = data?.order_by_pk
   const products = data?.order_by_pk?.order_products
 
+  const handleOrderDelete = useCallback(() => {
+    navigate('/orders')
+  }, [navigate])
+
   return (
     <div>
       <div className="flex w-full py-2 ">
         <div className="flex flex-1 flex-row items-center">Order nr: {order?.order_nr}</div>
-        <Button onClick={() => navigate(-1)}>Back</Button>
+        <div className="space-x-2">
+          <Button onClick={() => navigate(-1)}>Back</Button>
+
+          {orderId && (
+            <DeleteOrder
+              orderId={orderId}
+              trigger={<Button variant="outline">Delete</Button>}
+              onDeleted={handleOrderDelete}
+            />
+          )}
+        </div>
       </div>
 
       {order ? (

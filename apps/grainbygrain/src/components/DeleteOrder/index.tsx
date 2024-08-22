@@ -1,6 +1,7 @@
 import { ReactNode, useCallback, useState } from 'react'
 import { type Reference, useMutation } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
+import { TrashIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -18,15 +19,47 @@ import { DELETE_ORDER_MUTATION } from './gql'
 type TProps = {
   orderId: string
   trigger?: ReactNode
+  onDeleted?: (orderId: string) => void
 }
 
-const DeleteOrder = ({ orderId, trigger = <Button>Delete</Button> }: TProps) => {
+const DeleteOrder = ({
+  orderId,
+  trigger = (
+    <Button>
+      <TrashIcon />
+    </Button>
+  ),
+  onDeleted,
+}: TProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const accessToken = useAccessToken()
 
   const [deleteOrder, deleteMutation] = useMutation(DELETE_ORDER_MUTATION, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
+    },
+    onCompleted: () => {
+      setIsOpen(false)
+
+      if (onDeleted) onDeleted(orderId)
+    },
+    update: (cache, { data }) => {
+      if (data?.delete_order_by_pk) {
+        const deletedId = cache.identify(data?.delete_order_by_pk)
+
+        cache.evict({ id: deletedId })
+        cache.modify({
+          fields: {
+            order: (existing = []) =>
+              existing.filter((o: Reference) => cache.identify(o) !== deletedId),
+            order_aggregate: (existing) => ({
+              ...existing,
+              aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count - 1 },
+            }),
+          },
+        })
+        cache.gc()
+      }
     },
   })
 
@@ -35,27 +68,8 @@ const DeleteOrder = ({ orderId, trigger = <Button>Delete</Button> }: TProps) => 
       variables: {
         id: orderId,
       },
-      onCompleted: () => setIsOpen(false),
-      update: (cache, { data }) => {
-        if (data?.delete_order_by_pk) {
-          const deletedId = cache.identify(data?.delete_order_by_pk)
-
-          cache.evict({ id: deletedId })
-          cache.modify({
-            fields: {
-              order: (existing = []) =>
-                existing.filter((o: Reference) => cache.identify(o) !== deletedId),
-              order_aggregate: (existing) => ({
-                ...existing,
-                aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count - 1 },
-              }),
-            },
-          })
-          cache.gc()
-        }
-      },
     })
-  }, [deleteOrder, setIsOpen, orderId])
+  }, [deleteOrder, orderId])
 
   const handleCancel = useCallback(() => {
     setIsOpen(false)

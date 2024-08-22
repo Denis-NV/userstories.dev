@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
-import { useSearchParams, Link } from 'react-router-dom'
+import { useSearchParams, Link, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
-import { TrashIcon } from '@radix-ui/react-icons'
 
 import { ORDERS_QUERY } from './gql'
 
@@ -18,6 +17,7 @@ const limit = 3
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const query = useQuery(ORDERS_QUERY, {
     context: {
@@ -50,32 +50,32 @@ const Orders = (): JSX.Element => {
     }
   }, [setSearchParams, orders])
 
+  const handleOrderAdd = useCallback(
+    (id: string) => {
+      navigate(`/order/${id}`)
+    },
+    [navigate],
+  )
+
   return (
     <div>
       <div className="flex justify-between">
         <TypographyH2 text="Orders" />
-        <AddOrder />
+        <AddOrder onAdded={handleOrderAdd} />
       </div>
       {orders ? (
         <ul>
           {[...orders]
             .sort((a, b) => a.order_nr - b.order_nr)
             .map((order) => (
-              <li key={order.id}>
+              <li key={order.id} className="space-x-2">
                 <Link
                   to={`/order/${order?.id}`}
                   className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
                 >
                   <span>{`${order.order_nr} - ${order.customer?.name}`}</span>
                 </Link>
-                <DeleteOrder
-                  orderId={order.id}
-                  trigger={
-                    <Button>
-                      <TrashIcon />
-                    </Button>
-                  }
-                />
+                <DeleteOrder orderId={order.id} />
               </li>
             ))}
         </ul>
