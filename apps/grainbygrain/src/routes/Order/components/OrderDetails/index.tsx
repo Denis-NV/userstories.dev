@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAccessToken } from '@nhost/react'
 import { useMutation, useQuery } from '@apollo/client'
+import { format } from 'date-fns'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -56,6 +57,16 @@ const OrderDetails = ({ order }: TProps) => {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
+    update: (cache, { data }) => {
+      if (!data?.update_order_by_pk) return
+
+      cache.modify({
+        fields: {
+          order_aggregate: () => {},
+          order: () => {},
+        },
+      })
+    },
   })
 
   const form = useForm<TFormData>({
@@ -82,7 +93,7 @@ const OrderDetails = ({ order }: TProps) => {
             id: orderId,
             input: {
               comment,
-              delivery_date,
+              delivery_date: delivery_date ? format(delivery_date, 'yyyy-MM-dd') : undefined,
               delivery_method_id,
               customer_id,
             },

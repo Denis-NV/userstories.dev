@@ -59,7 +59,7 @@ const Orders = (): JSX.Element => {
 
   const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
 
-  console.log(orders?.length, count)
+  // console.log(orders?.length, count)
 
   return (
     <div>

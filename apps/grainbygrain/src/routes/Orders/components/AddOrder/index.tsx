@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
+import { format } from 'date-fns'
 
 import CustomerSelectField from '@/components/CustomerSelectField'
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,7 @@ import {
 import { Form } from '@/components/ui/form'
 import DeliveryDateSelectField from '@/components/DeliveryDateSelectField'
 
-import { ADD_ORDER_MUTATION, LIST_ORDER_FRAGMENT } from '../../gql'
+import { ADD_ORDER_MUTATION } from '../../gql'
 
 const FormSchema = z.object({
   customer_id: z.string(),
@@ -65,18 +66,7 @@ const AddOrder = ({ onAdded }: TProps) => {
 
       cache.modify({
         fields: {
-          order: (existing = []) => {
-            const newOrder = cache.writeFragment({
-              data: data?.insert_order_one,
-              fragment: LIST_ORDER_FRAGMENT,
-            })
-
-            return [...existing, newOrder]
-          },
-          order_aggregate: (existing) => ({
-            ...existing,
-            aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count + 1 },
-          }),
+          order_aggregate: () => {},
         },
       })
     },
@@ -87,7 +77,7 @@ const AddOrder = ({ onAdded }: TProps) => {
       addOrder({
         variables: {
           customer_id,
-          delivery_date,
+          delivery_date: delivery_date ? format(delivery_date, 'yyyy-MM-dd') : undefined,
         },
       })
     },

@@ -19,7 +19,7 @@ const Filters = () => {
   const handleDeliveryDateSelect = useCallback(
     (date?: Date) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (date) prev.set('delivery_date', date.toISOString())
+        if (date) prev.set('delivery_date', format(date, 'yyyy-MM-dd'))
 
         return prev
       })
@@ -49,7 +49,7 @@ const Filters = () => {
                 !delivery_date && 'text-muted-foreground',
               )}
             >
-              {delivery_date ? format(delivery_date, 'PPP') : <span>Delivery date</span>}
+              {delivery_date ? format(delivery_date, 'yyyy-MM-dd') : <span>Delivery date</span>}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>
           </PopoverTrigger>

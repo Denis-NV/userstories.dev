@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useState } from 'react'
-import { type Reference, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
 import { TrashIcon } from '@radix-ui/react-icons'
 
@@ -50,12 +50,7 @@ const DeleteOrder = ({
         cache.evict({ id: deletedId })
         cache.modify({
           fields: {
-            order: (existing = []) =>
-              existing.filter((o: Reference) => cache.identify(o) !== deletedId),
-            order_aggregate: (existing) => ({
-              ...existing,
-              aggregate: { ...existing?.aggregate, count: existing?.aggregate?.count - 1 },
-            }),
+            order: (_, { DELETE }) => DELETE,
           },
         })
         cache.gc()

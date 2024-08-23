@@ -21,6 +21,7 @@ export type Scalars = {
   bigint: { input: any; output: any }
   bytea: { input: any; output: any }
   citext: { input: any; output: any }
+  date: { input: any; output: any }
   jsonb: { input: any; output: any }
   numeric: { input: any; output: any }
   time: { input: any; output: any }
@@ -2544,6 +2545,19 @@ export type Customer_Updates = {
   where: Customer_Bool_Exp
 }
 
+/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+export type Date_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['date']['input']>
+  _gt?: InputMaybe<Scalars['date']['input']>
+  _gte?: InputMaybe<Scalars['date']['input']>
+  _in?: InputMaybe<Array<Scalars['date']['input']>>
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>
+  _lt?: InputMaybe<Scalars['date']['input']>
+  _lte?: InputMaybe<Scalars['date']['input']>
+  _neq?: InputMaybe<Scalars['date']['input']>
+  _nin?: InputMaybe<Array<Scalars['date']['input']>>
+}
+
 /** columns and relationships of "delivery_method" */
 export type Delivery_Method = {
   __typename?: 'delivery_method'
@@ -4716,7 +4730,7 @@ export type Order = {
   /** An object relationship */
   customer: Customer
   customer_id: Scalars['uuid']['output']
-  delivery_date: Scalars['timestamptz']['output']
+  delivery_date: Scalars['date']['output']
   /** An object relationship */
   delivery_method?: Maybe<Delivery_Method>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
@@ -4829,7 +4843,7 @@ export type Order_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>
   customer?: InputMaybe<Customer_Bool_Exp>
   customer_id?: InputMaybe<Uuid_Comparison_Exp>
-  delivery_date?: InputMaybe<Timestamptz_Comparison_Exp>
+  delivery_date?: InputMaybe<Date_Comparison_Exp>
   delivery_method?: InputMaybe<Delivery_Method_Bool_Exp>
   delivery_method_id?: InputMaybe<Uuid_Comparison_Exp>
   id?: InputMaybe<Uuid_Comparison_Exp>
@@ -4874,7 +4888,7 @@ export type Order_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   customer?: InputMaybe<Customer_Obj_Rel_Insert_Input>
   customer_id?: InputMaybe<Scalars['uuid']['input']>
-  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>
+  delivery_date?: InputMaybe<Scalars['date']['input']>
   delivery_method?: InputMaybe<Delivery_Method_Obj_Rel_Insert_Input>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
@@ -4889,7 +4903,7 @@ export type Order_Max_Fields = {
   comment?: Maybe<Scalars['String']['output']>
   created_at?: Maybe<Scalars['timestamptz']['output']>
   customer_id?: Maybe<Scalars['uuid']['output']>
-  delivery_date?: Maybe<Scalars['timestamptz']['output']>
+  delivery_date?: Maybe<Scalars['date']['output']>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
   id?: Maybe<Scalars['uuid']['output']>
   order_nr?: Maybe<Scalars['Int']['output']>
@@ -4914,7 +4928,7 @@ export type Order_Min_Fields = {
   comment?: Maybe<Scalars['String']['output']>
   created_at?: Maybe<Scalars['timestamptz']['output']>
   customer_id?: Maybe<Scalars['uuid']['output']>
-  delivery_date?: Maybe<Scalars['timestamptz']['output']>
+  delivery_date?: Maybe<Scalars['date']['output']>
   delivery_method_id?: Maybe<Scalars['uuid']['output']>
   id?: Maybe<Scalars['uuid']['output']>
   order_nr?: Maybe<Scalars['Int']['output']>
@@ -5348,7 +5362,7 @@ export type Order_Set_Input = {
   comment?: InputMaybe<Scalars['String']['input']>
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   customer_id?: InputMaybe<Scalars['uuid']['input']>
-  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>
+  delivery_date?: InputMaybe<Scalars['date']['input']>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
   order_nr?: InputMaybe<Scalars['Int']['input']>
@@ -5401,7 +5415,7 @@ export type Order_Stream_Cursor_Value_Input = {
   comment?: InputMaybe<Scalars['String']['input']>
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   customer_id?: InputMaybe<Scalars['uuid']['input']>
-  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>
+  delivery_date?: InputMaybe<Scalars['date']['input']>
   delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
   order_nr?: InputMaybe<Scalars['Int']['input']>
@@ -8222,7 +8236,7 @@ export type OrdersQueryQuery = {
 
 export type AddOrderMutationVariables = Exact<{
   customer_id?: InputMaybe<Scalars['uuid']['input']>
-  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>
+  delivery_date?: InputMaybe<Scalars['date']['input']>
 }>
 
 export type AddOrderMutation = {
@@ -9352,6 +9366,13 @@ export const OrdersQueryDocument = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'order_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -9453,7 +9474,7 @@ export const AddOrderDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'timestamptz' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'date' } },
         },
       ],
       selectionSet: {

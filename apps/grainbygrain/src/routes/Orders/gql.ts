@@ -16,7 +16,7 @@ export const LIST_ORDER_FRAGMENT = graphql(`
 
 export const ORDERS_QUERY = graphql(`
   query OrdersQuery($limit: Int, $filters: order_bool_exp) {
-    order_aggregate {
+    order_aggregate(where: $filters) {
       aggregate {
         count
       }
@@ -28,7 +28,7 @@ export const ORDERS_QUERY = graphql(`
 `)
 
 export const ADD_ORDER_MUTATION = graphql(`
-  mutation AddOrder($customer_id: uuid, $delivery_date: timestamptz) {
+  mutation AddOrder($customer_id: uuid, $delivery_date: date) {
     insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {
       ...listOrder_on_Order
     }
