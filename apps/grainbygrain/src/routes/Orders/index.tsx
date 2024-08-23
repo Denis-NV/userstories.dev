@@ -3,20 +3,20 @@ import { useSearchParams, Link, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
-import { ORDERS_QUERY } from './gql'
-
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import DeleteOrder from '@/components/DeleteOrder'
 
+import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
 import AddOrder from './components/AddOrder'
+import Filters from './components/Filters'
 
 const limit = 3
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
   const query = useQuery(ORDERS_QUERY, {
@@ -48,7 +48,7 @@ const Orders = (): JSX.Element => {
         },
       })
     }
-  }, [setSearchParams, orders])
+  }, [orders])
 
   const handleOrderAdd = useCallback(
     (id: string) => {
@@ -57,12 +57,19 @@ const Orders = (): JSX.Element => {
     [navigate],
   )
 
+  const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
+
+  console.log(orders?.length, count)
+
   return (
     <div>
       <div className="flex justify-between">
         <TypographyH2 text="Orders" />
         <AddOrder onAdded={handleOrderAdd} />
       </div>
+
+      <Filters />
+
       {orders ? (
         <ul>
           {[...orders]
@@ -83,9 +90,7 @@ const Orders = (): JSX.Element => {
         <div>{loading && 'loading...'}</div>
       )}
 
-      {orders?.length && count && orders?.length < count && (
-        <Button onClick={handleLoadMore}>Load more</Button>
-      )}
+      {showLoadMore && <Button onClick={handleLoadMore}>Load more</Button>}
     </div>
   )
 }
