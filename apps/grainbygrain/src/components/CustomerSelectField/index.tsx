@@ -1,18 +1,8 @@
 import { Control, FieldValues, Path } from 'react-hook-form'
-import { useQuery } from '@apollo/client'
-import { useAccessToken } from '@nhost/react'
 
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { CUSTOMERS_BY_DISTRICT_QUERY } from './gql'
+
+import CustomerSelect from '../CustomerSelect'
 
 type TProps<T extends FieldValues> = {
   control: Control<T, any>
@@ -20,15 +10,6 @@ type TProps<T extends FieldValues> = {
 }
 
 const CustomerSelectField = <T extends FieldValues>({ control, name }: TProps<T>) => {
-  const accessToken = useAccessToken()
-
-  const { data: customersData } = useQuery(CUSTOMERS_BY_DISTRICT_QUERY, {
-    context: {
-      headers: { authorization: `Bearer ${accessToken}` },
-    },
-  })
-  const districts = customersData?.district
-
   return (
     <FormField
       control={control}
@@ -36,28 +17,11 @@ const CustomerSelectField = <T extends FieldValues>({ control, name }: TProps<T>
       render={({ field }) => (
         <FormItem>
           <FormLabel>Customer</FormLabel>
-          <Select onValueChange={field.onChange} value={field.value}>
-            <FormControl>
-              <SelectTrigger disabled={!districts}>
-                <SelectValue placeholder="Select customer" />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent className="max-h-60">
-              {districts?.map(({ id: distId, name, customers }) => {
-                return (
-                  <SelectGroup key={distId}>
-                    <SelectLabel>{name}</SelectLabel>
-
-                    {customers?.map(({ id: custId, name }) => (
-                      <SelectItem key={custId} value={custId} className="ml-3">
-                        {name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                )
-              })}
-            </SelectContent>
-          </Select>
+          <CustomerSelect
+            value={field.value}
+            onChange={field.onChange}
+            TriggerWrapperComp={FormControl}
+          />
         </FormItem>
       )}
     />

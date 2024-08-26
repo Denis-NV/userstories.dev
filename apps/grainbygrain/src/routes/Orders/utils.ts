@@ -5,6 +5,7 @@ export const getParamsFilter = (searchParams: URLSearchParams): InputMaybe<Order
   const delivery_date = searchParams.get('delivery_date')
   const order_products = searchParams.get('order_products')
   const delivery_method = searchParams.get('delivery_method')
+  const customer = searchParams.get('customer')
 
   return {
     ...(order_nr ? { order_nr: { _eq: parseInt(order_nr) } } : {}),
@@ -13,6 +14,7 @@ export const getParamsFilter = (searchParams: URLSearchParams): InputMaybe<Order
       ? { order_products: { product: { id: { _in: order_products.split(',') } } } }
       : {}),
     ...(delivery_method ? { delivery_method: { id: { _eq: delivery_method } } } : {}),
+    ...(customer ? { customer: { id: { _eq: customer } } } : {}),
   }
 }
 

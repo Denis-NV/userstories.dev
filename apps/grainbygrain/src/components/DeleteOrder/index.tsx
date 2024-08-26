@@ -25,7 +25,7 @@ type TProps = {
 const DeleteOrder = ({
   orderId,
   trigger = (
-    <Button>
+    <Button variant="link">
       <TrashIcon />
     </Button>
   ),

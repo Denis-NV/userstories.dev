@@ -6,6 +6,15 @@ import { useQuery } from '@apollo/client'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import DeleteOrder from '@/components/DeleteOrder'
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from '@/components/ui/table'
 
 import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
@@ -70,27 +79,68 @@ const Orders = (): JSX.Element => {
 
       <Filters />
 
-      {orders ? (
-        <ul>
-          {[...orders]
-            .sort((a, b) => a.order_nr - b.order_nr)
-            .map((order) => (
-              <li key={order.id} className="space-x-2">
-                <Link
-                  to={`/order/${order?.id}`}
-                  className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
-                  <span>{`${order.order_nr} - ${order.customer?.name}`}</span>
-                </Link>
-                <DeleteOrder orderId={order.id} />
-              </li>
-            ))}
-        </ul>
-      ) : (
-        <div>{loading && 'loading...'}</div>
-      )}
-
-      {showLoadMore && <Button onClick={handleLoadMore}>Load more</Button>}
+      <Table className="table-fixed">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Nr.</TableHead>
+            <TableHead className="w-24">Customer</TableHead>
+            <TableHead className="w-32">Delivery</TableHead>
+            <TableHead className="w-16 text-right">Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {orders &&
+            [...orders]
+              .sort((a, b) => a.order_nr - b.order_nr)
+              .map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell
+                    className="font-medium"
+                    onClick={() => console.log('clicked', order.order_nr)}
+                  >
+                    <Link
+                      to={`/order/${order?.id}`}
+                      className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+                    >
+                      <span>{order.order_nr}</span>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {' '}
+                    <Link
+                      to={`/order/${order?.id}`}
+                      className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+                    >
+                      <span>{order.customer.name}</span>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <span>{order.delivery_date}</span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DeleteOrder orderId={order.id} />
+                  </TableCell>
+                </TableRow>
+              ))}
+        </TableBody>
+        <TableFooter>
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <span>loading...</span>
+              </TableCell>
+            </TableRow>
+          ) : (
+            showLoadMore && (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <Button onClick={handleLoadMore}>Load more</Button>
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableFooter>
+      </Table>
     </div>
   )
 }
