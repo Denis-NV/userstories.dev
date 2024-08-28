@@ -119,7 +119,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
         </Form>
       </TableCell>
       <TableCell className="text-right">
-        <Button onClick={handleDelete} disabled={deleteMutation.loading}>
+        <Button variant="outline" onClick={handleDelete} disabled={deleteMutation.loading}>
           <TrashIcon />
         </Button>
       </TableCell>

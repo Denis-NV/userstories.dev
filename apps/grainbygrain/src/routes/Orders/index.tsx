@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useSearchParams, Link, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
@@ -20,6 +20,7 @@ import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
 import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
+import OrderCell from './components/OrderCell'
 
 const limit = 3
 
@@ -82,9 +83,9 @@ const Orders = (): JSX.Element => {
       <Table className="table-fixed">
         <TableHeader>
           <TableRow>
-            <TableHead>Nr.</TableHead>
-            <TableHead className="w-24">Customer</TableHead>
-            <TableHead className="w-32">Delivery</TableHead>
+            <TableHead className="w-12">Nr.</TableHead>
+            <TableHead>Customer</TableHead>
+            <TableHead className="w-28">Delivery</TableHead>
             <TableHead className="w-16 text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -94,29 +95,13 @@ const Orders = (): JSX.Element => {
               .sort((a, b) => a.order_nr - b.order_nr)
               .map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell
-                    className="font-medium"
-                    onClick={() => console.log('clicked', order.order_nr)}
-                  >
-                    <Link
-                      to={`/order/${order?.id}`}
-                      className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                    >
-                      <span>{order.order_nr}</span>
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    {' '}
-                    <Link
-                      to={`/order/${order?.id}`}
-                      className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                    >
-                      <span>{order.customer.name}</span>
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <span>{order.delivery_date}</span>
-                  </TableCell>
+                  <OrderCell orderId={order.id} content={String(order.order_nr)} />
+                  <OrderCell
+                    orderId={order.id}
+                    content={`${order.customer.name}, ${order.customer.district?.name}`}
+                  />
+                  <OrderCell orderId={order.id} content={order.delivery_date} />
+
                   <TableCell className="text-right">
                     <DeleteOrder orderId={order.id} />
                   </TableCell>

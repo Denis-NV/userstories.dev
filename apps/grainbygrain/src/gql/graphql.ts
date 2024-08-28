@@ -8210,7 +8210,12 @@ export type ListOrder_On_OrderFragment = {
   created_at: any
   order_nr: number
   delivery_date: any
-  customer: { __typename?: 'customer'; id: any; name: string }
+  customer: {
+    __typename?: 'customer'
+    id: any
+    name: string
+    district?: { __typename?: 'district'; id: any; name: string } | null
+  }
 }
 
 export type OrdersQueryQueryVariables = Exact<{
@@ -8230,7 +8235,12 @@ export type OrdersQueryQuery = {
     created_at: any
     order_nr: number
     delivery_date: any
-    customer: { __typename?: 'customer'; id: any; name: string }
+    customer: {
+      __typename?: 'customer'
+      id: any
+      name: string
+      district?: { __typename?: 'district'; id: any; name: string } | null
+    }
   }>
 }
 
@@ -8247,7 +8257,12 @@ export type AddOrderMutation = {
     created_at: any
     order_nr: number
     delivery_date: any
-    customer: { __typename?: 'customer'; id: any; name: string }
+    customer: {
+      __typename?: 'customer'
+      id: any
+      name: string
+      district?: { __typename?: 'district'; id: any; name: string } | null
+    }
   } | null
 }
 
@@ -8431,6 +8446,17 @@ export const ListOrder_On_OrderFragmentDoc = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'district' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -9450,6 +9476,17 @@ export const OrdersQueryDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'district' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -9533,6 +9570,17 @@ export const AddOrderDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'district' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
               ],
             },
           },

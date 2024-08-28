@@ -10,6 +10,10 @@ export const LIST_ORDER_FRAGMENT = graphql(`
     customer {
       id
       name
+      district {
+        id
+        name
+      }
     }
   }
 `)
