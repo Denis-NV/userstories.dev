@@ -12,8 +12,16 @@ const policies: TypePolicies = {
         merge(existing = [], incoming = []) {
           const refs = existing.map((item: RefObjectType) => item.__ref)
           const insertion = incoming.filter((item: RefObjectType) => !refs.includes(item.__ref))
+
           return [...insertion, ...existing]
         },
+      },
+    },
+  },
+  order: {
+    fields: {
+      order_products: {
+        merge: false,
       },
     },
   },

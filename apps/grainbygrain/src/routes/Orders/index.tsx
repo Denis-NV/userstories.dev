@@ -1,19 +1,33 @@
+import { useCallback } from 'react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
-import { useSearchParams, Link } from 'react-router-dom'
-
-import { ORDERS_QUERY } from './gql'
 
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
-import { getParamsFilter, getCursorFilter } from './utils'
-import { useCallback } from 'react'
+import DeleteOrder from '@/components/DeleteOrder'
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from '@/components/ui/table'
 
-const limit = 1
+import { ORDERS_QUERY } from './gql'
+import { getParamsFilter, getCursorFilter } from './utils'
+import AddOrder from './components/AddOrder'
+import Filters from './components/Filters'
+import OrderCell from './components/OrderCell'
+
+const limit = 3
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const query = useQuery(ORDERS_QUERY, {
     context: {
@@ -44,33 +58,74 @@ const Orders = (): JSX.Element => {
         },
       })
     }
-  }, [setSearchParams, orders])
+  }, [orders])
+
+  const handleOrderAdd = useCallback(
+    (id: string) => {
+      navigate(`/order/${id}`)
+    },
+    [navigate],
+  )
+
+  const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
+
+  // console.log(orders?.length, count)
 
   return (
     <div>
-      <TypographyH2 text="Orders" />
-      {orders ? (
-        <ul>
-          {[...orders]
-            .sort((order) => (order.order_nr ? -1 : 1))
-            .map((order) => (
-              <li key={order.id}>
-                <Link
-                  to={`/order/${order?.id}`}
-                  className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-                >
-                  <span>{`${order?.order_nr} - ${order?.customer?.name}`}</span>
-                </Link>
-              </li>
-            ))}
-        </ul>
-      ) : (
-        <div>{loading && 'loading...'}</div>
-      )}
+      <div className="flex justify-between">
+        <TypographyH2 text="Orders" />
+        <AddOrder onAdded={handleOrderAdd} />
+      </div>
 
-      {orders?.length && count && orders?.length < count && (
-        <Button onClick={handleLoadMore}>Load more</Button>
-      )}
+      <Filters />
+
+      <Table className="table-fixed">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-12">Nr.</TableHead>
+            <TableHead>Customer</TableHead>
+            <TableHead className="w-28">Delivery</TableHead>
+            <TableHead className="w-16 text-right">Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {orders &&
+            [...orders]
+              .sort((a, b) => a.order_nr - b.order_nr)
+              .map((order) => (
+                <TableRow key={order.id}>
+                  <OrderCell orderId={order.id} content={String(order.order_nr)} />
+                  <OrderCell
+                    orderId={order.id}
+                    content={`${order.customer.name}, ${order.customer.district?.name}`}
+                  />
+                  <OrderCell orderId={order.id} content={order.delivery_date} />
+
+                  <TableCell className="text-right">
+                    <DeleteOrder orderId={order.id} />
+                  </TableCell>
+                </TableRow>
+              ))}
+        </TableBody>
+        <TableFooter>
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <span>loading...</span>
+              </TableCell>
+            </TableRow>
+          ) : (
+            showLoadMore && (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <Button onClick={handleLoadMore}>Load more</Button>
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableFooter>
+      </Table>
     </div>
   )
 }
