@@ -114,7 +114,7 @@ const Filters = () => {
         </div>
       </div>
 
-      <Button variant="link" onClick={handleClear}>
+      <Button variant="ghost" onClick={handleClear}>
         <strong>clear</strong>
       </Button>
     </div>

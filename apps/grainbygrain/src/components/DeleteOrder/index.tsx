@@ -45,14 +45,18 @@ const DeleteOrder = ({
     },
     update: (cache, { data }) => {
       if (data?.delete_order_by_pk) {
-        const deletedId = cache.identify(data?.delete_order_by_pk)
-
-        cache.evict({ id: deletedId })
         cache.modify({
           fields: {
-            order: (_, { DELETE }) => DELETE,
+            order_aggregate: (_, { DELETE }) => {
+              return DELETE
+            },
+            order: (_, { DELETE }) => {
+              return DELETE
+            },
           },
         })
+
+        cache.evict({ id: cache.identify(data?.delete_order_by_pk) })
         cache.gc()
       }
     },

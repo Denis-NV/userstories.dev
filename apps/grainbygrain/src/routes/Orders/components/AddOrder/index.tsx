@@ -66,7 +66,12 @@ const AddOrder = ({ onAdded }: TProps) => {
 
       cache.modify({
         fields: {
-          order_aggregate: () => {},
+          order_aggregate: (_, { DELETE }) => {
+            return DELETE
+          },
+          order: (_, { DELETE }) => {
+            return DELETE
+          },
         },
       })
     },
