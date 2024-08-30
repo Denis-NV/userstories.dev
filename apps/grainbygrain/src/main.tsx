@@ -71,7 +71,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider storageKey="vite-ui-theme">
       <NhostProvider nhost={nhost}>
         <ApolloProvider client={client}>
           <RouterProvider router={router} />

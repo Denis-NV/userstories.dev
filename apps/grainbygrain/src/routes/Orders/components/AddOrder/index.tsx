@@ -92,7 +92,7 @@ const AddOrder = ({ onAdded }: TProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add order</Button>
+        <Button>Add order</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>

@@ -1,10 +1,12 @@
+import { useCallback } from 'react'
 import {
   useAuthenticationStatus,
   useSignOut,
   // useUserDefaultRole,
   // useUserRoles,
 } from '@nhost/react'
-import { Outlet, Link, Navigate, useLocation } from 'react-router-dom'
+import { Outlet, Navigate, useLocation } from 'react-router-dom'
+import { Moon, Sun, Cog } from 'lucide-react'
 
 import useThemeMode from '@/context/ThemeModeProvider/useThemeMode'
 import {
@@ -15,6 +17,22 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/toaster'
+import MainNav from '@/components/MainNav'
+
+const navData = [
+  {
+    name: 'Customers',
+    to: '/customers',
+  },
+  {
+    name: 'Products',
+    to: '/products',
+  },
+  {
+    name: 'Orders',
+    to: '/orders',
+  },
+]
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
@@ -26,47 +44,43 @@ function Root() {
 
   const { setTheme } = useThemeMode()
 
+  const handleSignOut = useCallback(() => {
+    signOut()
+  }, [signOut])
+
   if (isLoading) return <div>Loading...</div>
 
   return isAuthenticated ? (
-    <div>
-      <div className="flex flex-row justify-between align-middle">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button>Toggle theme</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <div className="bg-background min-h-screen font-sans antialiased">
+      <div className="flex flex-row justify-between px-2 py-2 align-middle">
+        <MainNav navData={navData} />
 
-        <span className="text-lg font-semibold sm:text-3xl">Grain by Grain</span>
+        <div className="flex flex-row space-x-1 align-middle">
+          <Button variant="link" onClick={handleSignOut}>
+            Sign Out
+          </Button>
 
-        {isAuthenticated && <Button onClick={() => signOut()}>Sign Out</Button>}
+          <Button variant="ghost" size="icon">
+            <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
+            <span className="sr-only">Settings</span>
+          </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-
-      <nav className={'mx-6 flex items-center space-x-4 lg:space-x-6'}>
-        <Link
-          to={`/customers`}
-          className="hover:text-primary text-sm font-medium transition-colors"
-        >
-          Customers
-        </Link>
-        <Link
-          to={`/products`}
-          className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-        >
-          Products
-        </Link>
-        <Link
-          to={`/orders`}
-          className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-        >
-          Orders
-        </Link>
-      </nav>
 
       {/* <ul>
         <span>User roles: </span>
@@ -75,7 +89,6 @@ function Root() {
         ))}
       </ul>
       <span>Default Role: {userDeafaultRole}</span> */}
-      <hr />
 
       <Outlet />
 
