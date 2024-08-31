@@ -118,7 +118,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
   return (
     <Form {...form}>
       <TableRow>
-        <TableCell colSpan={2}>
+        <TableCell>
           <form id="addOrderProductForm" onSubmit={form.handleSubmit(handleAdd)} />
           <FormField
             control={form.control}
@@ -155,6 +155,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
             )}
           />
         </TableCell>
+        <TableCell className="hidden sm:table-cell" />
         <TableCell className="min-w-44">
           <FormField
             control={form.control}
@@ -172,6 +173,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
         <TableCell className="text-right">
           <Button
             type="submit"
+            size="sm"
             form="addOrderProductForm"
             disabled={!isValid || addProductMutation.loading}
           >

@@ -68,7 +68,7 @@ const Filters = () => {
   }, [handleClearDate, handleClearCustomer])
 
   return (
-    <div className="mb-3 flex justify-between">
+    <div className="mb-6 flex justify-between">
       <div className="flex">
         <div className="flex align-middle">
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>

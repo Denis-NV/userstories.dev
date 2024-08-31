@@ -40,9 +40,6 @@ const AddOrder = ({ onAdded }: TProps) => {
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      delivery_date: new Date(),
-    },
   })
 
   const {
@@ -92,7 +89,7 @@ const AddOrder = ({ onAdded }: TProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add order</Button>
+        <Button size="sm">Add order</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>

@@ -22,7 +22,7 @@ import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
 import OrderCell from './components/OrderCell'
 
-const limit = 3
+const limit = 5
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
@@ -69,19 +69,20 @@ const Orders = (): JSX.Element => {
 
   const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
 
-  // console.log(orders?.length, count)
-
   return (
-    <div>
-      <div className="flex justify-between">
+    <div className="flex h-full flex-col">
+      <div className="mb-2  flex justify-between">
         <TypographyH2 text="Orders" />
-        <AddOrder onAdded={handleOrderAdd} />
+
+        <div className="pt-1">
+          <AddOrder onAdded={handleOrderAdd} />
+        </div>
       </div>
 
       <Filters />
 
       <Table className="table-fixed">
-        <TableHeader>
+        <TableHeader className="bg-background sticky top-0">
           <TableRow>
             <TableHead className="w-12">Nr.</TableHead>
             <TableHead>Customer</TableHead>
@@ -107,22 +108,24 @@ const Orders = (): JSX.Element => {
                   </TableCell>
                 </TableRow>
               ))}
+
+          {showLoadMore && (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <Button onClick={handleLoadMore} variant="outline" size="sm">
+                  Load more
+                </Button>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
         <TableFooter>
-          {loading ? (
+          {loading && (
             <TableRow>
               <TableCell colSpan={4} align="center">
                 <span>loading...</span>
               </TableCell>
             </TableRow>
-          ) : (
-            showLoadMore && (
-              <TableRow>
-                <TableCell colSpan={4} align="center">
-                  <Button onClick={handleLoadMore}>Load more</Button>
-                </TableCell>
-              </TableRow>
-            )
           )}
         </TableFooter>
       </Table>

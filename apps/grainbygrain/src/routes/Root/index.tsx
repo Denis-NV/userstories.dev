@@ -1,20 +1,16 @@
+import { useCallback } from 'react'
 import {
   useAuthenticationStatus,
   useSignOut,
   // useUserDefaultRole,
   // useUserRoles,
 } from '@nhost/react'
-import { Outlet, Link, Navigate, useLocation } from 'react-router-dom'
+import { Outlet, Navigate, useLocation } from 'react-router-dom'
+import { Cog } from 'lucide-react'
 
-import useThemeMode from '@/context/ThemeModeProvider/useThemeMode'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/toaster'
+import MainNav from '@/components/MainNav'
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
@@ -24,65 +20,49 @@ function Root() {
   // const userRoles = useUserRoles()
   // const userDeafaultRole = useUserDefaultRole()
 
-  const { setTheme } = useThemeMode()
+  const handleSignOut = useCallback(() => {
+    signOut()
+  }, [signOut])
 
   if (isLoading) return <div>Loading...</div>
 
-  return isAuthenticated ? (
-    <div>
-      <div className="flex flex-row justify-between align-middle">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button>Toggle theme</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+  return (
+    <div className="bg-background">
+      {isAuthenticated ? (
+        <div className="flex h-screen min-h-screen flex-col items-center justify-between font-sans antialiased">
+          <header className="bg-background sticky top-0 z-10 flex w-full flex-row justify-between border-b px-2 py-2 align-middle">
+            <MainNav />
 
-        <span className="text-lg font-semibold sm:text-3xl">Grain by Grain</span>
+            <div className="flex flex-row space-x-1 align-middle">
+              <Button variant="link" onClick={handleSignOut}>
+                Sign Out
+              </Button>
 
-        {isAuthenticated && <Button onClick={() => signOut()}>Sign Out</Button>}
-      </div>
+              <Button variant="ghost" size="icon">
+                <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
+                <span className="sr-only">Settings</span>
+              </Button>
+            </div>
+          </header>
 
-      <nav className={'mx-6 flex items-center space-x-4 lg:space-x-6'}>
-        <Link
-          to={`/customers`}
-          className="hover:text-primary text-sm font-medium transition-colors"
-        >
-          Customers
-        </Link>
-        <Link
-          to={`/products`}
-          className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-        >
-          Products
-        </Link>
-        <Link
-          to={`/orders`}
-          className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-        >
-          Orders
-        </Link>
-      </nav>
+          {/* <ul>
+            <span>User roles: </span>
+            {userRoles.map((role, index) => (
+              <li key={index}>{role}</li>
+            ))}
+          </ul>
+          <span>Default Role: {userDeafaultRole}</span> */}
 
-      {/* <ul>
-        <span>User roles: </span>
-        {userRoles.map((role, index) => (
-          <li key={index}>{role}</li>
-        ))}
-      </ul>
-      <span>Default Role: {userDeafaultRole}</span> */}
-      <hr />
+          <main className="w-full max-w-4xl flex-1 overflow-hidden px-2 pt-6 sm:pt-10">
+            <Outlet />
+          </main>
 
-      <Outlet />
-
-      <Toaster />
+          <Toaster />
+        </div>
+      ) : (
+        <Navigate to="/signin" state={{ from: location }} replace />
+      )}
     </div>
-  ) : (
-    <Navigate to="/signin" state={{ from: location }} replace />
   )
 }
 

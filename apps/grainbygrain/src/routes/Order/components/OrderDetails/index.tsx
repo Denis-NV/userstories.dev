@@ -110,7 +110,10 @@ const OrderDetails = ({ order }: TProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-96 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="mx-auto w-full max-w-xl space-y-6"
+      >
         <CustomerSelectField<TFormData> control={form.control} name="customer_id" />
 
         <DeliveryDateSelectField<TFormData> control={form.control} name="delivery_date" />
@@ -163,7 +166,7 @@ const OrderDetails = ({ order }: TProps) => {
             {loading ? 'Saving changes...' : error && 'Problem saving changes. Please try again'}
           </div>
           <div className="flex-1 text-right">
-            <Button type="submit" disabled={!isDirty}>
+            <Button size="sm" type="submit" disabled={!isDirty}>
               {isDirty ? 'Save changes' : 'No changes to save'}
             </Button>
           </div>

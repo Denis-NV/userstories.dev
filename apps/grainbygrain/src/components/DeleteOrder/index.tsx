@@ -25,7 +25,7 @@ type TProps = {
 const DeleteOrder = ({
   orderId,
   trigger = (
-    <Button variant="link">
+    <Button variant="ghost" size="sm">
       <TrashIcon />
     </Button>
   ),
@@ -79,14 +79,14 @@ const DeleteOrder = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Warning</DialogTitle>
           <DialogDescription>Are you sure you want to delete this order?</DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="flex-col space-y-2 sm:space-y-0">
-          <Button onClick={handleDelete} disabled={deleteMutation.loading}>
+          <Button onClick={handleDelete} disabled={deleteMutation.loading} variant="destructive">
             Confirm
           </Button>
           <Button onClick={handleCancel} disabled={deleteMutation.loading} variant="outline">
