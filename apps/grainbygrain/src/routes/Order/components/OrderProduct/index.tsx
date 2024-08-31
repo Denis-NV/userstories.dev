@@ -86,7 +86,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       <TableCell className="font-medium">
         {name} {weight}g
       </TableCell>
-      <TableCell>{department?.name}</TableCell>
+      <TableCell className="hidden sm:table-cell">{department?.name}</TableCell>
       <TableCell>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleUpdate)}>
@@ -119,7 +119,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
         </Form>
       </TableCell>
       <TableCell className="text-right">
-        <Button variant="outline" onClick={handleDelete} disabled={deleteMutation.loading}>
+        <Button variant="ghost" size="sm" onClick={handleDelete} disabled={deleteMutation.loading}>
           <TrashIcon />
         </Button>
       </TableCell>

@@ -6,33 +6,11 @@ import {
   // useUserRoles,
 } from '@nhost/react'
 import { Outlet, Navigate, useLocation } from 'react-router-dom'
-import { Moon, Sun, Cog } from 'lucide-react'
+import { Cog } from 'lucide-react'
 
-import useThemeMode from '@/context/ThemeModeProvider/useThemeMode'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/toaster'
 import MainNav from '@/components/MainNav'
-
-const navData = [
-  {
-    name: 'Customers',
-    to: '/customers',
-  },
-  {
-    name: 'Products',
-    to: '/products',
-  },
-  {
-    name: 'Orders',
-    to: '/orders',
-  },
-]
 
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
@@ -42,60 +20,49 @@ function Root() {
   // const userRoles = useUserRoles()
   // const userDeafaultRole = useUserDefaultRole()
 
-  const { setTheme } = useThemeMode()
-
   const handleSignOut = useCallback(() => {
     signOut()
   }, [signOut])
 
   if (isLoading) return <div>Loading...</div>
 
-  return isAuthenticated ? (
-    <div className="bg-background min-h-screen font-sans antialiased">
-      <div className="flex flex-row justify-between px-2 py-2 align-middle">
-        <MainNav navData={navData} />
+  return (
+    <div className="bg-background">
+      {isAuthenticated ? (
+        <div className="flex h-screen min-h-screen flex-col items-center justify-between font-sans antialiased">
+          <header className="bg-background sticky top-0 z-10 flex w-full flex-row justify-between border-b px-2 py-2 align-middle">
+            <MainNav />
 
-        <div className="flex flex-row space-x-1 align-middle">
-          <Button variant="link" onClick={handleSignOut}>
-            Sign Out
-          </Button>
-
-          <Button variant="ghost" size="icon">
-            <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
-            <span className="sr-only">Settings</span>
-          </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
+            <div className="flex flex-row space-x-1 align-middle">
+              <Button variant="link" onClick={handleSignOut}>
+                Sign Out
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
+              <Button variant="ghost" size="icon">
+                <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
+                <span className="sr-only">Settings</span>
+              </Button>
+            </div>
+          </header>
+
+          {/* <ul>
+            <span>User roles: </span>
+            {userRoles.map((role, index) => (
+              <li key={index}>{role}</li>
+            ))}
+          </ul>
+          <span>Default Role: {userDeafaultRole}</span> */}
+
+          <main className="w-full max-w-4xl flex-1 overflow-hidden px-2 pt-6 sm:pt-10">
+            <Outlet />
+          </main>
+
+          <Toaster />
         </div>
-      </div>
-
-      {/* <ul>
-        <span>User roles: </span>
-        {userRoles.map((role, index) => (
-          <li key={index}>{role}</li>
-        ))}
-      </ul>
-      <span>Default Role: {userDeafaultRole}</span> */}
-
-      <Outlet />
-
-      <Toaster />
+      ) : (
+        <Navigate to="/signin" state={{ from: location }} replace />
+      )}
     </div>
-  ) : (
-    <Navigate to="/signin" state={{ from: location }} replace />
   )
 }
 

@@ -5,13 +5,12 @@ import { createApolloClient } from '@nhost/apollo'
 import { ApolloProvider, InMemoryCache } from '@apollo/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { ThemeProvider } from './context/ThemeModeProvider'
 import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
 import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
-import Products from '@/routes/Products'
+import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
 import { TOrderRouteParams } from '@/routes/Order/types'
@@ -49,10 +48,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: 'products',
-        element: <Products />,
-      },
+
       {
         path: 'orders',
         element: <Orders />,
@@ -60,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: `order/:${orderParamKey}`,
         element: <Order />,
+      },
+      {
+        path: 'production',
+        element: <Production />,
       },
     ],
   },
@@ -71,12 +71,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider storageKey="vite-ui-theme">
-      <NhostProvider nhost={nhost}>
-        <ApolloProvider client={client}>
-          <RouterProvider router={router} />
-        </ApolloProvider>
-      </NhostProvider>
-    </ThemeProvider>
+    <NhostProvider nhost={nhost}>
+      <ApolloProvider client={client}>
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </NhostProvider>
   </React.StrictMode>,
 )

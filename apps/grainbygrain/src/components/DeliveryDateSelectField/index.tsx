@@ -43,8 +43,9 @@ const DeliveryDateSelectField = <T extends FieldValues>({ control, name }: TProp
               <Calendar
                 mode="single"
                 selected={field.value}
-                onSelect={(e) => {
-                  field.onChange(e)
+                onSelect={(value) => {
+                  if (value) field.onChange(value)
+
                   setCalendarOpen(false)
                 }}
                 disabled={{ before: new Date() }}

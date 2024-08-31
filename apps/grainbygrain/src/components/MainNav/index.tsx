@@ -1,63 +1,68 @@
-import { useCallback, useState } from 'react'
+import {
+  useMemo,
+  // useState
+} from 'react'
+import { Link } from 'react-router-dom'
+import { format } from 'date-fns'
+
 import { cn } from '@/utils'
-import { Link, LinkProps, useNavigate } from 'react-router-dom'
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetDescription,
+//   SheetTitle,
+//   SheetTrigger,
+// } from '@/components/ui/sheet'
+// import { Button } from '@/components/ui/button'
+// import { ScrollArea } from '@/components/ui/scroll-area'
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
+// import MobileLink from './MobileLink'
 
-type TMobileLinkProps = LinkProps & {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
-}
+const MainNav = () => {
+  // const [open, setOpen] = useState(false)
 
-const MobileLink = ({ to, onOpenChange, className, children, ...props }: TMobileLinkProps) => {
-  const navigate = useNavigate()
-
-  const handleClick = useCallback(() => {
-    navigate(to)
-    onOpenChange?.(false)
-  }, [navigate, onOpenChange])
-
-  return (
-    <Link to={to} onClick={handleClick} className={className} {...props}>
-      {children}
-    </Link>
+  const navData = useMemo(
+    () => [
+      {
+        name: 'Orders',
+        to: `/orders?delivery_date=${format(new Date(), 'yyyy-MM-dd')}`,
+        group: '/order',
+      },
+      {
+        name: 'Production',
+        to: '/production',
+        group: '/production',
+      },
+    ],
+    [],
   )
-}
 
-type TProps = {
-  navData: {
-    name: string
-    to: string
-  }[]
-}
-
-const MainNav = ({ navData }: TProps) => {
-  const [open, setOpen] = useState(false)
+  const isSelected = (group: string, index: number) =>
+    location?.pathname?.startsWith(group) || (index === 0 && location?.pathname === '/')
 
   return (
     <div className="flex">
-      <nav className="hidden items-center sm:flex">
-        {navData.map((navItem, index) => (
+      <nav
+        // className="hidden items-center sm:flex"
+        className="flex items-center"
+      >
+        {navData.map(({ to, name, group }, index) => (
           <Link
-            to={navItem.to}
-            key={navItem.to}
+            to={to}
+            key={to}
             className={cn(
-              'hover:text-primary text-md flex h-7 items-center justify-center rounded-full px-4 text-center transition-colors',
-              location?.pathname?.startsWith(navItem.to) ||
-                (index === 0 && location?.pathname === '/')
-                ? 'bg-muted text-primary font-medium'
+              'hover:text-primary text-md flex h-7 items-center justify-center rounded-full px-4 text-center font-medium transition-colors',
+              isSelected(group, index)
+                ? 'bg-muted text-primary font-semibold'
                 : 'text-muted-foreground',
             )}
           >
-            {navItem.name}
+            {name}
           </Link>
         ))}
       </nav>
 
-      <Sheet open={open} onOpenChange={setOpen}>
+      {/* <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
@@ -96,18 +101,19 @@ const MainNav = ({ navData }: TProps) => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-[300px] pr-0">
+          <SheetTitle>Menu</SheetTitle>
+          <SheetDescription className="sr-only">Menu</SheetDescription>
           <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-2">
             <div className="flex flex-col space-y-3">
               {navData.map(
-                ({ to, name }, index) =>
+                ({ to, name, group }, index) =>
                   to && (
                     <MobileLink
                       key={to}
                       to={to}
                       className={cn(
                         'hover:text-primary transition-colors',
-                        location?.pathname?.startsWith(to) ||
-                          (index === 0 && location?.pathname === '/')
+                        isSelected(group, index)
                           ? 'text-primary font-semibold'
                           : 'text-muted-foreground',
                       )}
@@ -120,7 +126,7 @@ const MainNav = ({ navData }: TProps) => {
             </div>
           </ScrollArea>
         </SheetContent>
-      </Sheet>
+      </Sheet> */}
     </div>
   )
 }

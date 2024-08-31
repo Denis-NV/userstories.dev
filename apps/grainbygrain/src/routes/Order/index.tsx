@@ -11,6 +11,7 @@ import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
 import OrderDetails from './components/OrderDetails'
 import Products from './components/OrderProducts'
+import { TypographyH2 } from '@/components/typography'
 
 const Order = (): JSX.Element => {
   const { orderId } = useParams<TOrderRouteParams>()
@@ -34,29 +35,43 @@ const Order = (): JSX.Element => {
     navigate('/orders')
   }, [navigate])
 
+  const handleBackClick = useCallback(() => {
+    navigate(-1)
+  }, [navigate])
+
   return (
-    <div>
-      <div className="flex w-full py-2 ">
-        <div className="flex flex-1 flex-row items-center">Order nr: {order?.order_nr}</div>
-        <div className="space-x-2">
-          <Button onClick={() => navigate(-1)}>Back</Button>
-
-          {orderId && (
-            <DeleteOrder
-              orderId={orderId}
-              trigger={<Button variant="outline">Delete</Button>}
-              onDeleted={handleOrderDelete}
-            />
-          )}
-        </div>
-      </div>
-
+    <div className="h-full overflow-scroll pb-10">
       {order ? (
-        <Tabs defaultValue="details" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="products">Products</TabsTrigger>
-          </TabsList>
+        <Tabs defaultValue="details" className="w-full ">
+          <div className="bg-background b-2 sticky top-0 z-10 mb-6">
+            <div className="mb-2 flex w-full justify-between">
+              <TypographyH2 text={`Order - ${order?.order_nr}`} />
+
+              <div className="space-x-2 pt-1">
+                <Button onClick={handleBackClick} size="sm">
+                  Back
+                </Button>
+
+                {orderId && (
+                  <DeleteOrder
+                    orderId={orderId}
+                    trigger={
+                      <Button variant="outline" size="sm">
+                        Delete
+                      </Button>
+                    }
+                    onDeleted={handleOrderDelete}
+                  />
+                )}
+              </div>
+            </div>
+
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="details">Details</TabsTrigger>
+              <TabsTrigger value="products">Products</TabsTrigger>
+            </TabsList>
+          </div>
+
           <TabsContent value="details">
             <OrderDetails order={order} />
           </TabsContent>
