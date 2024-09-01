@@ -42,11 +42,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Business by Numbers App and all the dependant libraries
-        run: pnpm run build:bbn
+      - name: Build apps and libs
+        run: pnpm turbo run build
 
       - name: Run linting
-        run: pnpm run lint
+        run: pnpm turbo run lint
 
       - name: Run vitest unit and integration tests
-        run: pnpm run test:bbn
+        run: pnpm turbo run test

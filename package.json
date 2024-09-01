@@ -35,9 +35,6 @@
     "turbo": "^1.13.3",
     "typescript": "^5.3.3"
   },
-  "engines": {
-    "node": "20.9.0"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
