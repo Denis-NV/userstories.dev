@@ -19,8 +19,8 @@ import typePolicies from '@/utils/typePolicies'
 import './styles.css'
 
 const nhost = new NhostClient({
-  subdomain: import.meta.env.VITE_NHOST_SUBDOMAIN,
-  region: import.meta.env.VITE_NHOST_REGION,
+  subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
+  region: import.meta.env.VITE_GBG_NHOST_REGION,
   autoSignIn: false,
 })
 
