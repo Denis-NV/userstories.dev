@@ -1,13 +1,11 @@
-name: 'BBN app: delpoy to Netlify on "push" to "main"'
+name: 'GbG app: delpoy to Netlify on "push" to "main"'
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'apps/businessbynumbers/**'
-      - 'libs/shadcn-ui/**'
-      - 'libs/utils/**'
+      - 'apps/grainbygrain/**'
   workflow_dispatch:
 
 jobs:
@@ -45,13 +43,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Business by Numbers App and all the dependant libraries
-        run: pnpm turbo run build -F bbn
+      - name: Build Grain by Grain App and all the dependant libraries
+        run: pnpm turbo run build -F grain-by-grain
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
         with:
-          publish-dir: './apps/businessbynumbers/dist'
+          publish-dir: './apps/grainbygrain/dist'
           production-branch: main
           deploy-message: 'Deploy from GitHub Actions'
           enable-pull-request-comment: false
@@ -59,4 +57,4 @@ jobs:
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_BBN_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_GBG_SITE_ID }}

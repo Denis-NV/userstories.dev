@@ -7,8 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
-import Customers from '@/routes/Customers'
-import Customer from '@/routes/Customer'
+// import Customers from '@/routes/Customers'
+// import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
@@ -37,17 +37,17 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: 'customers',
-        element: <Customers />,
-        children: [
-          { index: true, element: <Customer /> },
-          {
-            path: ':customerId',
-            element: <Customer />,
-          },
-        ],
-      },
+      // {
+      //   path: 'customers',
+      //   element: <Customers />,
+      //   children: [
+      //     { index: true, element: <Customer /> },
+      //     {
+      //       path: ':customerId',
+      //       element: <Customer />,
+      //     },
+      //   ],
+      // },
       {
         path: '/',
         element: <Orders />,
