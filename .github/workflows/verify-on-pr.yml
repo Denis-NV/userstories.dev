@@ -6,6 +6,10 @@ on:
   workflow_call:
   workflow_dispatch:
 
+env:
+  VITE_GBG_NHOST_SUBDOMAIN: ${{ secrets.VITE_GBG_NHOST_SUBDOMAIN }}
+  VITE_GBG_NHOST_REGION: ${{ secrets.VITE_GBG_NHOST_REGION }}
+
 jobs:
   verify:
     name: Run lint and unit tests
