@@ -5,7 +5,6 @@
   "author": "Denis Nemytov",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
-    "@swc-node/register": "^1.6.8",
     "@swc/core": "^1.3.103",
     "@turbo/gen": "^1.11.3",
     "@types/inquirer-autocomplete-prompt": "^3.0.3",
@@ -36,9 +35,6 @@
     "turbo": "^1.13.3",
     "typescript": "^5.3.3"
   },
-  "engines": {
-    "node": "20.9.0"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -58,6 +54,7 @@
       "pnpm syncpack lint"
     ]
   },
+  "packageManager": "pnpm@9.9.0",
   "pnpm": {
     "peerDependencyRules": {
       "allowedVersions": {
@@ -84,6 +81,6 @@
     "test:watch:ui": "pnpm --filter=@ustrs/shadcn-ui test:watch"
   },
   "volta": {
-    "node": "20.9.0"
+    "node": "20.17.0"
   }
 }
