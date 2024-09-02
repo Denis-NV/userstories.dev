@@ -110,7 +110,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
                 )}
               />
               {isDirty && (
-                <Button type="submit" disabled={!isDirty} className="ml-2">
+                <Button type="submit" size="sm" disabled={!isDirty} className="ml-2">
                   <CheckIcon />
                 </Button>
               )}

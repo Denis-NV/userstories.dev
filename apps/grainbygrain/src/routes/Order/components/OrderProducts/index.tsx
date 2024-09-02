@@ -24,7 +24,7 @@ const OrderProducts = ({ products, orderId }: TProps) => {
         <TableRow>
           <TableHead>Product</TableHead>
           <TableHead className="hidden w-40 sm:table-cell">Department</TableHead>
-          <TableHead className="w-24">Quantity</TableHead>
+          <TableHead className="w-28">Quantity</TableHead>
           <TableHead className="w-16 text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
