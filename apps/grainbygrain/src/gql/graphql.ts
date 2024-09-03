@@ -9439,7 +9439,7 @@ export const OrdersQueryDocument = {
                         {
                           kind: 'ObjectField',
                           name: { kind: 'Name', value: 'created_at' },
-                          value: { kind: 'EnumValue', value: 'asc' },
+                          value: { kind: 'EnumValue', value: 'desc' },
                         },
                       ],
                     },

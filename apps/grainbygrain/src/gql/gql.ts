@@ -41,7 +41,7 @@ const documents = {
     types.DeleteOrderProductDocument,
   '\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n  }\n':
     types.ListOrder_On_OrderFragmentDoc,
-  '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: asc }]) {\n      ...listOrder_on_Order\n    }\n  }\n':
+  '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n':
     types.OrdersQueryDocument,
   '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date) {\n    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {\n      ...listOrder_on_Order\n    }\n  }\n':
     types.AddOrderDocument,
@@ -149,8 +149,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: asc }]) {\n      ...listOrder_on_Order\n    }\n  }\n',
-): (typeof documents)['\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: asc }]) {\n      ...listOrder_on_Order\n    }\n  }\n']
+  source: '\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n',
+): (typeof documents)['\n  query OrdersQuery($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

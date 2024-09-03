@@ -22,7 +22,7 @@ import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
 import OrderCell from './components/OrderCell'
 
-const limit = 5
+const limit = 100
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
@@ -93,7 +93,7 @@ const Orders = (): JSX.Element => {
         <TableBody>
           {orders &&
             [...orders]
-              .sort((a, b) => a.order_nr - b.order_nr)
+              .sort((a, b) => b.order_nr - a.order_nr)
               .map((order) => (
                 <TableRow key={order.id}>
                   <OrderCell orderId={order.id} content={String(order.order_nr)} />
