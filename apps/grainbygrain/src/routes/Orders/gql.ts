@@ -25,7 +25,7 @@ export const ORDERS_QUERY = graphql(`
         count
       }
     }
-    order(limit: $limit, where: $filters, order_by: [{ created_at: asc }]) {
+    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {
       ...listOrder_on_Order
     }
   }

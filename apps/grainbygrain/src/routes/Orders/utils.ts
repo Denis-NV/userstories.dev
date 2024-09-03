@@ -21,11 +21,18 @@ export const getParamsFilter = (searchParams: URLSearchParams): InputMaybe<Order
 export const getCursorFilter = (items?: { created_at: string }[]) => {
   if (items) {
     const dates = items.map(({ created_at }) => new Date(created_at).getTime())
-    const maxDate = Math.max(...dates)
+    const maxDate = Math.min(...dates)
     const cursor = items[dates.findIndex((date) => date === maxDate)].created_at
 
-    return { created_at: { _gt: cursor } }
+    return { created_at: { _lt: cursor } }
   }
 
-  return { created_at: { _gt: '0000-01-01T00:00:00+00:00' } }
+  const date = new Date()
+  date.setHours(0)
+  date.setMinutes(0)
+  date.setSeconds(0)
+  date.setMilliseconds(0)
+  date.setDate(date.getDate() + 1)
+
+  return { created_at: { _lt: date.toISOString() } }
 }
