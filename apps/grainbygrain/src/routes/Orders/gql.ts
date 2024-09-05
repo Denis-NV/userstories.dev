@@ -19,7 +19,7 @@ export const LIST_ORDER_FRAGMENT = graphql(`
 `)
 
 export const ORDERS_QUERY = graphql(`
-  query OrdersQuery($limit: Int, $filters: order_bool_exp) {
+  query Orders($limit: Int, $filters: order_bool_exp) {
     order_aggregate(where: $filters) {
       aggregate {
         count
