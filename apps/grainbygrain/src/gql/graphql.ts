@@ -8267,11 +8267,16 @@ export type AddOrderMutation = {
 }
 
 export type ProdusctsByOrderDateQueryVariables = Exact<{
-  filters?: InputMaybe<Order_Bool_Exp>
+  limit?: InputMaybe<Scalars['Int']['input']>
+  filters?: InputMaybe<Order_Product_Bool_Exp>
 }>
 
 export type ProdusctsByOrderDateQuery = {
   __typename?: 'query_root'
+  order_product_aggregate: {
+    __typename?: 'order_product_aggregate'
+    aggregate?: { __typename?: 'order_product_aggregate_fields'; count: number } | null
+  }
   order_product: Array<{
     __typename?: 'order_product'
     id: any
@@ -9617,8 +9622,13 @@ export const ProdusctsByOrderDateDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_bool_exp' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product_bool_exp' } },
         },
       ],
       selectionSet: {
@@ -9626,21 +9636,41 @@ export const ProdusctsByOrderDateDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'order_product' },
+            name: { kind: 'Name', value: 'order_product_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'order' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
-                    },
-                  ],
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
+                  },
                 },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_product' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
               },
               {
                 kind: 'Argument',

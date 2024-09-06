@@ -45,7 +45,7 @@ const documents = {
     types.OrdersDocument,
   '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date) {\n    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {\n      ...listOrder_on_Order\n    }\n  }\n':
     types.AddOrderDocument,
-  '\n  query ProdusctsByOrderDate($filters: order_bool_exp) {\n    order_product(where: { order: $filters }, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n':
+  '\n  query ProdusctsByOrderDate($limit: Int, $filters: order_product_bool_exp) {\n    order_product_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n':
     types.ProdusctsByOrderDateDocument,
 }
 
@@ -163,8 +163,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query ProdusctsByOrderDate($filters: order_bool_exp) {\n    order_product(where: { order: $filters }, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n',
-): (typeof documents)['\n  query ProdusctsByOrderDate($filters: order_bool_exp) {\n    order_product(where: { order: $filters }, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n']
+  source: '\n  query ProdusctsByOrderDate($limit: Int, $filters: order_product_bool_exp) {\n    order_product_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n',
+): (typeof documents)['\n  query ProdusctsByOrderDate($limit: Int, $filters: order_product_bool_exp) {\n    order_product_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
