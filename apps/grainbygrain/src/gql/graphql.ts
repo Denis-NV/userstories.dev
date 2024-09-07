@@ -7965,9 +7965,9 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
-export type CustomersByDistrictQueryQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersByDistrictQueryVariables = Exact<{ [key: string]: never }>
 
-export type CustomersByDistrictQueryQuery = {
+export type CustomersByDistrictQuery = {
   __typename?: 'query_root'
   district: Array<{
     __typename?: 'district'
@@ -7984,6 +7984,13 @@ export type DeleteOrderMutationVariables = Exact<{
 export type DeleteOrderMutation = {
   __typename?: 'mutation_root'
   delete_order_by_pk?: { __typename?: 'order'; id: any } | null
+}
+
+export type DepartmentsQueryVariables = Exact<{ [key: string]: never }>
+
+export type DepartmentsQuery = {
+  __typename?: 'query_root'
+  department: Array<{ __typename?: 'department'; id: any; name: string }>
 }
 
 export type CustomerQueryVariables = Exact<{
@@ -8267,16 +8274,11 @@ export type AddOrderMutation = {
 }
 
 export type ProdusctsByOrderDateQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']['input']>
   filters?: InputMaybe<Order_Product_Bool_Exp>
 }>
 
 export type ProdusctsByOrderDateQuery = {
   __typename?: 'query_root'
-  order_product_aggregate: {
-    __typename?: 'order_product_aggregate'
-    aggregate?: { __typename?: 'order_product_aggregate_fields'; count: number } | null
-  }
   order_product: Array<{
     __typename?: 'order_product'
     id: any
@@ -8491,13 +8493,13 @@ export const ListOrder_On_OrderFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ListOrder_On_OrderFragment, unknown>
-export const CustomersByDistrictQueryDocument = {
+export const CustomersByDistrictDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'CustomersByDistrictQuery' },
+      name: { kind: 'Name', value: 'CustomersByDistrict' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8559,7 +8561,7 @@ export const CustomersByDistrictQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CustomersByDistrictQueryQuery, CustomersByDistrictQueryQueryVariables>
+} as unknown as DocumentNode<CustomersByDistrictQuery, CustomersByDistrictQueryVariables>
 export const DeleteOrderDocument = {
   kind: 'Document',
   definitions: [
@@ -8600,6 +8602,32 @@ export const DeleteOrderDocument = {
     },
   ],
 } as unknown as DocumentNode<DeleteOrderMutation, DeleteOrderMutationVariables>
+export const DepartmentsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Departments' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DepartmentsQuery, DepartmentsQueryVariables>
 export const CustomerDocument = {
   kind: 'Document',
   definitions: [
@@ -9622,11 +9650,6 @@ export const ProdusctsByOrderDateDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
-        },
-        {
-          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product_bool_exp' } },
         },
@@ -9636,37 +9659,8 @@ export const ProdusctsByOrderDateDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'order_product_aggregate' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
             name: { kind: 'Name', value: 'order_product' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },

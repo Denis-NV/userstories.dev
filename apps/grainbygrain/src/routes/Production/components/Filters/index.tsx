@@ -7,20 +7,20 @@ import { cn, removeNulls } from '@/utils'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
-import CustomerSelect from '@/components/CustomerSelect'
+import DepartmentSelect from '@/components/DepartmentSelect'
 
 const deliveryDateKey = 'delivery_date'
-const customerKey = 'customer'
+const departmentKey = 'department'
 
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const delivery_date_param = searchParams.get(deliveryDateKey)
-  const customer_param = searchParams.get(customerKey)
+  const department_param = searchParams.get(departmentKey)
 
   const delivery_date = delivery_date_param ? new Date(delivery_date_param) : undefined
-  const customer = removeNulls(customer_param) ?? ''
+  const department = removeNulls(department_param) ?? ''
 
   const handleDeliveryDateSelect = useCallback(
     (date?: Date) => {
@@ -35,10 +35,10 @@ const Filters = () => {
     [setSearchParams, setCalendarOpen],
   )
 
-  const handleCustomerSelect = useCallback(
+  const handleDepartmentSelect = useCallback(
     (value?: string) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (value) prev.set(customerKey, value)
+        if (value) prev.set(departmentKey, value)
 
         return prev
       })
@@ -54,9 +54,9 @@ const Filters = () => {
     })
   }, [setSearchParams])
 
-  const handleClearCustomer = useCallback(() => {
+  const handleClearDepartment = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(customerKey)
+      prev.delete(departmentKey)
 
       return prev
     })
@@ -64,8 +64,8 @@ const Filters = () => {
 
   const handleClear = useCallback(() => {
     handleClearDate()
-    handleClearCustomer()
-  }, [handleClearDate, handleClearCustomer])
+    handleClearDepartment()
+  }, [handleClearDate, handleClearDepartment])
 
   return (
     <div className="mb-6 flex justify-between">
@@ -101,14 +101,14 @@ const Filters = () => {
         </div>
 
         <div className="flex align-middle">
-          <CustomerSelect
-            value={customer}
-            onChange={handleCustomerSelect}
-            placeholder="customer"
-            triggerClassName="w-28"
+          <DepartmentSelect
+            value={department}
+            onChange={handleDepartmentSelect}
+            placeholder="department"
+            triggerClassName="w-30"
           />
 
-          <Button variant="link" onClick={handleClearCustomer}>
+          <Button variant="link" onClick={handleClearDepartment}>
             <Cross2Icon />
           </Button>
         </div>

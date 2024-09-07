@@ -14,7 +14,7 @@ import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
 import { TOrderRouteParams } from '@/routes/Order/types'
-import typePolicies from '@/utils/typePolicies'
+import typePolicies from '@/typePolicies'
 
 import './styles.css'
 

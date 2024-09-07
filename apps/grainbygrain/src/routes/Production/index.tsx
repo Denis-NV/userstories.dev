@@ -1,9 +1,8 @@
-import { useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
+import { format } from 'date-fns'
 
-import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import {
   Table,
@@ -16,12 +15,11 @@ import {
 } from '@/components/ui/table'
 
 import { PRODUCTS_BY_ORDER_DATE_QUERY } from './gql'
-import { getParamsFilter, getCursorFilter } from './utils'
+import { getParamsFilter } from './utils'
 import Filters from './components/Filters'
 
-const limit = 7
-
-type TProdList = Record<string, Record<string, Record<string, number>>>
+type TProdStore = Record<string, Record<string, Record<string, number>>>
+type TProdLists = [string, Record<string, Record<string, number>>][]
 
 const Production = () => {
   const accessToken = useAccessToken()
@@ -32,9 +30,7 @@ const Production = () => {
       headers: { authorization: `Bearer ${accessToken}` },
     },
     variables: {
-      limit,
       filters: {
-        ...getCursorFilter(),
         ...getParamsFilter(searchParams),
       },
     },
@@ -42,15 +38,14 @@ const Production = () => {
 
   const { data, loading } = query
   const products = data?.order_product
-  const count = data?.order_product_aggregate?.aggregate?.count
 
-  const prodStore: TProdList = {}
+  const prodStore: TProdStore = {}
 
   products?.forEach(({ order, product, quantity }) => {
     if (product.department?.name) {
       const dateKey = String(order.delivery_date)
       const depKey = product.department.name
-      const prodKey = `${product.name} - ${product.weight}g`
+      const prodKey = `${product.name} ${product.weight}g`
 
       const existingDate = prodStore[dateKey] ?? {}
       const existingDep = existingDate[depKey] ?? {}
@@ -63,29 +58,9 @@ const Production = () => {
     }
   })
 
-  const handleLoadMore = useCallback(() => {
-    // if (orders) {
-    //   query.fetchMore({
-    //     variables: {
-    //       limit,
-    //       filters: {
-    //         ...getCursorFilter(orders),
-    //         ...getParamsFilter(searchParams),
-    //       },
-    //     },
-    //   })
-    // }
-  }, [])
-
-  const showLoadMore = Boolean(products?.length && count && products?.length < count)
-
-  const prodsByDate = Object.entries(prodStore).sort(
+  const prodsByDate: TProdLists = Object.entries(prodStore).sort(
     (a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime(),
   )
-
-  if (showLoadMore) prodsByDate.pop()
-
-  console.log(prodsByDate)
 
   return (
     <div className="flex h-full flex-col">
@@ -102,33 +77,28 @@ const Production = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* {orders &&
-            [...orders]
-              .sort((a, b) => b.order_nr - a.order_nr)
-              .map((order) => (
-                <TableRow key={order.id}>
-                  <OrderCell orderId={order.id} content={String(order.order_nr)} />
-                  <OrderCell
-                    orderId={order.id}
-                    content={`${order.customer.name}, ${order.customer.district?.name}`}
-                  />
-                  <OrderCell orderId={order.id} content={order.delivery_date} />
+          {prodsByDate.map(([date, departments]) => (
+            <TableRow key={date}>
+              <TableCell>
+                {Object.entries(departments).map(([depName, prodList]) => (
+                  <div key={depName} className="flex w-full flex-row space-x-4">
+                    <span className="mb-2 flex-grow-[1] font-medium">{format(date, 'dd LLL')}</span>
 
-                  <TableCell className="text-right">
-                    <DeleteOrder orderId={order.id} />
-                  </TableCell>
-                </TableRow>
-              ))} */}
+                    <span className="flex-grow-[3]">{depName}</span>
 
-          {showLoadMore && (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
-                <Button onClick={handleLoadMore} variant="outline" size="sm">
-                  Load more
-                </Button>
+                    <div className="mb-1 flex-grow-[4]">
+                      {Object.entries(prodList).map(([prod, quantity]) => (
+                        <div key={prod} className="flex w-full flex-row space-x-4">
+                          <span className="flex-1 font-medium">{prod}</span>
+                          <span className="px-4 font-semibold">{quantity}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </TableCell>
             </TableRow>
-          )}
+          ))}
         </TableBody>
         <TableFooter>
           {loading && (

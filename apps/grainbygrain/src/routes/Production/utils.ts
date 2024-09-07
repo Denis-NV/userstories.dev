@@ -31,22 +31,3 @@ export const getParamsFilter = (
       : {}),
   }
 }
-
-export const getCursorFilter = (items?: { created_at: string }[]) => {
-  if (items) {
-    const dates = items.map(({ created_at }) => new Date(created_at).getTime())
-    const maxDate = Math.min(...dates)
-    const cursor = items[dates.findIndex((date) => date === maxDate)].created_at
-
-    return { created_at: { _lt: cursor } }
-  }
-
-  const date = new Date()
-  date.setHours(0)
-  date.setMinutes(0)
-  date.setSeconds(0)
-  date.setMilliseconds(0)
-  date.setDate(date.getDate() + 1)
-
-  return { created_at: { _lt: date.toISOString() } }
-}
