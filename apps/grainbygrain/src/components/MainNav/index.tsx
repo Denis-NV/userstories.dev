@@ -28,7 +28,7 @@ const MainNav = () => {
         name: 'Orders',
         // to: `/${Routes.orders}?delivery_date=${format(new Date(), 'yyyy-MM-dd')}`,
         to: `/${Routes.orders}`,
-        group: `/${Routes.orders}`,
+        group: `/${Routes.order}`,
       },
       {
         name: 'Production',

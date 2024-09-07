@@ -56,11 +56,6 @@ const Production = () => {
       const existingProd = existingDep.products[prodKey] ?? { id: prodId, quantity: 0 }
       const totalProdQuantity = existingProd.quantity + quantity
 
-      // prodStore[dateKey] = {
-      //   ...existingDate,
-      //   [depKey]: { ...existingDep, [prodKey]: totalProdQuantity },
-      // }
-
       prodStore[dateKey] = {
         ...existingDate,
         [depKey]: {
@@ -71,8 +66,6 @@ const Production = () => {
           },
         },
       }
-
-      console.log(prodStore)
     }
   })
 
