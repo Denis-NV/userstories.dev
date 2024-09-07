@@ -82,7 +82,7 @@ const Production = () => {
               <TableCell>
                 {Object.entries(departments).map(([depName, prodList]) => (
                   <div key={depName} className="flex w-full flex-row space-x-4">
-                    <span className="mb-2 flex-grow-[1] font-medium">{format(date, 'dd LLL')}</span>
+                    <span className="mb-2 flex-grow-[1]">{format(date, 'dd LLL')}</span>
 
                     <span className="flex-grow-[3]">{depName}</span>
 

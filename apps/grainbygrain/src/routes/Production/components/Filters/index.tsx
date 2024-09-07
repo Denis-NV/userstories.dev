@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { format } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 import { useSearchParams } from 'react-router-dom'
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons'
 
@@ -9,30 +10,37 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar'
 import DepartmentSelect from '@/components/DepartmentSelect'
 
-const deliveryDateKey = 'delivery_date'
+const dateFromKey = 'from'
+const dateToKey = 'to'
 const departmentKey = 'department'
 
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const delivery_date_param = searchParams.get(deliveryDateKey)
-  const department_param = searchParams.get(departmentKey)
+  const dateFromParam = searchParams.get(dateFromKey)
+  const dateToParam = searchParams.get(dateToKey)
+  const departmentParam = searchParams.get(departmentKey)
 
-  const delivery_date = delivery_date_param ? new Date(delivery_date_param) : undefined
-  const department = removeNulls(department_param) ?? ''
+  const date: DateRange = {
+    from: dateFromParam ? new Date(dateFromParam) : undefined,
+    to: dateToParam ? new Date(dateToParam) : undefined,
+  }
 
-  const handleDeliveryDateSelect = useCallback(
-    (date?: Date) => {
+  const department = removeNulls(departmentParam) ?? ''
+
+  const handleDateSelect = useCallback(
+    (newDate?: DateRange) => {
+      console.log(newDate)
+
       setSearchParams((prev: URLSearchParams) => {
-        if (date) prev.set(deliveryDateKey, format(date, 'yyyy-MM-dd'))
+        if (newDate?.from) prev.set(dateFromKey, format(newDate?.from, 'yyyy-MM-dd'))
+        if (newDate?.to) prev.set(dateToKey, format(newDate?.to, 'yyyy-MM-dd'))
 
         return prev
       })
-
-      setCalendarOpen(false)
     },
-    [setSearchParams, setCalendarOpen],
+    [setSearchParams],
   )
 
   const handleDepartmentSelect = useCallback(
@@ -48,7 +56,7 @@ const Filters = () => {
 
   const handleClearDate = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(deliveryDateKey)
+      prev.delete(dateFromKey)
 
       return prev
     })
@@ -75,23 +83,31 @@ const Filters = () => {
             <PopoverTrigger asChild>
               <Button
                 variant={'outline'}
-                className={cn(
-                  'pl-3 text-left font-normal',
-                  !delivery_date && 'text-muted-foreground',
-                )}
+                className={cn('pl-3 text-left font-normal', !date?.from && 'text-muted-foreground')}
               >
-                <span className="mr-1 min-w-12">
-                  {delivery_date ? format(delivery_date, 'dd LLL') : 'date'}
+                <span className="mr-1 min-w-24">
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, 'dd LLL')} - {format(date.to, 'dd LLL')}
+                      </>
+                    ) : (
+                      format(date.from, 'dd LLL')
+                    )
+                  ) : (
+                    'date'
+                  )}
                 </span>
                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                mode="single"
-                selected={delivery_date}
-                onSelect={handleDeliveryDateSelect}
                 initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={handleDateSelect}
               />
             </PopoverContent>
           </Popover>
@@ -114,7 +130,7 @@ const Filters = () => {
         </div>
       </div>
 
-      <Button variant="ghost" onClick={handleClear}>
+      <Button variant="ghost" className="hidden sm:block" onClick={handleClear}>
         <strong>clear</strong>
       </Button>
     </div>

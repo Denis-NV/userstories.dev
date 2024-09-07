@@ -4,7 +4,7 @@ export const getParamsFilter = (
   searchParams: URLSearchParams,
 ): InputMaybe<Order_Product_Bool_Exp> => {
   const delivery_date_from = searchParams.get('from')
-  const delivery_date_until = searchParams.get('until')
+  const delivery_date_to = searchParams.get('to')
   const department = searchParams.get('department')
 
   return {
@@ -19,12 +19,12 @@ export const getParamsFilter = (
           },
         }
       : {}),
-    ...(delivery_date_from || delivery_date_until
+    ...(delivery_date_from || delivery_date_to
       ? {
           order: {
             delivery_date: {
               ...(delivery_date_from ? { _gte: delivery_date_from } : {}),
-              ...(delivery_date_until ? { _lte: delivery_date_until } : {}),
+              ...(delivery_date_to ? { _lte: delivery_date_to } : {}),
             },
           },
         }
