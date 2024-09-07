@@ -31,8 +31,6 @@ const Filters = () => {
 
   const handleDateSelect = useCallback(
     (newDate?: DateRange) => {
-      console.log(newDate)
-
       setSearchParams((prev: URLSearchParams) => {
         if (newDate?.from) prev.set(dateFromKey, format(newDate?.from, 'yyyy-MM-dd'))
         if (newDate?.to) prev.set(dateToKey, format(newDate?.to, 'yyyy-MM-dd'))

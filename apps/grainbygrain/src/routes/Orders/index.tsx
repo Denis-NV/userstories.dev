@@ -15,6 +15,7 @@ import {
   TableRow,
   TableCell,
 } from '@/components/ui/table'
+import { Routes } from '@/const'
 
 import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
@@ -62,7 +63,7 @@ const Orders = (): JSX.Element => {
 
   const handleOrderAdd = useCallback(
     (id: string) => {
-      navigate(`/order/${id}`)
+      navigate(`/${Routes.order}/${id}`)
     },
     [navigate],
   )

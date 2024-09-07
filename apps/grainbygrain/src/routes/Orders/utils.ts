@@ -1,11 +1,12 @@
 import { InputMaybe, Order_Bool_Exp } from '@/gql/graphql'
+import { UrlParams } from '@/const'
 
 export const getParamsFilter = (searchParams: URLSearchParams): InputMaybe<Order_Bool_Exp> => {
-  const order_nr = searchParams.get('order_nr')
-  const delivery_date = searchParams.get('delivery_date')
-  const order_products = searchParams.get('order_products')
-  const delivery_method = searchParams.get('delivery_method')
-  const customer = searchParams.get('customer')
+  const order_nr = searchParams.get(UrlParams.order_nr)
+  const delivery_date = searchParams.get(UrlParams.delivery_date)
+  const order_products = searchParams.get(UrlParams.order_products)
+  const delivery_method = searchParams.get(UrlParams.delivery_method)
+  const customer = searchParams.get(UrlParams.customer)
 
   return {
     ...(order_nr ? { order_nr: { _eq: parseInt(order_nr) } } : {}),

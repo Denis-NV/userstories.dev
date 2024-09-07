@@ -17,7 +17,6 @@ const policies: TypePolicies = {
         },
       },
       order_product: {
-        // keyArgs: ['where', ['order', 'product', 'quantity']],
         merge(existing = [], incoming = []) {
           const refs = existing.map((item: RefObjectType) => item.__ref)
           const insertion = incoming.filter((item: RefObjectType) => !refs.includes(item.__ref))

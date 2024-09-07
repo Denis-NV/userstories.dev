@@ -17,9 +17,12 @@ import {
 import { PRODUCTS_BY_ORDER_DATE_QUERY } from './gql'
 import { getParamsFilter } from './utils'
 import Filters from './components/Filters'
+import ProductTotal from './components/ProductTotal'
 
-type TProdStore = Record<string, Record<string, Record<string, number>>>
-type TProdLists = [string, Record<string, Record<string, number>>][]
+type TProdRecord = Record<string, { quantity: number; id: string }>
+type TDepRecord = Record<string, { id: string; products: TProdRecord }>
+type TDateRecord = Record<string, TDepRecord>
+type TProdLists = [string, TDepRecord][]
 
 const Production = () => {
   const accessToken = useAccessToken()
@@ -39,22 +42,37 @@ const Production = () => {
   const { data, loading } = query
   const products = data?.order_product
 
-  const prodStore: TProdStore = {}
+  const prodStore: TDateRecord = {}
 
-  products?.forEach(({ order, product, quantity }) => {
-    if (product.department?.name) {
+  products?.forEach(({ order, product: { id: prodId, name, department, weight }, quantity }) => {
+    if (department) {
       const dateKey = String(order.delivery_date)
-      const depKey = product.department.name
-      const prodKey = `${product.name} ${product.weight}g`
+      const depKey = department.name
+      const depId = department.id
+      const prodKey = `${name} ${weight}g`
 
       const existingDate = prodStore[dateKey] ?? {}
-      const existingDep = existingDate[depKey] ?? {}
-      const totalProdQuantity = (existingDep[prodKey] ?? 0) + quantity
+      const existingDep = existingDate[depKey] ?? { id: depId, products: {} }
+      const existingProd = existingDep.products[prodKey] ?? { id: prodId, quantity: 0 }
+      const totalProdQuantity = existingProd.quantity + quantity
+
+      // prodStore[dateKey] = {
+      //   ...existingDate,
+      //   [depKey]: { ...existingDep, [prodKey]: totalProdQuantity },
+      // }
 
       prodStore[dateKey] = {
         ...existingDate,
-        [depKey]: { ...existingDep, [prodKey]: totalProdQuantity },
+        [depKey]: {
+          ...existingDep,
+          products: {
+            ...existingDep.products,
+            [prodKey]: { ...existingProd, quantity: totalProdQuantity },
+          },
+        },
       }
+
+      console.log(prodStore)
     }
   })
 
@@ -73,32 +91,38 @@ const Production = () => {
       <Table className="table-fixed">
         <TableHeader className="bg-background sticky top-0">
           <TableRow>
+            <TableHead className="w-16">Delivery</TableHead>
+            <TableHead className="w-24">Department</TableHead>
             <TableHead>Production List</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {prodsByDate.map(([date, departments]) => (
-            <TableRow key={date}>
-              <TableCell>
-                {Object.entries(departments).map(([depName, prodList]) => (
-                  <div key={depName} className="flex w-full flex-row space-x-4">
-                    <span className="mb-2 flex-grow-[1]">{format(date, 'dd LLL')}</span>
+          {prodsByDate.map(([date, departments]) =>
+            Object.entries(departments).map(([depName, { id: depId, products }]) => (
+              <TableRow key={depId}>
+                <TableCell>
+                  <span>{format(date, 'dd LLL')}</span>
+                </TableCell>
 
-                    <span className="flex-grow-[3]">{depName}</span>
-
-                    <div className="mb-1 flex-grow-[4]">
-                      {Object.entries(prodList).map(([prod, quantity]) => (
-                        <div key={prod} className="flex w-full flex-row space-x-4">
-                          <span className="flex-1 font-medium">{prod}</span>
-                          <span className="px-4 font-semibold">{quantity}</span>
-                        </div>
-                      ))}
-                    </div>
+                <TableCell>
+                  <span>{depName}</span>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-4">
+                    {Object.entries(products).map(([prodName, { id: prodId, quantity }]) => (
+                      <ProductTotal
+                        key={prodId}
+                        name={prodName}
+                        quantity={quantity}
+                        date={date}
+                        prodId={prodId}
+                      />
+                    ))}
                   </div>
-                ))}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            )),
+          )}
         </TableBody>
         <TableFooter>
           {loading && (
