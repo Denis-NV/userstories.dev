@@ -3,15 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
+import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DeleteOrder from '@/components/DeleteOrder'
+import { TypographyH2 } from '@/components/typography'
 
 import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
 import OrderDetails from './components/OrderDetails'
 import Products from './components/OrderProducts'
-import { TypographyH2 } from '@/components/typography'
 
 const Order = (): JSX.Element => {
   const { orderId } = useParams<TOrderRouteParams>()
@@ -32,7 +33,7 @@ const Order = (): JSX.Element => {
   const products = data?.order_by_pk?.order_products
 
   const handleOrderDelete = useCallback(() => {
-    navigate('/orders')
+    navigate(`/${Routes.orders}`)
   }, [navigate])
 
   const handleBackClick = useCallback(() => {

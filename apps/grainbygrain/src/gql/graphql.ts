@@ -7965,9 +7965,9 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
-export type CustomersByDistrictQueryQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersByDistrictQueryVariables = Exact<{ [key: string]: never }>
 
-export type CustomersByDistrictQueryQuery = {
+export type CustomersByDistrictQuery = {
   __typename?: 'query_root'
   district: Array<{
     __typename?: 'district'
@@ -7986,11 +7986,18 @@ export type DeleteOrderMutation = {
   delete_order_by_pk?: { __typename?: 'order'; id: any } | null
 }
 
-export type CustomerQueryQueryVariables = Exact<{
+export type DepartmentsQueryVariables = Exact<{ [key: string]: never }>
+
+export type DepartmentsQuery = {
+  __typename?: 'query_root'
+  department: Array<{ __typename?: 'department'; id: any; name: string }>
+}
+
+export type CustomerQueryVariables = Exact<{
   id: Scalars['uuid']['input']
 }>
 
-export type CustomerQueryQuery = {
+export type CustomerQuery = {
   __typename?: 'query_root'
   customer_by_pk?: {
     __typename: 'customer'
@@ -8003,9 +8010,9 @@ export type CustomerQueryQuery = {
   } | null
 }
 
-export type CustomersQueryQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersQueryVariables = Exact<{ [key: string]: never }>
 
-export type CustomersQueryQuery = {
+export type CustomersQuery = {
   __typename?: 'query_root'
   customer: Array<{
     __typename: 'customer'
@@ -8060,11 +8067,11 @@ export type FullOrder_On_OrderFragment = {
   }>
 }
 
-export type OrderQueryQueryVariables = Exact<{
+export type OrderQueryVariables = Exact<{
   id: Scalars['uuid']['input']
 }>
 
-export type OrderQueryQuery = {
+export type OrderQuery = {
   __typename?: 'query_root'
   order_by_pk?: {
     __typename?: 'order'
@@ -8096,9 +8103,9 @@ export type OrderQueryQuery = {
   } | null
 }
 
-export type ProductsByDepartmentQueryQueryVariables = Exact<{ [key: string]: never }>
+export type ProductsByDepartmentQueryVariables = Exact<{ [key: string]: never }>
 
-export type ProductsByDepartmentQueryQuery = {
+export type ProductsByDepartmentQuery = {
   __typename?: 'query_root'
   department: Array<{
     __typename?: 'department'
@@ -8108,9 +8115,9 @@ export type ProductsByDepartmentQueryQuery = {
   }>
 }
 
-export type DeliveryMethodsQueryQueryVariables = Exact<{ [key: string]: never }>
+export type DeliveryMethodsQueryVariables = Exact<{ [key: string]: never }>
 
-export type DeliveryMethodsQueryQuery = {
+export type DeliveryMethodsQuery = {
   __typename?: 'query_root'
   delivery_method: Array<{ __typename?: 'delivery_method'; id: any; name: string }>
 }
@@ -8218,12 +8225,12 @@ export type ListOrder_On_OrderFragment = {
   }
 }
 
-export type OrdersQueryQueryVariables = Exact<{
+export type OrdersQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>
   filters?: InputMaybe<Order_Bool_Exp>
 }>
 
-export type OrdersQueryQuery = {
+export type OrdersQuery = {
   __typename?: 'query_root'
   order_aggregate: {
     __typename?: 'order_aggregate'
@@ -8264,6 +8271,27 @@ export type AddOrderMutation = {
       district?: { __typename?: 'district'; id: any; name: string } | null
     }
   } | null
+}
+
+export type ProdusctsByOrderDateQueryVariables = Exact<{
+  filters?: InputMaybe<Order_Product_Bool_Exp>
+}>
+
+export type ProdusctsByOrderDateQuery = {
+  __typename?: 'query_root'
+  order_product: Array<{
+    __typename?: 'order_product'
+    id: any
+    quantity: number
+    order: { __typename?: 'order'; id: any; delivery_date: any }
+    product: {
+      __typename?: 'product'
+      id: any
+      name: string
+      weight: any
+      department?: { __typename?: 'department'; id: any; name: string } | null
+    }
+  }>
 }
 
 export const OrderProduct_On_OrderProductFragmentDoc = {
@@ -8465,13 +8493,13 @@ export const ListOrder_On_OrderFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ListOrder_On_OrderFragment, unknown>
-export const CustomersByDistrictQueryDocument = {
+export const CustomersByDistrictDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'CustomersByDistrictQuery' },
+      name: { kind: 'Name', value: 'CustomersByDistrict' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8533,7 +8561,7 @@ export const CustomersByDistrictQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CustomersByDistrictQueryQuery, CustomersByDistrictQueryQueryVariables>
+} as unknown as DocumentNode<CustomersByDistrictQuery, CustomersByDistrictQueryVariables>
 export const DeleteOrderDocument = {
   kind: 'Document',
   definitions: [
@@ -8574,13 +8602,39 @@ export const DeleteOrderDocument = {
     },
   ],
 } as unknown as DocumentNode<DeleteOrderMutation, DeleteOrderMutationVariables>
-export const CustomerQueryDocument = {
+export const DepartmentsDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'CustomerQuery' },
+      name: { kind: 'Name', value: 'Departments' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DepartmentsQuery, DepartmentsQueryVariables>
+export const CustomerDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Customer' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -8631,14 +8685,14 @@ export const CustomerQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CustomerQueryQuery, CustomerQueryQueryVariables>
-export const CustomersQueryDocument = {
+} as unknown as DocumentNode<CustomerQuery, CustomerQueryVariables>
+export const CustomersDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'CustomersQuery' },
+      name: { kind: 'Name', value: 'Customers' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8672,14 +8726,14 @@ export const CustomersQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CustomersQueryQuery, CustomersQueryQueryVariables>
-export const OrderQueryDocument = {
+} as unknown as DocumentNode<CustomersQuery, CustomersQueryVariables>
+export const OrderDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'OrderQuery' },
+      name: { kind: 'Name', value: 'Order' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -8827,14 +8881,14 @@ export const OrderQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<OrderQueryQuery, OrderQueryQueryVariables>
-export const ProductsByDepartmentQueryDocument = {
+} as unknown as DocumentNode<OrderQuery, OrderQueryVariables>
+export const ProductsByDepartmentDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'ProductsByDepartmentQuery' },
+      name: { kind: 'Name', value: 'ProductsByDepartment' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8897,17 +8951,14 @@ export const ProductsByDepartmentQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<
-  ProductsByDepartmentQueryQuery,
-  ProductsByDepartmentQueryQueryVariables
->
-export const DeliveryMethodsQueryDocument = {
+} as unknown as DocumentNode<ProductsByDepartmentQuery, ProductsByDepartmentQueryVariables>
+export const DeliveryMethodsDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'DeliveryMethodsQuery' },
+      name: { kind: 'Name', value: 'DeliveryMethods' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8926,7 +8977,7 @@ export const DeliveryMethodsQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<DeliveryMethodsQueryQuery, DeliveryMethodsQueryQueryVariables>
+} as unknown as DocumentNode<DeliveryMethodsQuery, DeliveryMethodsQueryVariables>
 export const UpdateOrderDocument = {
   kind: 'Document',
   definitions: [
@@ -9367,13 +9418,13 @@ export const DeleteOrderProductDocument = {
     },
   ],
 } as unknown as DocumentNode<DeleteOrderProductMutation, DeleteOrderProductMutationVariables>
-export const OrdersQueryDocument = {
+export const OrdersDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'OrdersQuery' },
+      name: { kind: 'Name', value: 'Orders' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -9494,7 +9545,7 @@ export const OrdersQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<OrdersQueryQuery, OrdersQueryQueryVariables>
+} as unknown as DocumentNode<OrdersQuery, OrdersQueryVariables>
 export const AddOrderDocument = {
   kind: 'Document',
   definitions: [
@@ -9589,3 +9640,105 @@ export const AddOrderDocument = {
     },
   ],
 } as unknown as DocumentNode<AddOrderMutation, AddOrderMutationVariables>
+export const ProdusctsByOrderDateDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'ProdusctsByOrderDate' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product_bool_exp' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_product' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'order' },
+                          value: {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'delivery_date' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'order' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'product' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'department' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProdusctsByOrderDateQuery, ProdusctsByOrderDateQueryVariables>

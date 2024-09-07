@@ -1,7 +1,7 @@
 import { graphql } from '@/gql'
 
 export const CUSTOMERS_BY_DISTRICT_QUERY = graphql(`
-  query CustomersByDistrictQuery {
+  query CustomersByDistrict {
     district(order_by: { name: asc }) {
       id
       name

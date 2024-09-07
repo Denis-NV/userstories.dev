@@ -3,9 +3,10 @@ import {
   // useState
 } from 'react'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 
 import { cn } from '@/utils'
+import { Routes } from '@/const'
 // import {
 //   Sheet,
 //   SheetContent,
@@ -25,13 +26,14 @@ const MainNav = () => {
     () => [
       {
         name: 'Orders',
-        to: `/orders?delivery_date=${format(new Date(), 'yyyy-MM-dd')}`,
-        group: '/order',
+        // to: `/${Routes.orders}?delivery_date=${format(new Date(), 'yyyy-MM-dd')}`,
+        to: `/${Routes.orders}`,
+        group: `/${Routes.orders}`,
       },
       {
         name: 'Production',
-        to: '/production',
-        group: '/production',
+        to: `/${Routes.production}`,
+        group: `/${Routes.production}`,
       },
     ],
     [],

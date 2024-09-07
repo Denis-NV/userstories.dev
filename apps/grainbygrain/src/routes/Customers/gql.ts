@@ -1,7 +1,7 @@
 import { graphql } from '@/gql'
 
 export const CUSTOMERS_QUERY = graphql(`
-  query CustomersQuery {
+  query Customers {
     customer {
       __typename
       id

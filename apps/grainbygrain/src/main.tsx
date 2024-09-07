@@ -7,16 +7,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
-// import Customers from '@/routes/Customers'
-// import Customer from '@/routes/Customer'
+import Customers from '@/routes/Customers'
+import Customer from '@/routes/Customer'
 import SignIn from '@/routes/SignIn'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
 import { TOrderRouteParams } from '@/routes/Order/types'
-import typePolicies from '@/utils/typePolicies'
+import typePolicies from '@/typePolicies'
 
 import './styles.css'
+import { Routes } from './const'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
@@ -37,37 +38,37 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: 'customers',
-      //   element: <Customers />,
-      //   children: [
-      //     { index: true, element: <Customer /> },
-      //     {
-      //       path: ':customerId',
-      //       element: <Customer />,
-      //     },
-      //   ],
-      // },
+      {
+        path: Routes.customers,
+        element: <Customers />,
+        children: [
+          { index: true, element: <Customer /> },
+          {
+            path: ':customerId',
+            element: <Customer />,
+          },
+        ],
+      },
       {
         path: '/',
         element: <Orders />,
       },
       {
-        path: 'orders',
+        path: Routes.orders,
         element: <Orders />,
       },
       {
-        path: `order/:${orderParamKey}`,
+        path: `${Routes.order}/:${orderParamKey}`,
         element: <Order />,
       },
       {
-        path: 'production',
+        path: Routes.production,
         element: <Production />,
       },
     ],
   },
   {
-    path: '/signin',
+    path: `/${Routes.signin}`,
     element: <SignIn />,
   },
 ])
