@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         element: <Orders />,
       },
       {
-        path: `${Routes.order}/:${orderParamKey}`,
+        path: `${Routes.orders}/:${orderParamKey}`,
         element: <Order />,
       },
       {

@@ -28,19 +28,17 @@ const MainNav = () => {
         name: 'Orders',
         // to: `/${Routes.orders}?delivery_date=${format(new Date(), 'yyyy-MM-dd')}`,
         to: `/${Routes.orders}`,
-        group: `/${Routes.order}`,
       },
       {
         name: 'Production',
         to: `/${Routes.production}`,
-        group: `/${Routes.production}`,
       },
     ],
     [],
   )
 
-  const isSelected = (group: string, index: number) =>
-    location?.pathname?.startsWith(group) || (index === 0 && location?.pathname === '/')
+  const isSelected = (to: string, index: number) =>
+    location?.pathname?.startsWith(to) || (index === 0 && location?.pathname === '/')
 
   return (
     <div className="flex">
@@ -48,13 +46,13 @@ const MainNav = () => {
         // className="hidden items-center sm:flex"
         className="flex items-center"
       >
-        {navData.map(({ to, name, group }, index) => (
+        {navData.map(({ to, name }, index) => (
           <Link
             to={to}
             key={to}
             className={cn(
               'hover:text-primary text-md flex h-7 items-center justify-center rounded-full px-4 text-center font-medium transition-colors',
-              isSelected(group, index)
+              isSelected(to, index)
                 ? 'bg-muted text-primary font-semibold'
                 : 'text-muted-foreground',
             )}
@@ -108,14 +106,14 @@ const MainNav = () => {
           <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-2">
             <div className="flex flex-col space-y-3">
               {navData.map(
-                ({ to, name, group }, index) =>
+                ({ to, name }, index) =>
                   to && (
                     <MobileLink
                       key={to}
                       to={to}
                       className={cn(
                         'hover:text-primary transition-colors',
-                        isSelected(group, index)
+                        isSelected(to, index)
                           ? 'text-primary font-semibold'
                           : 'text-muted-foreground',
                       )}
