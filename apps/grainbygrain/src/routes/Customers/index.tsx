@@ -1,17 +1,20 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate, Outlet, useParams } from 'react-router-dom'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
+import { RouteParams, Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import CustomerSelect from '@/components/CustomerSelect'
-import { RouteParams, Routes } from '@/const'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 
 type TRouteParams = {
   [RouteParams.customerId]: string
 }
 
 const Customers = () => {
+  const [hideInactive, setHideIncative] = useState(true)
   const navigate = useNavigate()
   const { customerId = '' } = useParams<TRouteParams>()
 
@@ -44,13 +47,18 @@ const Customers = () => {
             <CustomerSelect
               value={customerId}
               onChange={handleCustomerSelect}
-              placeholder="customer"
+              placeholder="Select"
               triggerClassName="w-28"
             />
 
             <Button variant="link" onClick={handleClearCustomer}>
               <Cross2Icon />
             </Button>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Switch id="is_active" checked={hideInactive} onCheckedChange={setHideIncative} />
+            <Label htmlFor="is_active">Hide inactive</Label>
           </div>
         </div>
       </div>
