@@ -1,6 +1,5 @@
 export enum Routes {
   signin = 'signin',
-  order = 'order',
   orders = 'orders',
   production = 'production',
   customers = 'customers',
@@ -15,4 +14,8 @@ export enum UrlParams {
   department = 'department',
   from = 'from',
   to = 'to',
+}
+
+export enum RouteParams {
+  customerId = 'customerId',
 }

@@ -13,23 +13,23 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  query CustomersByDistrict {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n':
+  '\n  query CustomersByDistrict(\n    $onlyActive: [Boolean!] = [true]\n    $name: String = "%%"\n    $address: String = "%%"\n  ) {\n    district(order_by: { name: asc }) {\n      id\n      name\n      customers(\n        where: {\n          name: { _ilike: $name }\n          address: { _ilike: $address }\n          is_active: { _in: $onlyActive }\n        }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        address\n      }\n    }\n  }\n':
     types.CustomersByDistrictDocument,
   '\n  mutation DeleteOrder($id: uuid!) {\n    delete_order_by_pk(id: $id) {\n      id\n    }\n  }\n':
     types.DeleteOrderDocument,
   '\n  query Departments {\n    department {\n      id\n      name\n    }\n  }\n':
     types.DepartmentsDocument,
-  '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
+  '\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n':
+    types.FullCustomer_On_CustomerFragmentDoc,
+  '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n':
     types.CustomerDocument,
-  '\n  query Customers {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n':
-    types.CustomersDocument,
   '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrderProduct_On_OrderProductFragmentDoc,
   '\n  fragment fullOrder_on_Order on order {\n    id\n    created_at\n    updated_at\n    order_nr\n    comment\n    delivery_date\n    delivery_method {\n      id\n      name\n    }\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n    order_products(order_by: { created_at: asc }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
     types.FullOrder_On_OrderFragmentDoc,
   '\n  query Order($id: uuid!) {\n    order_by_pk(id: $id) {\n      ...fullOrder_on_Order\n    }\n  }\n':
     types.OrderDocument,
-  '\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n':
+  '\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _eq: true } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n':
     types.ProductsByDepartmentDocument,
   '\n  query DeliveryMethods {\n    delivery_method {\n      id\n      name\n    }\n  }\n':
     types.DeliveryMethodsDocument,
@@ -69,8 +69,8 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query CustomersByDistrict {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query CustomersByDistrict {\n    district(order_by: { name: asc }) {\n      id\n      name\n\n      customers(order_by: { name: asc }) {\n        id\n        name\n      }\n    }\n  }\n']
+  source: '\n  query CustomersByDistrict(\n    $onlyActive: [Boolean!] = [true]\n    $name: String = "%%"\n    $address: String = "%%"\n  ) {\n    district(order_by: { name: asc }) {\n      id\n      name\n      customers(\n        where: {\n          name: { _ilike: $name }\n          address: { _ilike: $address }\n          is_active: { _in: $onlyActive }\n        }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        address\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query CustomersByDistrict(\n    $onlyActive: [Boolean!] = [true]\n    $name: String = "%%"\n    $address: String = "%%"\n  ) {\n    district(order_by: { name: asc }) {\n      id\n      name\n      customers(\n        where: {\n          name: { _ilike: $name }\n          address: { _ilike: $address }\n          is_active: { _in: $onlyActive }\n        }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        address\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -87,14 +87,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n']
+  source: '\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n',
+): (typeof documents)['\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query Customers {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query Customers {\n    customer {\n      __typename\n      id\n      name\n      address\n\n      delivery_start_time\n      delivery_end_time\n\n      district {\n        id\n        name\n      }\n    }\n  }\n']
+  source: '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n',
+): (typeof documents)['\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -117,8 +117,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n']
+  source: '\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _eq: true } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query ProductsByDepartment {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _eq: true } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

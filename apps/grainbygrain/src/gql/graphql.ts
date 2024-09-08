@@ -2272,6 +2272,7 @@ export type Customer = {
   district?: Maybe<District>
   district_id?: Maybe<Scalars['uuid']['output']>
   id: Scalars['uuid']['output']
+  is_active: Scalars['Boolean']['output']
   name: Scalars['String']['output']
   /** An array relationship */
   orders: Array<Order>
@@ -2306,7 +2307,23 @@ export type Customer_Aggregate = {
 }
 
 export type Customer_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Customer_Aggregate_Bool_Exp_Bool_And>
+  bool_or?: InputMaybe<Customer_Aggregate_Bool_Exp_Bool_Or>
   count?: InputMaybe<Customer_Aggregate_Bool_Exp_Count>
+}
+
+export type Customer_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Customer_Select_Column_Customer_Aggregate_Bool_Exp_Bool_And_Arguments_Columns
+  distinct?: InputMaybe<Scalars['Boolean']['input']>
+  filter?: InputMaybe<Customer_Bool_Exp>
+  predicate: Boolean_Comparison_Exp
+}
+
+export type Customer_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Customer_Select_Column_Customer_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns
+  distinct?: InputMaybe<Scalars['Boolean']['input']>
+  filter?: InputMaybe<Customer_Bool_Exp>
+  predicate: Boolean_Comparison_Exp
 }
 
 export type Customer_Aggregate_Bool_Exp_Count = {
@@ -2356,6 +2373,7 @@ export type Customer_Bool_Exp = {
   district?: InputMaybe<District_Bool_Exp>
   district_id?: InputMaybe<Uuid_Comparison_Exp>
   id?: InputMaybe<Uuid_Comparison_Exp>
+  is_active?: InputMaybe<Boolean_Comparison_Exp>
   name?: InputMaybe<String_Comparison_Exp>
   orders?: InputMaybe<Order_Bool_Exp>
   orders_aggregate?: InputMaybe<Order_Aggregate_Bool_Exp>
@@ -2377,6 +2395,7 @@ export type Customer_Insert_Input = {
   district?: InputMaybe<District_Obj_Rel_Insert_Input>
   district_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   orders?: InputMaybe<Order_Arr_Rel_Insert_Input>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
@@ -2456,6 +2475,7 @@ export type Customer_Order_By = {
   district?: InputMaybe<District_Order_By>
   district_id?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
+  is_active?: InputMaybe<Order_By>
   name?: InputMaybe<Order_By>
   orders_aggregate?: InputMaybe<Order_Aggregate_Order_By>
   updated_at?: InputMaybe<Order_By>
@@ -2481,9 +2501,23 @@ export enum Customer_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsActive = 'is_active',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at',
+}
+
+/** select "customer_aggregate_bool_exp_bool_and_arguments_columns" columns of table "customer" */
+export enum Customer_Select_Column_Customer_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsActive = 'is_active',
+}
+
+/** select "customer_aggregate_bool_exp_bool_or_arguments_columns" columns of table "customer" */
+export enum Customer_Select_Column_Customer_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsActive = 'is_active',
 }
 
 /** input type for updating data in table "customer" */
@@ -2494,6 +2528,7 @@ export type Customer_Set_Input = {
   delivery_start_time?: InputMaybe<Scalars['time']['input']>
   district_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
 }
@@ -2514,6 +2549,7 @@ export type Customer_Stream_Cursor_Value_Input = {
   delivery_start_time?: InputMaybe<Scalars['time']['input']>
   district_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
 }
@@ -2532,6 +2568,8 @@ export enum Customer_Update_Column {
   DistrictId = 'district_id',
   /** column name */
   Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
   /** column name */
   Name = 'name',
   /** column name */
@@ -5503,6 +5541,7 @@ export type Product = {
   department?: Maybe<Department>
   department_id?: Maybe<Scalars['uuid']['output']>
   id: Scalars['uuid']['output']
+  is_active: Scalars['Boolean']['output']
   name: Scalars['String']['output']
   /** An array relationship */
   order_products: Array<Order_Product>
@@ -5538,7 +5577,23 @@ export type Product_Aggregate = {
 }
 
 export type Product_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Product_Aggregate_Bool_Exp_Bool_And>
+  bool_or?: InputMaybe<Product_Aggregate_Bool_Exp_Bool_Or>
   count?: InputMaybe<Product_Aggregate_Bool_Exp_Count>
+}
+
+export type Product_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Product_Select_Column_Product_Aggregate_Bool_Exp_Bool_And_Arguments_Columns
+  distinct?: InputMaybe<Scalars['Boolean']['input']>
+  filter?: InputMaybe<Product_Bool_Exp>
+  predicate: Boolean_Comparison_Exp
+}
+
+export type Product_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Product_Select_Column_Product_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns
+  distinct?: InputMaybe<Scalars['Boolean']['input']>
+  filter?: InputMaybe<Product_Bool_Exp>
+  predicate: Boolean_Comparison_Exp
 }
 
 export type Product_Aggregate_Bool_Exp_Count = {
@@ -5612,6 +5667,7 @@ export type Product_Bool_Exp = {
   department?: InputMaybe<Department_Bool_Exp>
   department_id?: InputMaybe<Uuid_Comparison_Exp>
   id?: InputMaybe<Uuid_Comparison_Exp>
+  is_active?: InputMaybe<Boolean_Comparison_Exp>
   name?: InputMaybe<String_Comparison_Exp>
   order_products?: InputMaybe<Order_Product_Bool_Exp>
   order_products_aggregate?: InputMaybe<Order_Product_Aggregate_Bool_Exp>
@@ -5636,6 +5692,7 @@ export type Product_Insert_Input = {
   department?: InputMaybe<Department_Obj_Rel_Insert_Input>
   department_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   order_products?: InputMaybe<Order_Product_Arr_Rel_Insert_Input>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
@@ -5713,6 +5770,7 @@ export type Product_Order_By = {
   department?: InputMaybe<Department_Order_By>
   department_id?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
+  is_active?: InputMaybe<Order_By>
   name?: InputMaybe<Order_By>
   order_products_aggregate?: InputMaybe<Order_Product_Aggregate_Order_By>
   updated_at?: InputMaybe<Order_By>
@@ -5733,6 +5791,8 @@ export enum Product_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsActive = 'is_active',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at',
@@ -5740,11 +5800,24 @@ export enum Product_Select_Column {
   Weight = 'weight',
 }
 
+/** select "product_aggregate_bool_exp_bool_and_arguments_columns" columns of table "product" */
+export enum Product_Select_Column_Product_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsActive = 'is_active',
+}
+
+/** select "product_aggregate_bool_exp_bool_or_arguments_columns" columns of table "product" */
+export enum Product_Select_Column_Product_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsActive = 'is_active',
+}
+
 /** input type for updating data in table "product" */
 export type Product_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   department_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
   weight?: InputMaybe<Scalars['numeric']['input']>
@@ -5796,6 +5869,7 @@ export type Product_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   department_id?: InputMaybe<Scalars['uuid']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
+  is_active?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>
   weight?: InputMaybe<Scalars['numeric']['input']>
@@ -5820,6 +5894,8 @@ export enum Product_Update_Column {
   DepartmentId = 'department_id',
   /** column name */
   Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
   /** column name */
   Name = 'name',
   /** column name */
@@ -7965,7 +8041,11 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
-export type CustomersByDistrictQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersByDistrictQueryVariables = Exact<{
+  onlyActive?: InputMaybe<Array<Scalars['Boolean']['input']> | Scalars['Boolean']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  address?: InputMaybe<Scalars['String']['input']>
+}>
 
 export type CustomersByDistrictQuery = {
   __typename?: 'query_root'
@@ -7973,7 +8053,7 @@ export type CustomersByDistrictQuery = {
     __typename?: 'district'
     id: any
     name: string
-    customers: Array<{ __typename?: 'customer'; id: any; name: string }>
+    customers: Array<{ __typename?: 'customer'; id: any; name: string; address: string }>
   }>
 }
 
@@ -7993,6 +8073,17 @@ export type DepartmentsQuery = {
   department: Array<{ __typename?: 'department'; id: any; name: string }>
 }
 
+export type FullCustomer_On_CustomerFragment = {
+  __typename?: 'customer'
+  id: any
+  is_active: boolean
+  name: string
+  address: string
+  delivery_start_time: any
+  delivery_end_time: any
+  district?: { __typename?: 'district'; id: any; name: string } | null
+}
+
 export type CustomerQueryVariables = Exact<{
   id: Scalars['uuid']['input']
 }>
@@ -8000,29 +8091,15 @@ export type CustomerQueryVariables = Exact<{
 export type CustomerQuery = {
   __typename?: 'query_root'
   customer_by_pk?: {
-    __typename: 'customer'
+    __typename?: 'customer'
     id: any
+    is_active: boolean
     name: string
     address: string
     delivery_start_time: any
     delivery_end_time: any
     district?: { __typename?: 'district'; id: any; name: string } | null
   } | null
-}
-
-export type CustomersQueryVariables = Exact<{ [key: string]: never }>
-
-export type CustomersQuery = {
-  __typename?: 'query_root'
-  customer: Array<{
-    __typename: 'customer'
-    id: any
-    name: string
-    address: string
-    delivery_start_time: any
-    delivery_end_time: any
-    district?: { __typename?: 'district'; id: any; name: string } | null
-  }>
 }
 
 export type OrderProduct_On_OrderProductFragment = {
@@ -8294,6 +8371,38 @@ export type ProdusctsByOrderDateQuery = {
   }>
 }
 
+export const FullCustomer_On_CustomerFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'customer' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FullCustomer_On_CustomerFragment, unknown>
 export const OrderProduct_On_OrderProductFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -8500,6 +8609,32 @@ export const CustomersByDistrictDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'CustomersByDistrict' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'onlyActive' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+            },
+          },
+          defaultValue: { kind: 'ListValue', values: [{ kind: 'BooleanValue', value: true }] },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '%%', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '%%', block: false },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8533,6 +8668,66 @@ export const CustomersByDistrictDocument = {
                   arguments: [
                     {
                       kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'name' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'address' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'address' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'is_active' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_in' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'onlyActive' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'Argument',
                       name: { kind: 'Name', value: 'order_by' },
                       value: {
                         kind: 'ObjectValue',
@@ -8551,6 +8746,7 @@ export const CustomersByDistrictDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                     ],
                   },
                 },
@@ -8661,23 +8857,37 @@ export const CustomerDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'customer' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -8686,47 +8896,6 @@ export const CustomerDocument = {
     },
   ],
 } as unknown as DocumentNode<CustomerQuery, CustomerQueryVariables>
-export const CustomersDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'Customers' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'customer' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CustomersQuery, CustomersQueryVariables>
 export const OrderDocument = {
   kind: 'Document',
   definitions: [
@@ -8920,6 +9089,29 @@ export const ProductsByDepartmentDocument = {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'products' },
                   arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'is_active' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: { kind: 'BooleanValue', value: true },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
                     {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'order_by' },

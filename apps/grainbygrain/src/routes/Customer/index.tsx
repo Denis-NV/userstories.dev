@@ -2,10 +2,12 @@ import { useQuery } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
 import { useParams } from 'react-router-dom'
 
+import { RouteParams } from '@/const'
+
 import { CUSTOMER_QUERY } from './gql'
 
 type TRouteParams = {
-  customerId: string
+  [RouteParams.customerId]: string
 }
 
 const Customer = () => {

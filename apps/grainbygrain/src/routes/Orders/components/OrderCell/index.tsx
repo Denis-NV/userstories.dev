@@ -10,7 +10,7 @@ const OrderCell = ({ orderId, content }: TProps) => {
   const navigate = useNavigate()
 
   const handleClick = useCallback(() => {
-    navigate(`/${Routes.order}/${orderId}`)
+    navigate(`/${Routes.orders}/${orderId}`)
   }, [orderId, navigate])
 
   return (

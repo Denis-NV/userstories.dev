@@ -63,7 +63,7 @@ const Orders = (): JSX.Element => {
 
   const handleOrderAdd = useCallback(
     (id: string) => {
-      navigate(`/${Routes.order}/${id}`)
+      navigate(`/${Routes.orders}/${id}`)
     },
     [navigate],
   )
