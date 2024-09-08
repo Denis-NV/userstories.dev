@@ -8069,6 +8069,17 @@ export type DepartmentsQuery = {
   department: Array<{ __typename?: 'department'; id: any; name: string }>
 }
 
+export type FullCustomer_On_CustomerFragment = {
+  __typename?: 'customer'
+  id: any
+  is_active: boolean
+  name: string
+  address: string
+  delivery_start_time: any
+  delivery_end_time: any
+  district?: { __typename?: 'district'; id: any; name: string } | null
+}
+
 export type CustomerQueryVariables = Exact<{
   id: Scalars['uuid']['input']
 }>
@@ -8076,22 +8087,7 @@ export type CustomerQueryVariables = Exact<{
 export type CustomerQuery = {
   __typename?: 'query_root'
   customer_by_pk?: {
-    __typename: 'customer'
-    id: any
-    name: string
-    address: string
-    delivery_start_time: any
-    delivery_end_time: any
-    district?: { __typename?: 'district'; id: any; name: string } | null
-  } | null
-}
-
-export type CustomersQueryVariables = Exact<{ [key: string]: never }>
-
-export type CustomersQuery = {
-  __typename?: 'query_root'
-  customer: Array<{
-    __typename: 'customer'
+    __typename?: 'customer'
     id: any
     is_active: boolean
     name: string
@@ -8099,7 +8095,7 @@ export type CustomersQuery = {
     delivery_start_time: any
     delivery_end_time: any
     district?: { __typename?: 'district'; id: any; name: string } | null
-  }>
+  } | null
 }
 
 export type OrderProduct_On_OrderProductFragment = {
@@ -8371,6 +8367,38 @@ export type ProdusctsByOrderDateQuery = {
   }>
 }
 
+export const FullCustomer_On_CustomerFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'customer' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FullCustomer_On_CustomerFragment, unknown>
 export const OrderProduct_On_OrderProductFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -8761,23 +8789,37 @@ export const CustomerDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'customer' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -8786,48 +8828,6 @@ export const CustomerDocument = {
     },
   ],
 } as unknown as DocumentNode<CustomerQuery, CustomerQueryVariables>
-export const CustomersDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'Customers' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'customer' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<CustomersQuery, CustomersQueryVariables>
 export const OrderDocument = {
   kind: 'Document',
   definitions: [

@@ -15,3 +15,7 @@ export enum UrlParams {
   from = 'from',
   to = 'to',
 }
+
+export enum RouteParams {
+  customerId = 'customerId',
+}
