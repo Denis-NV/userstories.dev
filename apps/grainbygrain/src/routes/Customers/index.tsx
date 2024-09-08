@@ -48,7 +48,8 @@ const Customers = () => {
               value={customerId}
               onChange={handleCustomerSelect}
               placeholder="Select"
-              triggerClassName="w-28"
+              triggerClassName="w-40"
+              onlyActive={hideInactive}
             />
 
             <Button variant="link" onClick={handleClearCustomer}>

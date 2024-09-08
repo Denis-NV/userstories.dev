@@ -8041,7 +8041,11 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
-export type CustomersByDistrictQueryVariables = Exact<{ [key: string]: never }>
+export type CustomersByDistrictQueryVariables = Exact<{
+  onlyActive?: InputMaybe<Array<Scalars['Boolean']['input']> | Scalars['Boolean']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  address?: InputMaybe<Scalars['String']['input']>
+}>
 
 export type CustomersByDistrictQuery = {
   __typename?: 'query_root'
@@ -8049,7 +8053,7 @@ export type CustomersByDistrictQuery = {
     __typename?: 'district'
     id: any
     name: string
-    customers: Array<{ __typename?: 'customer'; id: any; name: string }>
+    customers: Array<{ __typename?: 'customer'; id: any; name: string; address: string }>
   }>
 }
 
@@ -8605,6 +8609,32 @@ export const CustomersByDistrictDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'CustomersByDistrict' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'onlyActive' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+            },
+          },
+          defaultValue: { kind: 'ListValue', values: [{ kind: 'BooleanValue', value: true }] },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '%%', block: false },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '%%', block: false },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -8644,14 +8674,51 @@ export const CustomersByDistrictDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'name' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'address' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'address' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
                             name: { kind: 'Name', value: 'is_active' },
                             value: {
                               kind: 'ObjectValue',
                               fields: [
                                 {
                                   kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_eq' },
-                                  value: { kind: 'BooleanValue', value: true },
+                                  name: { kind: 'Name', value: '_in' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'onlyActive' },
+                                  },
                                 },
                               ],
                             },
@@ -8679,6 +8746,7 @@ export const CustomersByDistrictDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                     ],
                   },
                 },
