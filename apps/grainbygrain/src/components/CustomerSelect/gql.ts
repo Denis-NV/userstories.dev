@@ -6,7 +6,7 @@ export const CUSTOMERS_BY_DISTRICT_QUERY = graphql(`
       id
       name
 
-      customers(order_by: { name: asc }) {
+      customers(where: { is_active: { _eq: true } }, order_by: { name: asc }) {
         id
         name
       }

@@ -5,6 +5,7 @@ export const CUSTOMERS_QUERY = graphql(`
     customer {
       __typename
       id
+      is_active
       name
       address
 

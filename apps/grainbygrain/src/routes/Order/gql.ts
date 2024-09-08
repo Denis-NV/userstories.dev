@@ -55,7 +55,7 @@ export const PRODUCST_BY_DEPARTMENT_QUERY = graphql(`
     department(order_by: { name: asc }) {
       id
       name
-      products(order_by: { name: asc }) {
+      products(where: { is_active: { _eq: true } }, order_by: { name: asc }) {
         id
         name
         weight
