@@ -19,10 +19,14 @@ const documents = {
     types.DeleteOrderDocument,
   '\n  query Departments {\n    department {\n      id\n      name\n    }\n  }\n':
     types.DepartmentsDocument,
+  '\n  query Districts {\n    district {\n      id\n      name\n    }\n  }\n':
+    types.DistrictsDocument,
   '\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n':
     types.FullCustomer_On_CustomerFragmentDoc,
   '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n':
     types.CustomerDocument,
+  '\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n':
+    types.UpdateCustomerDocument,
   '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrderProduct_On_OrderProductFragmentDoc,
   '\n  fragment fullOrder_on_Order on order {\n    id\n    created_at\n    updated_at\n    order_nr\n    comment\n    delivery_date\n    delivery_method {\n      id\n      name\n    }\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n    order_products(order_by: { created_at: asc }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
@@ -33,7 +37,7 @@ const documents = {
     types.ProductsByDepartmentDocument,
   '\n  query DeliveryMethods {\n    delivery_method {\n      id\n      name\n    }\n  }\n':
     types.DeliveryMethodsDocument,
-  '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n':
+  '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input!) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n':
     types.UpdateOrderDocument,
   '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {\n    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
     types.UpdateOrderProductDocument,
@@ -87,6 +91,12 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: '\n  query Districts {\n    district {\n      id\n      name\n    }\n  }\n',
+): (typeof documents)['\n  query Districts {\n    district {\n      id\n      name\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: '\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n',
 ): (typeof documents)['\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n']
 /**
@@ -95,6 +105,12 @@ export function graphql(
 export function graphql(
   source: '\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n',
 ): (typeof documents)['\n  query Customer($id: uuid!) {\n    customer_by_pk(id: $id) {\n      ...fullCustomer_on_Customer\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n',
+): (typeof documents)['\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -129,8 +145,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n',
-): (typeof documents)['\n  mutation UpdateOrder($id: uuid!, $input: order_set_input) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n']
+  source: '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input!) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n',
+): (typeof documents)['\n  mutation UpdateOrder($id: uuid!, $input: order_set_input!) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

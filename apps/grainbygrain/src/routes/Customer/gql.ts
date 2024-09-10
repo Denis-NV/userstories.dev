@@ -24,3 +24,11 @@ export const CUSTOMER_QUERY = graphql(`
     }
   }
 `)
+
+export const UPDATE_CUSTOMER_MUTATION = graphql(`
+  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {
+    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {
+      ...fullCustomer_on_Customer
+    }
+  }
+`)

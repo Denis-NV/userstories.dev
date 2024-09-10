@@ -8073,6 +8073,13 @@ export type DepartmentsQuery = {
   department: Array<{ __typename?: 'department'; id: any; name: string }>
 }
 
+export type DistrictsQueryVariables = Exact<{ [key: string]: never }>
+
+export type DistrictsQuery = {
+  __typename?: 'query_root'
+  district: Array<{ __typename?: 'district'; id: any; name: string }>
+}
+
 export type FullCustomer_On_CustomerFragment = {
   __typename?: 'customer'
   id: any
@@ -8091,6 +8098,25 @@ export type CustomerQueryVariables = Exact<{
 export type CustomerQuery = {
   __typename?: 'query_root'
   customer_by_pk?: {
+    __typename?: 'customer'
+    id: any
+    is_active: boolean
+    name: string
+    address: string
+    delivery_start_time: any
+    delivery_end_time: any
+    district?: { __typename?: 'district'; id: any; name: string } | null
+  } | null
+}
+
+export type UpdateCustomerMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+  input: Customer_Set_Input
+}>
+
+export type UpdateCustomerMutation = {
+  __typename?: 'mutation_root'
+  update_customer_by_pk?: {
     __typename?: 'customer'
     id: any
     is_active: boolean
@@ -8201,7 +8227,7 @@ export type DeliveryMethodsQuery = {
 
 export type UpdateOrderMutationVariables = Exact<{
   id: Scalars['uuid']['input']
-  input?: InputMaybe<Order_Set_Input>
+  input: Order_Set_Input
 }>
 
 export type UpdateOrderMutation = {
@@ -8824,6 +8850,32 @@ export const DepartmentsDocument = {
     },
   ],
 } as unknown as DocumentNode<DepartmentsQuery, DepartmentsQueryVariables>
+export const DistrictsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Districts' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DistrictsQuery, DistrictsQueryVariables>
 export const CustomerDocument = {
   kind: 'Document',
   definitions: [
@@ -8896,6 +8948,100 @@ export const CustomerDocument = {
     },
   ],
 } as unknown as DocumentNode<CustomerQuery, CustomerQueryVariables>
+export const UpdateCustomerDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateCustomer' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'customer_set_input' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_customer_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullCustomer_on_Customer' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'customer' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_start_time' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delivery_end_time' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateCustomerMutation, UpdateCustomerMutationVariables>
 export const OrderDocument = {
   kind: 'Document',
   definitions: [
@@ -9189,7 +9335,10 @@ export const UpdateOrderDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_set_input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_set_input' } },
+          },
         },
       ],
       selectionSet: {
