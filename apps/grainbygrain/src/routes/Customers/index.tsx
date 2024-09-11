@@ -9,6 +9,8 @@ import CustomerSelect from '@/components/CustomerSelect'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 
+import AddCustomer from './AddCustomer'
+
 type TRouteParams = {
   [RouteParams.customerId]: string
 }
@@ -19,8 +21,8 @@ const Customers = () => {
   const { customerId = '' } = useParams<TRouteParams>()
 
   const handleCustomerSelect = useCallback(
-    (value?: string) => {
-      if (value) navigate(`/${Routes.customers}/${value}`)
+    (id?: string) => {
+      if (id) navigate(`/${Routes.customers}/${id}`)
       else navigate(`/${Routes.customers}`)
     },
     [navigate],
@@ -36,12 +38,11 @@ const Customers = () => {
         <TypographyH2 text="Customers" />
 
         <div className="pt-1">
-          {/* <AddOrder onAdded={handleOrderAdd} /> */}
-          {customerId && <Button size="sm">Add customer</Button>}
+          <AddCustomer onAdded={handleCustomerSelect} />
         </div>
       </div>
 
-      <div className="mb-6 flex justify-between">
+      <div className="flex justify-between pb-4">
         <div className="flex">
           <div className="flex align-middle">
             <CustomerSelect
@@ -59,7 +60,7 @@ const Customers = () => {
 
           <div className="flex items-center space-x-2">
             <Switch id="is_active" checked={hideInactive} onCheckedChange={setHideIncative} />
-            <Label htmlFor="is_active">Hide inactive</Label>
+            <Label htmlFor="is_active">Hide inactive customer</Label>
           </div>
         </div>
       </div>
@@ -68,7 +69,7 @@ const Customers = () => {
         <Outlet />
       ) : (
         <div className="flex flex-1 items-center justify-center">
-          <Button size="sm">Add customer</Button>
+          <AddCustomer onAdded={handleCustomerSelect} />
         </div>
       )}
     </div>

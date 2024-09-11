@@ -124,7 +124,13 @@ const OrderDetails = ({ order }: TProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Delivery method</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={(e) => {
+                  console.log('onValueChange', e)
+                  field.onChange(e)
+                }}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger disabled={!methods}>
                     <SelectValue placeholder="Select delivery method" />

@@ -8,7 +8,10 @@ const policies: TypePolicies = {
   Query: {
     fields: {
       order: {
-        keyArgs: ['where', ['order_nr', 'delivery_date', 'order_products', 'delivery_method']],
+        keyArgs: [
+          'where',
+          ['order_nr', 'delivery_date', 'order_products', 'delivery_method', 'customer'],
+        ],
         merge(existing = [], incoming = []) {
           const refs = existing.map((item: RefObjectType) => item.__ref)
           const insertion = incoming.filter((item: RefObjectType) => !refs.includes(item.__ref))
