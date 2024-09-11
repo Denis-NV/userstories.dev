@@ -27,6 +27,8 @@ const documents = {
     types.CustomerDocument,
   '\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n':
     types.UpdateCustomerDocument,
+  '\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n':
+    types.AddCustomerDocument,
   '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrderProduct_On_OrderProductFragmentDoc,
   '\n  fragment fullOrder_on_Order on order {\n    id\n    created_at\n    updated_at\n    order_nr\n    comment\n    delivery_date\n    delivery_method {\n      id\n      name\n    }\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n    order_products(order_by: { created_at: asc }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
@@ -111,6 +113,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n',
 ): (typeof documents)['\n  mutation UpdateCustomer($id: uuid!, $input: customer_set_input!) {\n    update_customer_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullCustomer_on_Customer\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n',
+): (typeof documents)['\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

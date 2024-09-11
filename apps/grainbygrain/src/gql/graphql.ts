@@ -8128,6 +8128,17 @@ export type UpdateCustomerMutation = {
   } | null
 }
 
+export type AddCustomerMutationVariables = Exact<{
+  name: Scalars['String']['input']
+  address: Scalars['String']['input']
+  district_id: Scalars['uuid']['input']
+}>
+
+export type AddCustomerMutation = {
+  __typename?: 'mutation_root'
+  insert_customer_one?: { __typename?: 'customer'; id: any } | null
+}
+
 export type OrderProduct_On_OrderProductFragment = {
   __typename?: 'order_product'
   id: any
@@ -9042,6 +9053,81 @@ export const UpdateCustomerDocument = {
     },
   ],
 } as unknown as DocumentNode<UpdateCustomerMutation, UpdateCustomerMutationVariables>
+export const AddCustomerDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddCustomer' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'district_id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_customer_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'address' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'district_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'district_id' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddCustomerMutation, AddCustomerMutationVariables>
 export const OrderDocument = {
   kind: 'Document',
   definitions: [

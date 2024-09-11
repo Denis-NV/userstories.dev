@@ -25,8 +25,8 @@ import TextInputField from '@/components/TextInputField'
 const FormSchema = z.object({
   name: z.string(),
   address: z.string(),
-  delivery_start_time: z.string().time().optional(),
-  delivery_end_time: z.string().time().optional(),
+  delivery_start_time: z.string().optional(),
+  delivery_end_time: z.string().optional(),
   district_id: z.string().optional(),
   is_active: z.boolean().optional(),
 })
@@ -43,6 +43,17 @@ const DetailsForm = ({ customer }: TProps) => {
   const [updateCustomer, { loading: updating, error }] = useMutation(UPDATE_CUSTOMER_MUTATION, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
+    },
+    update: (cache, { data }) => {
+      if (!data?.update_customer_by_pk) return
+
+      cache.modify({
+        fields: {
+          district: (_, { DELETE }) => {
+            return DELETE
+          },
+        },
+      })
     },
   })
 
