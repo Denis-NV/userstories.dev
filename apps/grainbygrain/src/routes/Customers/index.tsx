@@ -41,7 +41,7 @@ const Customers = () => {
         </div>
       </div>
 
-      <div className="mb-6 flex justify-between">
+      <div className="flex justify-between pb-4">
         <div className="flex">
           <div className="flex align-middle">
             <CustomerSelect
@@ -59,7 +59,7 @@ const Customers = () => {
 
           <div className="flex items-center space-x-2">
             <Switch id="is_active" checked={hideInactive} onCheckedChange={setHideIncative} />
-            <Label htmlFor="is_active">Hide inactive</Label>
+            <Label htmlFor="is_active">Hide inactive customer</Label>
           </div>
         </div>
       </div>

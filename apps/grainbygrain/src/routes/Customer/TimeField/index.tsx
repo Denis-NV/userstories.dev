@@ -1,7 +1,9 @@
 import { ChangeEvent } from 'react'
 import { Control, FieldValues, Path } from 'react-hook-form'
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/utils'
 
 type TProps<T extends FieldValues> = {
   control: Control<T, any>
@@ -18,6 +20,7 @@ const TimeField = <T extends FieldValues>({ control, name, label }: TProps<T>) =
         return (
           <FormItem className="flex-1">
             <FormLabel>{label}</FormLabel>
+
             <FormControl>
               <Input
                 placeholder="00:00"
@@ -31,7 +34,7 @@ const TimeField = <T extends FieldValues>({ control, name, label }: TProps<T>) =
 
                   onChange(newEvent)
                 }}
-                className="resize-none"
+                className={cn('resize-none')}
                 {...rest}
               />
             </FormControl>

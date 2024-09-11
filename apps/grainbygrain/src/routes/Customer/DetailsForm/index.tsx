@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,16 +12,15 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form'
 
 import { CustomerQuery } from '@/gql/graphql'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import DistrictSelect from '@/components/DistrictSelect'
 
 import { UPDATE_CUSTOMER_MUTATION } from '../gql'
 import TimeField from '../TimeField'
+import TextInputField from '@/components/TextInputField'
 
 const FormSchema = z.object({
   name: z.string(),
@@ -40,7 +39,6 @@ type TProps = {
 
 const DetailsForm = ({ customer }: TProps) => {
   const accessToken = useAccessToken()
-  const [editMode, setEditMode] = useState(false)
 
   const [updateCustomer, { loading: updating, error }] = useMutation(UPDATE_CUSTOMER_MUTATION, {
     context: {
@@ -96,46 +94,12 @@ const DetailsForm = ({ customer }: TProps) => {
     [updateCustomer, customer.id],
   )
 
-  const handleEditClick = useCallback(() => {
-    setEditMode(true)
-  }, [setEditMode])
-
-  const handleCancelClick = useCallback(() => {
-    setEditMode(false)
-  }, [setEditMode])
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-lg space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Customer name" className="resize-none" {...field} />
-              </FormControl>
+        <TextInputField control={form.control} name="name" label="Customer name" />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Input placeholder="Customer address" className="resize-none" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <TextInputField control={form.control} name="address" label="Customer address" />
 
         <FormField
           control={form.control}
@@ -181,31 +145,17 @@ const DetailsForm = ({ customer }: TProps) => {
           />
         </div>
 
-        {editMode && (
-          <div className="flex w-full space-x-6 py-2">
-            <div className="flex flex-row space-x-3">
-              <Button size="sm" type="submit" disabled={!isDirty}>
-                Save
-              </Button>
-
-              <Button size="sm" variant="outline" onClick={handleCancelClick}>
-                Cancel
-              </Button>
-            </div>
-            <div className="flex flex-1 flex-row items-center">
-              {updating ? 'Saving changes...' : error && 'Problem saving changes. Please try again'}
-            </div>
+        <div className="flex w-full space-x-6 py-2">
+          <div className="flex flex-row space-x-3">
+            <Button size="sm" type="submit" disabled={!isDirty}>
+              Save
+            </Button>
           </div>
-        )}
-      </form>
-
-      {!editMode && (
-        <div className="pt-8">
-          <Button size="sm" onClick={handleEditClick}>
-            Edit
-          </Button>
+          <div className="flex flex-1 flex-row items-center">
+            {updating ? 'Saving changes...' : error && 'Problem saving changes. Please try again'}
+          </div>
         </div>
-      )}
+      </form>
     </Form>
   )
 }

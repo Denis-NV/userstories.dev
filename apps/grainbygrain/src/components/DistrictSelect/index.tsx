@@ -2,6 +2,7 @@ import { FC, ReactNode, Fragment } from 'react'
 import { useQuery } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
 
+import { cn } from '@/utils'
 import {
   Select,
   SelectContent,
@@ -40,7 +41,7 @@ const DistrictSelect = <T extends string>({
   return (
     <Select onValueChange={onChange} value={value}>
       <TriggerWrapperComp>
-        <SelectTrigger disabled={!districts} className={triggerClassName}>
+        <SelectTrigger disabled={!districts} className={cn(triggerClassName)}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
       </TriggerWrapperComp>

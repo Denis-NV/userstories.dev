@@ -25,7 +25,7 @@ const Customer = () => {
   const customer = data?.customer_by_pk
 
   return (
-    <div className="w-full overflow-scroll pb-12">
+    <div className="w-full overflow-scroll pb-12 pt-6">
       {loading ? <span>Loading ...</span> : customer && <DetailsForm customer={customer} />}
     </div>
   )
