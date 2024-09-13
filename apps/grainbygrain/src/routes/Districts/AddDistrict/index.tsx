@@ -15,16 +15,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Form } from '@/components/ui/form'
 import TextInputField from '@/components/TextInputField'
-import DistrictSelect from '@/components/DistrictSelect'
 
-import { ADD_CUSTOMER_MUTATION } from '../gql'
+import { ADD_DISTRICT_MUTATION } from '../gql'
 
 const FormSchema = z.object({
   name: z.string().min(1),
-  address: z.string().min(1),
-  district_id: z.string().min(1),
 })
 
 type TFormData = z.infer<typeof FormSchema>
@@ -33,7 +30,7 @@ type TProps = {
   onAdded?: (orderId: string) => void
 }
 
-const AddCustomer = ({ onAdded }: TProps) => {
+const AddDistrict = ({ onAdded }: TProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const accessToken = useAccessToken()
@@ -42,8 +39,6 @@ const AddCustomer = ({ onAdded }: TProps) => {
     resolver: zodResolver(FormSchema),
     values: {
       name: '',
-      address: '',
-      district_id: '',
     },
   })
 
@@ -52,19 +47,19 @@ const AddCustomer = ({ onAdded }: TProps) => {
     reset,
   } = form
 
-  const [addCustomer, addCustomerMutation] = useMutation(ADD_CUSTOMER_MUTATION, {
+  const [addCustomer, addCustomerMutation] = useMutation(ADD_DISTRICT_MUTATION, {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
-    onCompleted: ({ insert_customer_one }) => {
+    onCompleted: ({ insert_district_one }) => {
       reset()
 
       setIsOpen(false)
 
-      if (onAdded && insert_customer_one) onAdded(insert_customer_one.id)
+      if (onAdded && insert_district_one) onAdded(insert_district_one.id)
     },
     update: (cache, { data }) => {
-      if (!data?.insert_customer_one) return
+      if (!data?.insert_district_one) return
 
       cache.modify({
         fields: {
@@ -77,12 +72,10 @@ const AddCustomer = ({ onAdded }: TProps) => {
   })
 
   const handleAdd = useCallback(
-    ({ name, address, district_id }: TFormData) => {
+    ({ name }: TFormData) => {
       addCustomer({
         variables: {
           name,
-          address,
-          district_id,
         },
       })
     },
@@ -100,28 +93,12 @@ const AddCustomer = ({ onAdded }: TProps) => {
             <DialogHeader>
               <DialogTitle>New customer</DialogTitle>
               <DialogDescription>
-                Add minumum information to create a customer and then edit its details
+                Add minumum information to create a district and then edit its details
               </DialogDescription>
             </DialogHeader>
 
             <TextInputField control={form.control} name="name" label="Customer name" />
 
-            <TextInputField control={form.control} name="address" label="Customer address" />
-
-            <FormField
-              control={form.control}
-              name="district_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>District</FormLabel>
-                  <DistrictSelect
-                    value={field.value}
-                    onChange={field.onChange}
-                    TriggerWrapperComp={FormControl}
-                  />
-                </FormItem>
-              )}
-            />
             <DialogFooter>
               <Button type="submit" disabled={!isValid || addCustomerMutation.loading}>
                 Add
@@ -133,4 +110,4 @@ const AddCustomer = ({ onAdded }: TProps) => {
     </Dialog>
   )
 }
-export default AddCustomer
+export default AddDistrict

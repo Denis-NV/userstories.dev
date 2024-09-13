@@ -2266,8 +2266,8 @@ export type Customer = {
   __typename?: 'customer'
   address: Scalars['String']['output']
   created_at: Scalars['timestamptz']['output']
-  delivery_end_time: Scalars['time']['output']
-  delivery_start_time: Scalars['time']['output']
+  delivery_end_time?: Maybe<Scalars['time']['output']>
+  delivery_start_time?: Maybe<Scalars['time']['output']>
   /** An object relationship */
   district?: Maybe<District>
   district_id?: Maybe<Scalars['uuid']['output']>
@@ -8086,8 +8086,8 @@ export type FullCustomer_On_CustomerFragment = {
   is_active: boolean
   name: string
   address: string
-  delivery_start_time: any
-  delivery_end_time: any
+  delivery_start_time?: any | null
+  delivery_end_time?: any | null
   district?: { __typename?: 'district'; id: any; name: string } | null
 }
 
@@ -8103,8 +8103,8 @@ export type CustomerQuery = {
     is_active: boolean
     name: string
     address: string
-    delivery_start_time: any
-    delivery_end_time: any
+    delivery_start_time?: any | null
+    delivery_end_time?: any | null
     district?: { __typename?: 'district'; id: any; name: string } | null
   } | null
 }
@@ -8122,8 +8122,8 @@ export type UpdateCustomerMutation = {
     is_active: boolean
     name: string
     address: string
-    delivery_start_time: any
-    delivery_end_time: any
+    delivery_start_time?: any | null
+    delivery_end_time?: any | null
     district?: { __typename?: 'district'; id: any; name: string } | null
   } | null
 }
@@ -8137,6 +8137,36 @@ export type AddCustomerMutationVariables = Exact<{
 export type AddCustomerMutation = {
   __typename?: 'mutation_root'
   insert_customer_one?: { __typename?: 'customer'; id: any } | null
+}
+
+export type FullDistrict_On_DistrictFragment = { __typename?: 'district'; id: any; name: string }
+
+export type DistrictQueryVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type DistrictQuery = {
+  __typename?: 'query_root'
+  district_by_pk?: { __typename?: 'district'; id: any; name: string } | null
+}
+
+export type UpdateDistrictMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+  input: District_Set_Input
+}>
+
+export type UpdateDistrictMutation = {
+  __typename?: 'mutation_root'
+  update_district_by_pk?: { __typename?: 'district'; id: any; name: string } | null
+}
+
+export type AddDistrictMutationVariables = Exact<{
+  name: Scalars['String']['input']
+}>
+
+export type AddDistrictMutation = {
+  __typename?: 'mutation_root'
+  insert_district_one?: { __typename?: 'district'; id: any } | null
 }
 
 export type OrderProduct_On_OrderProductFragment = {
@@ -8440,6 +8470,23 @@ export const FullCustomer_On_CustomerFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FullCustomer_On_CustomerFragment, unknown>
+export const FullDistrict_On_DistrictFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullDistrict_on_District' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'district' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FullDistrict_On_DistrictFragment, unknown>
 export const OrderProduct_On_OrderProductFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -9128,6 +9175,191 @@ export const AddCustomerDocument = {
     },
   ],
 } as unknown as DocumentNode<AddCustomerMutation, AddCustomerMutationVariables>
+export const DistrictDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'District' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'district_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'fullDistrict_on_District' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullDistrict_on_District' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'district' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DistrictQuery, DistrictQueryVariables>
+export const UpdateDistrictDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateDistrict' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'district_set_input' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_district_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'fullDistrict_on_District' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullDistrict_on_District' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'district' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateDistrictMutation, UpdateDistrictMutationVariables>
+export const AddDistrictDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddDistrict' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_district_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddDistrictMutation, AddDistrictMutationVariables>
 export const OrderDocument = {
   kind: 'Document',
   definitions: [

@@ -3,6 +3,7 @@ export enum Routes {
   orders = 'orders',
   production = 'production',
   customers = 'customers',
+  districts = 'districts',
 }
 
 export enum UrlParams {
@@ -18,4 +19,5 @@ export enum UrlParams {
 
 export enum RouteParams {
   customerId = 'customerId',
+  districtId = 'districtId',
 }

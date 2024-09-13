@@ -37,9 +37,7 @@ const Customers = () => {
       <div className="mb-2  flex justify-between">
         <TypographyH2 text="Customers" />
 
-        <div className="pt-1">
-          <AddCustomer onAdded={handleCustomerSelect} />
-        </div>
+        <div className="pt-1">{customerId && <AddCustomer onAdded={handleCustomerSelect} />}</div>
       </div>
 
       <div className="flex justify-between pb-4">
