@@ -30,6 +30,10 @@ const navData = [
 
 const settingsData = [
   {
+    name: 'Districts',
+    to: `/${Routes.districts}`,
+  },
+  {
     name: 'Customers',
     to: `/${Routes.customers}`,
   },

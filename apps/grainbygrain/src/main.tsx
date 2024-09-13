@@ -9,6 +9,8 @@ import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
 import Customer from '@/routes/Customer'
+import Districts from '@/routes/Districts'
+import District from '@/routes/District'
 import SignIn from '@/routes/SignIn'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
@@ -17,7 +19,7 @@ import { TOrderRouteParams } from '@/routes/Order/types'
 import typePolicies from '@/typePolicies'
 
 import './styles.css'
-import { Routes } from './const'
+import { RouteParams, Routes } from './const'
 
 const nhost = new NhostClient({
   subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
@@ -44,8 +46,19 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Customer /> },
           {
-            path: ':customerId',
+            path: `:${RouteParams.customerId}`,
             element: <Customer />,
+          },
+        ],
+      },
+      {
+        path: Routes.districts,
+        element: <Districts />,
+        children: [
+          { index: true, element: <District /> },
+          {
+            path: `:${RouteParams.districtId}`,
+            element: <District />,
           },
         ],
       },

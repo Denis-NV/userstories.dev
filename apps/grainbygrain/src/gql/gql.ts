@@ -29,6 +29,14 @@ const documents = {
     types.UpdateCustomerDocument,
   '\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n':
     types.AddCustomerDocument,
+  '\n  fragment fullDistrict_on_District on district {\n    id\n    name\n  }\n':
+    types.FullDistrict_On_DistrictFragmentDoc,
+  '\n  query District($id: uuid!) {\n    district_by_pk(id: $id) {\n      ...fullDistrict_on_District\n    }\n  }\n':
+    types.DistrictDocument,
+  '\n  mutation UpdateDistrict($id: uuid!, $input: district_set_input!) {\n    update_district_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullDistrict_on_District\n    }\n  }\n':
+    types.UpdateDistrictDocument,
+  '\n  mutation AddDistrict($name: String!) {\n    insert_district_one(object: { name: $name }) {\n      id\n    }\n  }\n':
+    types.AddDistrictDocument,
   '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrderProduct_On_OrderProductFragmentDoc,
   '\n  fragment fullOrder_on_Order on order {\n    id\n    created_at\n    updated_at\n    order_nr\n    comment\n    delivery_date\n    delivery_method {\n      id\n      name\n    }\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n    order_products(order_by: { created_at: asc }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
@@ -119,6 +127,30 @@ export function graphql(
 export function graphql(
   source: '\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n',
 ): (typeof documents)['\n  mutation AddCustomer($name: String!, $address: String!, $district_id: uuid!) {\n    insert_customer_one(object: { name: $name, address: $address, district_id: $district_id }) {\n      id\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  fragment fullDistrict_on_District on district {\n    id\n    name\n  }\n',
+): (typeof documents)['\n  fragment fullDistrict_on_District on district {\n    id\n    name\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query District($id: uuid!) {\n    district_by_pk(id: $id) {\n      ...fullDistrict_on_District\n    }\n  }\n',
+): (typeof documents)['\n  query District($id: uuid!) {\n    district_by_pk(id: $id) {\n      ...fullDistrict_on_District\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdateDistrict($id: uuid!, $input: district_set_input!) {\n    update_district_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullDistrict_on_District\n    }\n  }\n',
+): (typeof documents)['\n  mutation UpdateDistrict($id: uuid!, $input: district_set_input!) {\n    update_district_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullDistrict_on_District\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation AddDistrict($name: String!) {\n    insert_district_one(object: { name: $name }) {\n      id\n    }\n  }\n',
+): (typeof documents)['\n  mutation AddDistrict($name: String!) {\n    insert_district_one(object: { name: $name }) {\n      id\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
