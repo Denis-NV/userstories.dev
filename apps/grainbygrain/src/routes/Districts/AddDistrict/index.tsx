@@ -85,13 +85,13 @@ const AddDistrict = ({ onAdded }: TProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Add customer</Button>
+        <Button size="sm">Add district</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleAdd)} className="w-full space-y-6">
             <DialogHeader>
-              <DialogTitle>New customer</DialogTitle>
+              <DialogTitle>New district</DialogTitle>
               <DialogDescription>
                 Add minumum information to create a district and then edit its details
               </DialogDescription>

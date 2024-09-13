@@ -38,6 +38,7 @@ const CustomerSelect = <T extends string>({
   const accessToken = useAccessToken()
   const [nameSearchStr, setNameSearchStr] = useState('')
   const [addressSearchStr, setaddressSearchStr] = useState('')
+  const [open, setOpen] = useState(false)
 
   const { data: customersData } = useQuery(CUSTOMERS_BY_DISTRICT_QUERY, {
     context: {
@@ -65,25 +66,35 @@ const CustomerSelect = <T extends string>({
     [setaddressSearchStr],
   )
 
-  const handleOpen = useCallback(
-    (open: boolean) => {
-      if (!open) {
-        setNameSearchStr('')
-        setaddressSearchStr('')
-      }
+  const handleOpen = useCallback(() => {
+    setNameSearchStr('')
+    setaddressSearchStr('')
+  }, [setNameSearchStr, setaddressSearchStr])
+
+  const handleCloseClick = useCallback(() => {
+    setOpen(false)
+  }, [setOpen])
+  const handleOpenClick = useCallback(() => {
+    setOpen(true)
+  }, [setOpen])
+  const handleValueChange = useCallback(
+    (e: T) => {
+      setOpen(false)
+
+      onChange(e)
     },
-    [setNameSearchStr, setaddressSearchStr],
+    [setOpen, onChange],
   )
 
   return (
-    <Select onValueChange={onChange} value={value} onOpenChange={handleOpen}>
+    <Select onValueChange={handleValueChange} value={value} open={open} onOpenChange={handleOpen}>
       <TriggerWrapperComp>
-        <SelectTrigger disabled={!districts} className={triggerClassName}>
+        <SelectTrigger disabled={!districts} className={triggerClassName} onClick={handleOpenClick}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
       </TriggerWrapperComp>
 
-      <SelectContent>
+      <SelectContent onPointerDownOutside={handleCloseClick}>
         <div className="flex items-center space-x-2 py-1 pl-2 pr-1">
           <MagnifyingGlassIcon className="h-4 w-4 opacity-50" />
           <Label htmlFor="name_search" className="sr-only">
