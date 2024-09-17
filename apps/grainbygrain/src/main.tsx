@@ -9,6 +9,8 @@ import ErrorPage from '@/components/ErrorPage'
 import Root from '@/routes/Root'
 import Customers from '@/routes/Customers'
 import Customer from '@/routes/Customer'
+import Products from '@/routes/Products'
+import Product from '@/routes/Product'
 import Districts from '@/routes/Districts'
 import District from '@/routes/District'
 import SignIn from '@/routes/SignIn'
@@ -41,6 +43,17 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: Routes.districts,
+        element: <Districts />,
+        children: [
+          { index: true, element: <District /> },
+          {
+            path: `:${RouteParams.districtId}`,
+            element: <District />,
+          },
+        ],
+      },
+      {
         path: Routes.customers,
         element: <Customers />,
         children: [
@@ -52,13 +65,13 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: Routes.districts,
-        element: <Districts />,
+        path: Routes.products,
+        element: <Products />,
         children: [
-          { index: true, element: <District /> },
+          { index: true, element: <Product /> },
           {
-            path: `:${RouteParams.districtId}`,
-            element: <District />,
+            path: `:${RouteParams.productId}`,
+            element: <Product />,
           },
         ],
       },

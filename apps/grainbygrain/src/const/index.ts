@@ -2,8 +2,9 @@ export enum Routes {
   signin = 'signin',
   orders = 'orders',
   production = 'production',
-  customers = 'customers',
   districts = 'districts',
+  customers = 'customers',
+  products = 'products',
 }
 
 export enum UrlParams {
@@ -20,4 +21,5 @@ export enum UrlParams {
 export enum RouteParams {
   customerId = 'customerId',
   districtId = 'districtId',
+  productId = 'productId',
 }

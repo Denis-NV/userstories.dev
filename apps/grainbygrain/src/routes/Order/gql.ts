@@ -50,20 +50,6 @@ export const ORDER_QUERY = graphql(`
   }
 `)
 
-export const PRODUCST_BY_DEPARTMENT_QUERY = graphql(`
-  query ProductsByDepartment {
-    department(order_by: { name: asc }) {
-      id
-      name
-      products(where: { is_active: { _eq: true } }, order_by: { name: asc }) {
-        id
-        name
-        weight
-      }
-    }
-  }
-`)
-
 export const DELIVERY_METHODS_QUERY = graphql(`
   query DeliveryMethods {
     delivery_method {

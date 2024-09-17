@@ -37,10 +37,10 @@ const settingsData = [
     name: 'Customers',
     to: `/${Routes.customers}`,
   },
-  // {
-  //   name: 'Products',
-  //   to: `/${Routes.products}`,
-  // },
+  {
+    name: 'Products',
+    to: `/${Routes.products}`,
+  },
 ]
 
 const MainNav = () => {

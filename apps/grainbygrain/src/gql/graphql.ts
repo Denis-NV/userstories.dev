@@ -8080,6 +8080,20 @@ export type DistrictsQuery = {
   district: Array<{ __typename?: 'district'; id: any; name: string }>
 }
 
+export type ProductsByDepartmentQueryVariables = Exact<{
+  onlyActive?: InputMaybe<Array<Scalars['Boolean']['input']> | Scalars['Boolean']['input']>
+}>
+
+export type ProductsByDepartmentQuery = {
+  __typename?: 'query_root'
+  department: Array<{
+    __typename?: 'department'
+    id: any
+    name: string
+    products: Array<{ __typename?: 'product'; id: any; name: string; weight: any }>
+  }>
+}
+
 export type FullCustomer_On_CustomerFragment = {
   __typename?: 'customer'
   id: any
@@ -8247,18 +8261,6 @@ export type OrderQuery = {
   } | null
 }
 
-export type ProductsByDepartmentQueryVariables = Exact<{ [key: string]: never }>
-
-export type ProductsByDepartmentQuery = {
-  __typename?: 'query_root'
-  department: Array<{
-    __typename?: 'department'
-    id: any
-    name: string
-    products: Array<{ __typename?: 'product'; id: any; name: string; weight: any }>
-  }>
-}
-
 export type DeliveryMethodsQueryVariables = Exact<{ [key: string]: never }>
 
 export type DeliveryMethodsQuery = {
@@ -8417,6 +8419,48 @@ export type AddOrderMutation = {
   } | null
 }
 
+export type FullProduct_On_ProductFragment = {
+  __typename?: 'product'
+  id: any
+  is_active: boolean
+  name: string
+  weight: any
+  department?: { __typename?: 'department'; id: any; name: string } | null
+}
+
+export type ProductQueryVariables = Exact<{
+  id: Scalars['uuid']['input']
+}>
+
+export type ProductQuery = {
+  __typename?: 'query_root'
+  product_by_pk?: {
+    __typename?: 'product'
+    id: any
+    is_active: boolean
+    name: string
+    weight: any
+    department?: { __typename?: 'department'; id: any; name: string } | null
+  } | null
+}
+
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+  input: Product_Set_Input
+}>
+
+export type UpdateProductMutation = {
+  __typename?: 'mutation_root'
+  update_product_by_pk?: {
+    __typename?: 'product'
+    id: any
+    is_active: boolean
+    name: string
+    weight: any
+    department?: { __typename?: 'department'; id: any; name: string } | null
+  } | null
+}
+
 export type ProdusctsByOrderDateQueryVariables = Exact<{
   filters?: InputMaybe<Order_Product_Bool_Exp>
 }>
@@ -8436,6 +8480,17 @@ export type ProdusctsByOrderDateQuery = {
       department?: { __typename?: 'department'; id: any; name: string } | null
     }
   }>
+}
+
+export type AddProductMutationVariables = Exact<{
+  name: Scalars['String']['input']
+  weight: Scalars['numeric']['input']
+  department_id: Scalars['uuid']['input']
+}>
+
+export type AddProductMutation = {
+  __typename?: 'mutation_root'
+  insert_product_one?: { __typename?: 'product'; id: any } | null
 }
 
 export const FullCustomer_On_CustomerFragmentDoc = {
@@ -8686,6 +8741,36 @@ export const ListOrder_On_OrderFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ListOrder_On_OrderFragment, unknown>
+export const FullProduct_On_ProductFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullProduct_on_Product' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FullProduct_On_ProductFragment, unknown>
 export const CustomersByDistrictDocument = {
   kind: 'Document',
   definitions: [
@@ -8934,6 +9019,116 @@ export const DistrictsDocument = {
     },
   ],
 } as unknown as DocumentNode<DistrictsQuery, DistrictsQueryVariables>
+export const ProductsByDepartmentDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'ProductsByDepartment' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'onlyActive' } },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+            },
+          },
+          defaultValue: { kind: 'ListValue', values: [{ kind: 'BooleanValue', value: true }] },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'EnumValue', value: 'asc' },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'products' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'is_active' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_in' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'onlyActive' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'order_by' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'name' },
+                            value: { kind: 'EnumValue', value: 'asc' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProductsByDepartmentQuery, ProductsByDepartmentQueryVariables>
 export const CustomerDocument = {
   kind: 'Document',
   definitions: [
@@ -9515,99 +9710,6 @@ export const OrderDocument = {
     },
   ],
 } as unknown as DocumentNode<OrderQuery, OrderQueryVariables>
-export const ProductsByDepartmentDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'ProductsByDepartment' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'department' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'name' },
-                      value: { kind: 'EnumValue', value: 'asc' },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'products' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'where' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'is_active' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_eq' },
-                                  value: { kind: 'BooleanValue', value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'order_by' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'name' },
-                            value: { kind: 'EnumValue', value: 'asc' },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProductsByDepartmentQuery, ProductsByDepartmentQueryVariables>
 export const DeliveryMethodsDocument = {
   kind: 'Document',
   definitions: [
@@ -10299,6 +10401,162 @@ export const AddOrderDocument = {
     },
   ],
 } as unknown as DocumentNode<AddOrderMutation, AddOrderMutationVariables>
+export const ProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Product' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'product_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'fullProduct_on_Product' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullProduct_on_Product' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProductQuery, ProductQueryVariables>
+export const UpdateProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'product_set_input' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'update_product_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'fullProduct_on_Product' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'fullProduct_on_Product' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'product' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'is_active' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'department' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateProductMutation, UpdateProductMutationVariables>
 export const ProdusctsByOrderDateDocument = {
   kind: 'Document',
   definitions: [
@@ -10401,3 +10659,78 @@ export const ProdusctsByOrderDateDocument = {
     },
   ],
 } as unknown as DocumentNode<ProdusctsByOrderDateQuery, ProdusctsByOrderDateQueryVariables>
+export const AddProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'weight' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'numeric' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'department_id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_product_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'weight' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'weight' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'department_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'department_id' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddProductMutation, AddProductMutationVariables>
