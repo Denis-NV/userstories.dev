@@ -3,29 +3,21 @@ import { useAccessToken } from '@nhost/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { PlusIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import ProductSelect from '@/components/ProductSelect'
 import {
   OrderProduct_On_OrderProductFragment,
   OrderProduct_On_OrderProductFragmentDoc,
   FullOrder_On_OrderFragmentDoc,
 } from '@/gql/graphql'
 
-import { ADD_ORDER_PRODUCT_MUTATION, PRODUCST_BY_DEPARTMENT_QUERY } from '../../gql'
+import { ADD_ORDER_PRODUCT_MUTATION } from '../../gql'
 
 const orderFragmentOptions = {
   fragment: {
@@ -62,14 +54,6 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
     formState: { isValid },
     reset,
   } = form
-
-  const productsQuery = useQuery(PRODUCST_BY_DEPARTMENT_QUERY, {
-    context: {
-      headers: { authorization: `Bearer ${accessToken}` },
-    },
-  })
-
-  const departments = productsQuery.data?.department
 
   const [addProduct, addProductMutation] = useMutation(ADD_ORDER_PRODUCT_MUTATION, {
     context: {
@@ -126,31 +110,12 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="hidden">Product</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger disabled={!productsQuery.data} style={{ margin: 0 }}>
-                      <SelectValue placeholder="Select product" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="max-h-60">
-                    {departments?.map(({ id: depId, name, products }) => {
-                      const uniqueProducts = addedIds
-                        ? products.filter(({ id }) => !addedIds.includes(id))
-                        : products
-                      return (
-                        <SelectGroup key={depId}>
-                          <SelectLabel>{name}</SelectLabel>
-
-                          {uniqueProducts?.map(({ id: prodId, name, weight }) => (
-                            <SelectItem key={prodId} value={prodId} className="ml-3">
-                              {name} {weight}g
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      )
-                    })}
-                  </SelectContent>
-                </Select>
+                <ProductSelect
+                  onChange={field.onChange}
+                  value={field.value}
+                  TriggerWrapperComp={FormControl}
+                  excludeIds={addedIds}
+                />
               </FormItem>
             )}
           />

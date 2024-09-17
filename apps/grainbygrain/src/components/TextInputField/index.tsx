@@ -9,6 +9,7 @@ type TProps<T extends FieldValues> = {
   name: Path<T>
   label: string
   placeholder?: string
+  type?: React.HTMLInputTypeAttribute | undefined
 }
 
 const TextInputField = <T extends FieldValues>({
@@ -16,6 +17,7 @@ const TextInputField = <T extends FieldValues>({
   name,
   label,
   placeholder,
+  type,
 }: TProps<T>) => {
   return (
     <FormField
@@ -25,7 +27,7 @@ const TextInputField = <T extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} className={cn('resize-none')} {...field} />
+            <Input type={type} placeholder={placeholder} className={cn('resize-none')} {...field} />
           </FormControl>
 
           <FormMessage />
