@@ -36,6 +36,15 @@ const policies: TypePolicies = {
       },
     },
   },
+  department: {
+    fields: {
+      products: {
+        merge(_, incoming = []) {
+          return [...incoming]
+        },
+      },
+    },
+  },
 }
 
 export default policies
