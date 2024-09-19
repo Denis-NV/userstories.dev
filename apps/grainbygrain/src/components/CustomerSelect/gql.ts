@@ -1,19 +1,16 @@
 import { graphql } from '@/gql'
 
 export const CUSTOMERS_BY_DISTRICT_QUERY = graphql(`
-  query CustomersByDistrict(
-    $onlyActive: [Boolean!] = [true]
-    $name: String = "%%"
-    $address: String = "%%"
-  ) {
+  query CustomersByDistrict($onlyActive: [Boolean!] = [true], $search: String = "%%") {
     district(order_by: { name: asc }) {
       id
       name
       customers(
         where: {
-          name: { _ilike: $name }
-          address: { _ilike: $address }
-          is_active: { _in: $onlyActive }
+          _and: [
+            { is_active: { _in: $onlyActive } }
+            { _or: [{ name: { _ilike: $search } }, { address: { _ilike: $search } }] }
+          ]
         }
         order_by: { name: asc }
       ) {

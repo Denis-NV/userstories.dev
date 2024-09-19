@@ -8043,8 +8043,7 @@ export type Virus_Updates = {
 
 export type CustomersByDistrictQueryVariables = Exact<{
   onlyActive?: InputMaybe<Array<Scalars['Boolean']['input']> | Scalars['Boolean']['input']>
-  name?: InputMaybe<Scalars['String']['input']>
-  address?: InputMaybe<Scalars['String']['input']>
+  search?: InputMaybe<Scalars['String']['input']>
 }>
 
 export type CustomersByDistrictQuery = {
@@ -8834,13 +8833,7 @@ export const CustomersByDistrictDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          defaultValue: { kind: 'StringValue', value: '%%', block: false },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'search' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           defaultValue: { kind: 'StringValue', value: '%%', block: false },
         },
@@ -8884,51 +8877,89 @@ export const CustomersByDistrictDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'name' },
+                            name: { kind: 'Name', value: '_and' },
                             value: {
-                              kind: 'ObjectValue',
-                              fields: [
+                              kind: 'ListValue',
+                              values: [
                                 {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_ilike' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'name' },
-                                  },
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'is_active' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: { kind: 'Name', value: '_in' },
+                                            value: {
+                                              kind: 'Variable',
+                                              name: { kind: 'Name', value: 'onlyActive' },
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
                                 },
-                              ],
-                            },
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'address' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
                                 {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_ilike' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'address' },
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'is_active' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_in' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'onlyActive' },
-                                  },
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_or' },
+                                      value: {
+                                        kind: 'ListValue',
+                                        values: [
+                                          {
+                                            kind: 'ObjectValue',
+                                            fields: [
+                                              {
+                                                kind: 'ObjectField',
+                                                name: { kind: 'Name', value: 'name' },
+                                                value: {
+                                                  kind: 'ObjectValue',
+                                                  fields: [
+                                                    {
+                                                      kind: 'ObjectField',
+                                                      name: { kind: 'Name', value: '_ilike' },
+                                                      value: {
+                                                        kind: 'Variable',
+                                                        name: { kind: 'Name', value: 'search' },
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                          {
+                                            kind: 'ObjectValue',
+                                            fields: [
+                                              {
+                                                kind: 'ObjectField',
+                                                name: { kind: 'Name', value: 'address' },
+                                                value: {
+                                                  kind: 'ObjectValue',
+                                                  fields: [
+                                                    {
+                                                      kind: 'ObjectField',
+                                                      name: { kind: 'Name', value: '_ilike' },
+                                                      value: {
+                                                        kind: 'Variable',
+                                                        name: { kind: 'Name', value: 'search' },
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
                                 },
                               ],
                             },

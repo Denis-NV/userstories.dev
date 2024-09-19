@@ -13,7 +13,7 @@ import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
 import OrderCard from './components/OrderCard'
 
-const limit = 5
+const limit = 30
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
