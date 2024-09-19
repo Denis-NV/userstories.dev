@@ -3,27 +3,17 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
+import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
-import DeleteOrder from '@/components/DeleteOrder'
-import {
-  Table,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableCell,
-} from '@/components/ui/table'
-import { Routes } from '@/const'
 
 import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
 import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
-import OrderCell from './components/OrderCell'
+import OrderCard from './components/OrderCard'
 
-const limit = 100
+const limit = 5
 
 const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
@@ -72,7 +62,7 @@ const Orders = (): JSX.Element => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-2  flex justify-between">
+      <div className="mb-2 flex justify-between">
         <TypographyH2 text="Orders" />
 
         <div className="pt-1">
@@ -82,54 +72,28 @@ const Orders = (): JSX.Element => {
 
       <Filters />
 
-      <Table className="table-fixed">
-        <TableHeader className="bg-background sticky top-0">
-          <TableRow>
-            <TableHead className="w-12">Nr.</TableHead>
-            <TableHead>Customer</TableHead>
-            <TableHead className="w-28">Delivery</TableHead>
-            <TableHead className="w-16 text-right">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {orders &&
-            [...orders]
-              .sort((a, b) => b.order_nr - a.order_nr)
-              .map((order) => (
-                <TableRow key={order.id}>
-                  <OrderCell orderId={order.id} content={String(order.order_nr)} />
-                  <OrderCell
-                    orderId={order.id}
-                    content={`${order.customer.name}, ${order.customer.district?.name}`}
-                  />
-                  <OrderCell orderId={order.id} content={order.delivery_date} />
+      <div className="h-1 w-full shadow-sm" />
 
-                  <TableCell className="text-right">
-                    <DeleteOrder orderId={order.id} />
-                  </TableCell>
-                </TableRow>
-              ))}
+      <div className="w-full space-y-1 overflow-auto pb-8">
+        {orders &&
+          [...orders]
+            .sort((a, b) => b.order_nr - a.order_nr)
+            .map((order) => <OrderCard key={order.id} order={order} />)}
 
-          {showLoadMore && (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
-                <Button onClick={handleLoadMore} variant="outline" size="sm">
-                  Load more
-                </Button>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          {loading && (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
-                <span>loading...</span>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableFooter>
-      </Table>
+        {showLoadMore && (
+          <div className="flex w-full justify-center pt-6">
+            <Button onClick={handleLoadMore} variant="secondary" size="sm">
+              Load more
+            </Button>
+          </div>
+        )}
+
+        {loading && (
+          <div className="flex w-full justify-center pt-6">
+            <span>loading...</span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

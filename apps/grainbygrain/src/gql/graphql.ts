@@ -8369,6 +8369,12 @@ export type ListOrder_On_OrderFragment = {
     name: string
     district?: { __typename?: 'district'; id: any; name: string } | null
   }
+  order_products: Array<{
+    __typename?: 'order_product'
+    id: any
+    quantity: number
+    product: { __typename?: 'product'; id: any; name: string; weight: any }
+  }>
 }
 
 export type OrdersQueryVariables = Exact<{
@@ -8394,6 +8400,12 @@ export type OrdersQuery = {
       name: string
       district?: { __typename?: 'district'; id: any; name: string } | null
     }
+    order_products: Array<{
+      __typename?: 'order_product'
+      id: any
+      quantity: number
+      product: { __typename?: 'product'; id: any; name: string; weight: any }
+    }>
   }>
 }
 
@@ -8416,6 +8428,12 @@ export type AddOrderMutation = {
       name: string
       district?: { __typename?: 'district'; id: any; name: string } | null
     }
+    order_products: Array<{
+      __typename?: 'order_product'
+      id: any
+      quantity: number
+      product: { __typename?: 'product'; id: any; name: string; weight: any }
+    }>
   } | null
 }
 
@@ -8730,6 +8748,29 @@ export const ListOrder_On_OrderFragmentDoc = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_products' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'product' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
                     ],
                   },
                 },
@@ -10302,6 +10343,29 @@ export const OrdersDocument = {
               ],
             },
           },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_products' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'product' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -10390,6 +10454,29 @@ export const AddOrderDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_products' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'product' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
                     ],
                   },
                 },
