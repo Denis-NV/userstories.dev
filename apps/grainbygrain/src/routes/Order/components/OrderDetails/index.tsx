@@ -7,14 +7,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { format } from 'date-fns'
 
 import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormLabel } from '@/components/ui/form'
 import { removeNulls } from '@/utils'
 import { FullOrder_On_OrderFragment } from '@/gql/graphql'
 
@@ -27,8 +20,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import CustomerSelectField from '@/components/CustomerSelectField'
 import DeliveryDateSelectField from '@/components/DeliveryDateSelectField'
+import CustomerSelect from '@/components/CustomerSelect'
 
 const FormSchema = z.object({
   comment: z.string().optional(),
@@ -110,74 +103,98 @@ const OrderDetails = ({ order }: TProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto w-full max-w-xl space-y-6"
-      >
-        <CustomerSelectField<TFormData> control={form.control} name="customer_id" />
+      <form id="orderDetailsForm" onSubmit={form.handleSubmit(handleSubmit)} />
 
-        <DeliveryDateSelectField<TFormData> control={form.control} name="delivery_date" />
+      <table className="mb-3 w-full table-fixed caption-bottom border-separate border-spacing-1 text-sm">
+        <thead>
+          <tr>
+            <th className="w-32" />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <DeliveryDateSelectField control={form.control} name="delivery_date" table />
 
-        <FormField
-          control={form.control}
-          name="delivery_method_id"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Delivery method</FormLabel>
-              <Select
-                onValueChange={(e) => {
-                  console.log('onValueChange', e)
-                  field.onChange(e)
-                }}
-                value={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger disabled={!methods}>
-                    <SelectValue placeholder="Select delivery method" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="max-h-60">
-                  {methods?.map(({ id, name }) => (
-                    <SelectItem key={id} value={id}>
-                      {name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="customer_id"
+            render={({ field }) => (
+              <tr>
+                <td>
+                  <FormLabel>Customer: </FormLabel>
+                </td>
+                <td>
+                  <CustomerSelect
+                    value={field.value}
+                    onChange={field.onChange}
+                    TriggerWrapperComp={FormControl}
+                  />
+                </td>
+              </tr>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="comment"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Comment</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Short comment about the order"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
+          <FormField
+            control={form.control}
+            name="delivery_method_id"
+            render={({ field }) => (
+              <tr>
+                <td>
+                  <FormLabel>Delivery method:</FormLabel>
+                </td>
+                <td>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger disabled={!methods}>
+                        <SelectValue placeholder="Select delivery method" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="max-h-60">
+                      {methods?.map(({ id, name }) => (
+                        <SelectItem key={id} value={id}>
+                          {name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </td>
+              </tr>
+            )}
+          />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <tr>
+                <td>
+                  <FormLabel>Comment:</FormLabel>
+                </td>
+                <td>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Short comment about the order"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                </td>
+              </tr>
+            )}
+          />
+        </tbody>
+      </table>
 
-        <div className="flex w-full py-2">
-          <div className="flex flex-1 flex-row items-center">
-            {loading ? 'Saving changes...' : error && 'Problem saving changes. Please try again'}
-          </div>
-          <div className="flex-1 text-right">
-            <Button size="sm" type="submit" disabled={!isDirty}>
-              {isDirty ? 'Save changes' : 'No changes to save'}
-            </Button>
-          </div>
+      <div className="mb-6 flex w-full py-2">
+        <div className="flex flex-1 flex-row items-center">
+          {loading ? 'Saving changes...' : error && 'Problem saving changes. Please try again'}
         </div>
-      </form>
+        <div className="flex-1 text-right">
+          <Button size="sm" type="submit" disabled={!isDirty} form="orderDetailsForm">
+            Update details
+          </Button>
+        </div>
+      </div>
     </Form>
   )
 }

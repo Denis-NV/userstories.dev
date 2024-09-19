@@ -15,6 +15,17 @@ export const LIST_ORDER_FRAGMENT = graphql(`
         name
       }
     }
+
+    order_products {
+      id
+      quantity
+
+      product {
+        id
+        name
+        weight
+      }
+    }
   }
 `)
 
