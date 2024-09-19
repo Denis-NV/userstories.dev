@@ -12,6 +12,10 @@ export function TypographyH2({ text }: TTypographyProps) {
   )
 }
 
+export function TypographyH3({ text }: TTypographyProps) {
+  return <h3 className="scroll-m-20 pb-1 text-2xl font-semibold tracking-tight">{text}</h3>
+}
+
 export function TypographyLarge({ text }: TTypographyProps) {
   return <div className="text-lg font-semibold">{text}</div>
 }

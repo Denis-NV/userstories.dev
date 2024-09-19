@@ -101,9 +101,9 @@ const AddOrder = ({ onAdded }: TProps) => {
               </DialogDescription>
             </DialogHeader>
 
-            <CustomerSelectField<TFormData> control={form.control} name="customer_id" />
+            <CustomerSelectField control={form.control} name="customer_id" />
 
-            <DeliveryDateSelectField<TFormData> control={form.control} name="delivery_date" />
+            <DeliveryDateSelectField control={form.control} name="delivery_date" />
 
             <DialogFooter>
               <Button type="submit" disabled={!isValid || addOrderMutation.loading}>

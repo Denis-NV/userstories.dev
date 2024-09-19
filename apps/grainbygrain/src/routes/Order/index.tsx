@@ -5,9 +5,8 @@ import { useQuery } from '@apollo/client'
 
 import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DeleteOrder from '@/components/DeleteOrder'
-import { TypographyH2 } from '@/components/typography'
+import { TypographyH2, TypographyH3 } from '@/components/typography'
 
 import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
@@ -43,13 +42,13 @@ const Order = (): JSX.Element => {
   return (
     <div className="h-full overflow-scroll pb-10">
       {order ? (
-        <Tabs defaultValue="details" className="w-full ">
+        <div className="w-full">
           <div className="bg-background b-2 sticky top-0 z-10 mb-6">
             <div className="mb-2 flex w-full justify-between">
-              <TypographyH2 text={`Order - ${order?.order_nr}`} />
+              <TypographyH2 text={`№ ${order?.order_nr}`} />
 
               <div className="space-x-2 pt-1">
-                <Button onClick={handleBackClick} size="sm">
+                <Button variant="outline" onClick={handleBackClick} size="sm">
                   Back
                 </Button>
 
@@ -57,7 +56,7 @@ const Order = (): JSX.Element => {
                   <DeleteOrder
                     orderId={orderId}
                     trigger={
-                      <Button variant="outline" size="sm">
+                      <Button variant="secondary" size="sm">
                         Delete
                       </Button>
                     }
@@ -66,20 +65,15 @@ const Order = (): JSX.Element => {
                 )}
               </div>
             </div>
-
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="products">Products</TabsTrigger>
-            </TabsList>
+            <div className="h-1 w-full shadow-sm" />
           </div>
 
-          <TabsContent value="details">
-            <OrderDetails order={order} />
-          </TabsContent>
-          <TabsContent value="products">
-            <Products products={products} orderId={orderId} />
-          </TabsContent>
-        </Tabs>
+          <TypographyH3 text="Order Details" />
+          <OrderDetails order={order} />
+
+          <TypographyH3 text="Product List" />
+          <Products products={products} orderId={orderId} />
+        </div>
       ) : (
         <div>{loading && 'loading...'}</div>
       )}
