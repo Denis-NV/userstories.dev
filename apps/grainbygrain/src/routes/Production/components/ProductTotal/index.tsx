@@ -11,15 +11,15 @@ type TProps = {
 
 const ProductTotal = ({ name, quantity, date, prodId }: TProps) => {
   return (
-    <div className="flex w-full flex-row space-x-1">
+    <li>
       <Link
         to={`/${Routes.orders}?${UrlParams.delivery_date}=${date}&${UrlParams.order_products}=${prodId}`}
+        className="hover:underline"
       >
-        <span className="hover:underline">{name}</span>
+        {name}
       </Link>
-      <span className="mb-1 flex-1 border-b-[1px] border-dotted border-gray-200" />
-      <span className="pr-4">{quantity}</span>
-    </div>
+      - <span className="font-bold">{quantity}</span>
+    </li>
   )
 }
 export default ProductTotal
