@@ -58,6 +58,10 @@ const Orders = (): JSX.Element => {
     [navigate],
   )
 
+  const handleBackClick = useCallback(() => {
+    navigate(-1)
+  }, [navigate])
+
   const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
 
   return (
@@ -65,7 +69,11 @@ const Orders = (): JSX.Element => {
       <div className="mb-2 flex justify-between">
         <TypographyH2 text="Orders" />
 
-        <div className="pt-1">
+        <div className="space-x-2 pt-1">
+          <Button variant="outline" onClick={handleBackClick} size="sm">
+            Back
+          </Button>
+
           <AddOrder onAdded={handleOrderAdd} />
         </div>
       </div>

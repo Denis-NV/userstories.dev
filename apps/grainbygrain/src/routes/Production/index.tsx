@@ -1,8 +1,10 @@
-import { useSearchParams } from 'react-router-dom'
+import { useCallback } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
 import { TypographyH2 } from '@/components/typography'
+import { Button } from '@/components/ui/button'
 
 import { PRODUCTS_BY_ORDER_DATE_QUERY } from './gql'
 import { getParamsFilter } from './utils'
@@ -17,6 +19,7 @@ type TProdLists = [string, TDepRecord][]
 const Production = () => {
   const accessToken = useAccessToken()
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const query = useQuery(PRODUCTS_BY_ORDER_DATE_QUERY, {
     context: {
@@ -63,10 +66,20 @@ const Production = () => {
     (a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime(),
   )
 
+  const handleBackClick = useCallback(() => {
+    navigate(-1)
+  }, [navigate])
+
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-2 ">
+      <div className="mb-2 flex w-full justify-between">
         <TypographyH2 text="Production List" />
+
+        <div className="pt-1">
+          <Button variant="outline" onClick={handleBackClick} size="sm">
+            Back
+          </Button>
+        </div>
       </div>
 
       <Filters />
