@@ -4,8 +4,7 @@ import { InputMaybe, Order_Product_Bool_Exp } from '@/gql/graphql'
 export const getParamsFilter = (
   searchParams: URLSearchParams,
 ): InputMaybe<Order_Product_Bool_Exp> => {
-  const delivery_date_from = searchParams.get(UrlParams.from)
-  const delivery_date_to = searchParams.get(UrlParams.to)
+  const delivery_date = searchParams.get(UrlParams.delivery_date)
   const department = searchParams.get(UrlParams.department)
 
   return {
@@ -20,13 +19,10 @@ export const getParamsFilter = (
           },
         }
       : {}),
-    ...(delivery_date_from || delivery_date_to
+    ...(delivery_date
       ? {
           order: {
-            delivery_date: {
-              ...(delivery_date_from ? { _gte: delivery_date_from } : {}),
-              ...(delivery_date_to ? { _lte: delivery_date_to } : {}),
-            },
+            delivery_date: { _eq: delivery_date },
           },
         }
       : {}),

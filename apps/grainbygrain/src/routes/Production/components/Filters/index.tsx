@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
 import { format } from 'date-fns'
-import { DateRange } from 'react-day-picker'
 import { useSearchParams } from 'react-router-dom'
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons'
 
@@ -10,35 +9,31 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar'
 import DepartmentSelect from '@/components/DepartmentSelect'
 
-const dateFromKey = 'from'
-const dateToKey = 'to'
+const deliveryDateKey = 'delivery_date'
 const departmentKey = 'department'
 
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const dateFromParam = searchParams.get(dateFromKey)
-  const dateToParam = searchParams.get(dateToKey)
+  const delivery_date_param = searchParams.get(deliveryDateKey)
   const departmentParam = searchParams.get(departmentKey)
 
-  const date: DateRange = {
-    from: dateFromParam ? new Date(dateFromParam) : undefined,
-    to: dateToParam ? new Date(dateToParam) : undefined,
-  }
+  const delivery_date = delivery_date_param ? new Date(delivery_date_param) : undefined
 
   const department = removeNulls(departmentParam) ?? ''
 
-  const handleDateSelect = useCallback(
-    (newDate?: DateRange) => {
+  const handleDeliveryDateSelect = useCallback(
+    (date?: Date) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (newDate?.from) prev.set(dateFromKey, format(newDate?.from, 'yyyy-MM-dd'))
-        if (newDate?.to) prev.set(dateToKey, format(newDate?.to, 'yyyy-MM-dd'))
+        if (date) prev.set(deliveryDateKey, format(date, 'yyyy-MM-dd'))
 
         return prev
       })
+
+      setCalendarOpen(false)
     },
-    [setSearchParams],
+    [setSearchParams, setCalendarOpen],
   )
 
   const handleDepartmentSelect = useCallback(
@@ -54,7 +49,7 @@ const Filters = () => {
 
   const handleClearDate = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(dateFromKey)
+      prev.delete(deliveryDateKey)
 
       return prev
     })
@@ -80,32 +75,24 @@ const Filters = () => {
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>
               <Button
-                variant={'outline'}
-                className={cn('pl-3 text-left font-normal', !date?.from && 'text-muted-foreground')}
+                variant="outline"
+                className={cn(
+                  'pl-3 text-left font-normal',
+                  !delivery_date && 'text-muted-foreground',
+                )}
               >
-                <span className="mr-1 min-w-24">
-                  {date?.from ? (
-                    date.to ? (
-                      <>
-                        {format(date.from, 'dd LLL')} - {format(date.to, 'dd LLL')}
-                      </>
-                    ) : (
-                      format(date.from, 'dd LLL')
-                    )
-                  ) : (
-                    'date'
-                  )}
+                <span className="mr-1 min-w-12">
+                  {delivery_date ? format(delivery_date, 'dd LLL') : 'date'}
                 </span>
                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
+                mode="single"
+                selected={delivery_date}
                 initialFocus
-                mode="range"
-                defaultMonth={date?.from}
-                selected={date}
-                onSelect={handleDateSelect}
+                onSelect={handleDeliveryDateSelect}
               />
             </PopoverContent>
           </Popover>
