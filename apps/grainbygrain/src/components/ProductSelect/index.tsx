@@ -58,7 +58,7 @@ const ProductSelect = <T extends string>({
             ? products.filter(({ id }) => !excludeIds.includes(id))
             : products
 
-          productsNr = +uniqueProducts?.length
+          productsNr += uniqueProducts?.length
 
           return uniqueProducts?.length > 0 ? (
             <SelectGroup key={depId}>

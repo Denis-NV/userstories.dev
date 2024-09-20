@@ -4,7 +4,6 @@ import { useAccessToken } from '@nhost/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { TrashIcon, CheckIcon } from '@radix-ui/react-icons'
 
 import { OrderProduct_On_OrderProductFragment } from '@/gql/graphql'
 import { TableCell, TableRow } from '@/components/ui/table'
@@ -12,7 +11,8 @@ import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { DELETE_ORDER_PRODUCT_MUTATION, UPDATE_ORDER_PRODUCT_MUTATION } from '../../gql'
+import { UPDATE_ORDER_PRODUCT_MUTATION } from '../../gql'
+import DeleteProduct from '../DeleteProduct'
 
 const FormSchema = z.object({
   quantity: z.coerce.number(),
@@ -34,12 +34,6 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
     },
   })
 
-  const [deleteProduct, deleteMutation] = useMutation(DELETE_ORDER_PRODUCT_MUTATION, {
-    context: {
-      headers: { authorization: `Bearer ${accessToken}` },
-    },
-  })
-
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
     values,
@@ -47,6 +41,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
 
   const {
     formState: { isDirty },
+    watch,
   } = form
 
   const {
@@ -65,19 +60,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
     [updateProduct, orderProduct?.id],
   )
 
-  const handleDelete = useCallback(() => {
-    deleteProduct({
-      variables: {
-        id: orderProduct?.id,
-      },
-      update: (cache, { data }) => {
-        if (data?.delete_order_product_by_pk) {
-          cache.evict({ id: cache.identify(data?.delete_order_product_by_pk) })
-          cache.gc()
-        }
-      },
-    })
-  }, [deleteProduct, orderProduct?.id])
+  const noQuantity = !parseInt(String(watch('quantity')))
 
   // TODO: add error handling strategy
 
@@ -89,39 +72,42 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
       <TableCell className="hidden sm:table-cell">{department?.name}</TableCell>
       <TableCell>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleUpdate)}>
-            <div className="flex flex-row">
-              <FormField
-                control={form.control}
-                name="quantity"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="hidden">Quantity</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="w-16"
-                        type="number"
-                        min={1}
-                        style={{ margin: 0 }}
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              {isDirty && (
-                <Button type="submit" size="sm" disabled={!isDirty} className="ml-2">
-                  <CheckIcon />
-                </Button>
+          <form id={`productForm${orderProduct?.id}`} onSubmit={form.handleSubmit(handleUpdate)} />
+          <div className="flex flex-row">
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="hidden">Quantity</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-16"
+                      type="number"
+                      min={0}
+                      style={{ margin: 0 }}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
-            </div>
-          </form>
+            />
+          </div>
         </Form>
       </TableCell>
       <TableCell className="text-right">
-        <Button variant="ghost" size="sm" onClick={handleDelete} disabled={deleteMutation.loading}>
-          <TrashIcon />
-        </Button>
+        {noQuantity ? (
+          <DeleteProduct orderProdId={orderProduct?.id} />
+        ) : (
+          <Button
+            type="submit"
+            size="sm"
+            disabled={!isDirty}
+            form={`productForm${orderProduct?.id}`}
+          >
+            Update
+          </Button>
+        )}
       </TableCell>
     </TableRow>
   )
