@@ -20,7 +20,10 @@ type TProps = {
   trigger?: ReactNode
 }
 
-const DeleteProduct = ({ orderProdId, trigger = <Button size="sm">Update</Button> }: TProps) => {
+const DeleteOrderProduct = ({
+  orderProdId,
+  trigger = <Button size="sm">Update</Button>,
+}: TProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const accessToken = useAccessToken()
 
@@ -71,4 +74,4 @@ const DeleteProduct = ({ orderProdId, trigger = <Button size="sm">Update</Button
     </Dialog>
   )
 }
-export default DeleteProduct
+export default DeleteOrderProduct

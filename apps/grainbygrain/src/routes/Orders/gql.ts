@@ -6,6 +6,7 @@ export const LIST_ORDER_FRAGMENT = graphql(`
     created_at
     order_nr
     delivery_date
+    comment
 
     customer {
       id

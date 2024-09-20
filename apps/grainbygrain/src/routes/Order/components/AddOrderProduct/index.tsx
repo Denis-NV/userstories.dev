@@ -1,10 +1,9 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useAccessToken } from '@nhost/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
-import { PlusIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
@@ -44,6 +43,11 @@ type TProps = {
 
 const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
   const accessToken = useAccessToken()
+  const [showAdd, setShowAddd] = useState(false)
+
+  const handleAddProduct = useCallback(() => {
+    setShowAddd(true)
+  }, [setShowAddd])
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
@@ -59,7 +63,10 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
     context: {
       headers: { authorization: `Bearer ${accessToken}` },
     },
-    onCompleted: () => reset(),
+    onCompleted: () => {
+      reset()
+      setShowAddd(false)
+    },
     update: (cache, { data }) => {
       if (!data?.insert_order_product_one) return
 
@@ -101,51 +108,72 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   return (
     <Form {...form}>
-      <TableRow>
-        <TableCell>
-          <form id="addOrderProductForm" onSubmit={form.handleSubmit(handleAdd)} />
-          <FormField
-            control={form.control}
-            name="productId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="hidden">Product</FormLabel>
-                <ProductSelect
-                  onChange={field.onChange}
-                  value={field.value}
-                  TriggerWrapperComp={FormControl}
-                  excludeIds={addedIds}
-                />
-              </FormItem>
-            )}
-          />
-        </TableCell>
-        <TableCell className="hidden sm:table-cell" />
-        <TableCell className="min-w-44">
-          <FormField
-            control={form.control}
-            name="quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="hidden">Quantity</FormLabel>
-                <FormControl>
-                  <Input className="w-16" type="number" min={1} style={{ margin: 0 }} {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </TableCell>
-        <TableCell className="text-right">
-          <Button
-            type="submit"
-            size="sm"
-            form="addOrderProductForm"
-            disabled={!isValid || addProductMutation.loading}
-          >
-            <PlusIcon />
-          </Button>
-        </TableCell>
-      </TableRow>
+      {showAdd ? (
+        <TableRow>
+          <TableCell>
+            <form id="addOrderProductForm" onSubmit={form.handleSubmit(handleAdd)} />
+            <FormField
+              control={form.control}
+              name="productId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="hidden">Product</FormLabel>
+                  <ProductSelect
+                    onChange={field.onChange}
+                    value={field.value}
+                    TriggerWrapperComp={FormControl}
+                    excludeIds={addedIds}
+                  />
+                </FormItem>
+              )}
+            />
+          </TableCell>
+          <TableCell className="hidden sm:table-cell" />
+          <TableCell className="min-w-44">
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="hidden">Quantity</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-16"
+                      type="number"
+                      min={1}
+                      style={{ margin: 0 }}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </TableCell>
+          <TableCell className="text-right">
+            <Button
+              type="submit"
+              size="sm"
+              form="addOrderProductForm"
+              disabled={!isValid || addProductMutation.loading}
+            >
+              Add
+            </Button>
+          </TableCell>
+        </TableRow>
+      ) : (
+        <TableRow>
+          <TableCell colSpan={4} align="center" className="hidden sm:table-cell">
+            <Button onClick={handleAddProduct} size="sm">
+              Add product
+            </Button>
+          </TableCell>
+          <TableCell colSpan={3} align="center" className="table-cell sm:hidden">
+            <Button onClick={handleAddProduct} size="sm">
+              Add product
+            </Button>
+          </TableCell>
+        </TableRow>
+      )}
     </Form>
   )
 }

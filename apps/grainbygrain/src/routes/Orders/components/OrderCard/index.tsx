@@ -28,7 +28,9 @@ const OrderCard = ({ order }: TProps) => {
           </div>
           <div className="text-foreground ml-auto text-xs">{order.delivery_date}</div>
         </div>
+        {order.comment && <div className="text-xs font-medium">{order.comment}</div>}
       </div>
+
       <ul className="text-muted-foreground w-full text-xs">
         {order.order_products.map((item) => (
           <li key={item.id}>

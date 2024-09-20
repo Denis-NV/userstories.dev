@@ -8362,6 +8362,7 @@ export type ListOrder_On_OrderFragment = {
   created_at: any
   order_nr: number
   delivery_date: any
+  comment?: string | null
   customer: {
     __typename?: 'customer'
     id: any
@@ -8393,6 +8394,7 @@ export type OrdersQuery = {
     created_at: any
     order_nr: number
     delivery_date: any
+    comment?: string | null
     customer: {
       __typename?: 'customer'
       id: any
@@ -8421,6 +8423,7 @@ export type AddOrderMutation = {
     created_at: any
     order_nr: number
     delivery_date: any
+    comment?: string | null
     customer: {
       __typename?: 'customer'
       id: any
@@ -8731,6 +8734,7 @@ export const ListOrder_On_OrderFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
           { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
           { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'customer' },
@@ -10352,6 +10356,7 @@ export const OrdersDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
           { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
           { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'customer' },
@@ -10469,6 +10474,7 @@ export const AddOrderDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
           { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
           { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'customer' },

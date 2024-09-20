@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input'
 
 import { UPDATE_ORDER_PRODUCT_MUTATION } from '../../gql'
-import DeleteProduct from '../DeleteProduct'
+import DeleteProduct from '../DeleteOrderProduct'
 
 const FormSchema = z.object({
   quantity: z.coerce.number(),
