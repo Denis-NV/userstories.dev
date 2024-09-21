@@ -6,6 +6,7 @@ import { RouteParams, Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import DistrictSelect from '@/components/DistrictSelect'
+import MainContainer from '@/components/MainContainer'
 
 import AddDistrict from './AddDistrict'
 
@@ -31,26 +32,30 @@ const Districts = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-2  flex justify-between">
-        <TypographyH2 text="Districts" />
+      <MainContainer>
+        <div className="mb-2  flex justify-between">
+          <TypographyH2 text="Districts" />
 
-        <div className="pt-1">{districtId && <AddDistrict onAdded={handleDistrictSelect} />}</div>
-      </div>
-
-      <div className="flex justify-between pb-4">
-        <div className="flex align-middle">
-          <DistrictSelect
-            value={districtId}
-            onChange={handleDistrictSelect}
-            placeholder="Select"
-            triggerClassName="w-40"
-          />
-
-          <Button variant="link" onClick={handleClearDistrict}>
-            <Cross2Icon />
-          </Button>
+          <div className="pt-1">{districtId && <AddDistrict onAdded={handleDistrictSelect} />}</div>
         </div>
-      </div>
+
+        <div className="flex justify-between pb-4">
+          <div className="flex align-middle">
+            <DistrictSelect
+              value={districtId}
+              onChange={handleDistrictSelect}
+              placeholder="Select"
+              triggerClassName="w-40"
+            />
+
+            <Button variant="link" onClick={handleClearDistrict}>
+              <Cross2Icon />
+            </Button>
+          </div>
+        </div>
+
+        <div className="h-1 w-full shadow-sm" />
+      </MainContainer>
 
       {districtId ? (
         <Outlet />
