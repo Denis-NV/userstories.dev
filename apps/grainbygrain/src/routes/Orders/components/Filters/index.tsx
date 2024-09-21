@@ -1,9 +1,10 @@
 import { useCallback, useState } from 'react'
 import { format } from 'date-fns'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons'
 
 import { cn, removeNulls } from '@/utils'
+import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
@@ -15,6 +16,7 @@ const customerKey = 'customer'
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const delivery_date_param = searchParams.get(deliveryDateKey)
   const customer_param = searchParams.get(customerKey)
@@ -63,9 +65,8 @@ const Filters = () => {
   }, [setSearchParams])
 
   const handleClear = useCallback(() => {
-    handleClearDate()
-    handleClearCustomer()
-  }, [handleClearDate, handleClearCustomer])
+    navigate(`/${Routes.orders}`)
+  }, [navigate])
 
   return (
     <div className="mb-6 flex justify-between">

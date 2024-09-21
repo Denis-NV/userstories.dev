@@ -8482,6 +8482,7 @@ export type UpdateProductMutation = {
 }
 
 export type ProdusctsByOrderDateQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>
   filters?: InputMaybe<Order_Product_Bool_Exp>
 }>
 
@@ -8499,6 +8500,37 @@ export type ProdusctsByOrderDateQuery = {
       weight: any
       department?: { __typename?: 'department'; id: any; name: string } | null
     }
+  }>
+}
+
+export type OrdersByDateQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>
+  filters?: InputMaybe<Order_Bool_Exp>
+}>
+
+export type OrdersByDateQuery = {
+  __typename?: 'query_root'
+  order_aggregate: {
+    __typename?: 'order_aggregate'
+    aggregate?: { __typename?: 'order_aggregate_fields'; count: number } | null
+  }
+  order: Array<{
+    __typename?: 'order'
+    id: any
+    created_at: any
+    delivery_date: any
+    order_products: Array<{
+      __typename?: 'order_product'
+      id: any
+      quantity: number
+      product: {
+        __typename?: 'product'
+        id: any
+        name: string
+        weight: any
+        department?: { __typename?: 'department'; id: any; name: string } | null
+      }
+    }>
   }>
 }
 
@@ -10691,6 +10723,12 @@ export const ProdusctsByOrderDateDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '100' },
+        },
+        {
+          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_product_bool_exp' } },
         },
@@ -10702,6 +10740,11 @@ export const ProdusctsByOrderDateDocument = {
             kind: 'Field',
             name: { kind: 'Name', value: 'order_product' },
             arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -10783,6 +10826,135 @@ export const ProdusctsByOrderDateDocument = {
     },
   ],
 } as unknown as DocumentNode<ProdusctsByOrderDateQuery, ProdusctsByOrderDateQueryVariables>
+export const OrdersByDateDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'OrdersByDate' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '100' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'order_bool_exp' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'count' } }],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'order' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'filters' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'delivery_date' },
+                          value: { kind: 'EnumValue', value: 'desc' },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'order_products' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'product' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'department' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OrdersByDateQuery, OrdersByDateQueryVariables>
 export const AddProductDocument = {
   kind: 'Document',
   definitions: [
