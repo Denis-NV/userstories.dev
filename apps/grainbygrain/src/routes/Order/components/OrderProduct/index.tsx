@@ -60,7 +60,9 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
     [updateProduct, orderProduct?.id],
   )
 
-  const noQuantity = !parseInt(String(watch('quantity')))
+  const quantity = parseInt(String(watch('quantity')))
+  const noQuantity = !quantity
+  const oldQuantity = quantity === values.quantity
 
   // TODO: add error handling strategy
 
@@ -102,7 +104,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
           <Button
             type="submit"
             size="sm"
-            disabled={!isDirty}
+            disabled={!isDirty || oldQuantity}
             form={`productForm${orderProduct?.id}`}
           >
             Update
