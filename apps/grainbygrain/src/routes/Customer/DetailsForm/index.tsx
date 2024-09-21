@@ -13,7 +13,6 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form'
-
 import { CustomerQuery } from '@/gql/graphql'
 import { Switch } from '@/components/ui/switch'
 import DistrictSelect from '@/components/DistrictSelect'

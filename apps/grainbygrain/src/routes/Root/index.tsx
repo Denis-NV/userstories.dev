@@ -33,7 +33,7 @@ function Root() {
           </ul>
           <span>Default Role: {userDeafaultRole}</span> */}
 
-          <main className="w-full max-w-2xl flex-1 overflow-hidden px-2 pt-6 sm:pt-10">
+          <main className="w-full flex-1 overflow-hidden pt-6 sm:pt-10">
             <Outlet />
           </main>
 

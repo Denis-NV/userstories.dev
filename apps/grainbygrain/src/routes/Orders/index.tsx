@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
+import MainContainer from '@/components/MainContainer'
 
 import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
@@ -66,41 +67,47 @@ const Orders = (): JSX.Element => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-2 flex justify-between">
-        <TypographyH2 text="Orders" />
+      <MainContainer>
+        <div className="mb-2 flex justify-between">
+          <TypographyH2 text="Orders" />
 
-        <div className="space-x-2 pt-1">
-          <Button variant="outline" onClick={handleBackClick} size="sm">
-            Back
-          </Button>
-
-          <AddOrder onAdded={handleOrderAdd} />
-        </div>
-      </div>
-
-      <Filters />
-
-      <div className="h-1 w-full shadow-sm" />
-
-      <div className="w-full space-y-1 overflow-auto pb-8">
-        {orders &&
-          [...orders]
-            .sort((a, b) => b.order_nr - a.order_nr)
-            .map((order) => <OrderCard key={order.id} order={order} />)}
-
-        {showLoadMore && (
-          <div className="flex w-full justify-center pt-6">
-            <Button onClick={handleLoadMore} variant="secondary" size="sm">
-              Load more
+          <div className="space-x-2 pt-1">
+            <Button variant="outline" onClick={handleBackClick} size="sm">
+              Back
             </Button>
-          </div>
-        )}
 
-        {loading && (
-          <div className="flex w-full justify-center pt-6">
-            <span>loading...</span>
+            <AddOrder onAdded={handleOrderAdd} />
           </div>
-        )}
+        </div>
+
+        <Filters />
+
+        <div className="h-1 w-full shadow-sm" />
+      </MainContainer>
+
+      <div className="overflow-auto pb-8">
+        <MainContainer>
+          <div className="w-full space-y-1 ">
+            {orders &&
+              [...orders]
+                .sort((a, b) => b.order_nr - a.order_nr)
+                .map((order) => <OrderCard key={order.id} order={order} />)}
+
+            {showLoadMore && (
+              <div className="flex w-full justify-center pt-6">
+                <Button onClick={handleLoadMore} variant="secondary" size="sm">
+                  Load more
+                </Button>
+              </div>
+            )}
+
+            {loading && (
+              <div className="flex w-full justify-center pt-6">
+                <span>loading...</span>
+              </div>
+            )}
+          </div>
+        </MainContainer>
       </div>
     </div>
   )

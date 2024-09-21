@@ -3,6 +3,7 @@ import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
 import { RouteParams } from '@/const'
+import MainContainer from '@/components/MainContainer'
 
 import { PRODUCT_QUERY } from './gql'
 import DetailsForm from './DetailsForm'
@@ -26,7 +27,9 @@ const Customer = () => {
 
   return (
     <div className="w-full overflow-scroll pb-12 pt-6">
-      {loading ? <span>Loading ...</span> : product && <DetailsForm product={product} />}
+      <MainContainer>
+        {loading ? <span>Loading ...</span> : product && <DetailsForm product={product} />}
+      </MainContainer>
     </div>
   )
 }

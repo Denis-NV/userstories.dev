@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client'
 
 import { TypographyH2 } from '@/components/typography'
 import { Button } from '@/components/ui/button'
+import MainContainer from '@/components/MainContainer'
 
 import { PRODUCTS_BY_ORDER_DATE_QUERY } from './gql'
 import { getParamsFilter } from './utils'
@@ -72,56 +73,62 @@ const Production = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-2 flex w-full justify-between">
-        <TypographyH2 text="Production List" />
+      <MainContainer>
+        <div className="mb-2 flex w-full justify-between">
+          <TypographyH2 text="Production List" />
 
-        <div className="pt-1">
-          <Button variant="outline" onClick={handleBackClick} size="sm">
-            Back
-          </Button>
-        </div>
-      </div>
-
-      <Filters />
-
-      <div className="h-1 w-full shadow-sm" />
-
-      <div className="w-full space-y-1 overflow-auto pb-8">
-        {prodsByDate.map(([date, departments], index) => {
-          return (
-            <div
-              key={index}
-              className="hover:bg-accent flex w-full flex-row items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all"
-            >
-              <div className="flex flex-col items-start gap-4">
-                {Object.entries(departments).map(([depName, { id: depId, products }]) => (
-                  <div key={depId} className="flex w-full flex-col gap-2">
-                    <div className="font-semibold">{depName}</div>
-
-                    <ul className="text-muted-foreground w-full text-xs">
-                      {Object.entries(products).map(([prodName, { id: prodId, quantity }]) => (
-                        <ProductTotal
-                          key={prodId}
-                          name={prodName}
-                          quantity={quantity}
-                          date={date}
-                          prodId={prodId}
-                        />
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              <div className="text-foreground ml-auto text-xs">{date}</div>
-            </div>
-          )
-        })}
-
-        {loading && (
-          <div className="flex w-full justify-center pt-6">
-            <span>loading...</span>
+          <div className="pt-1">
+            <Button variant="outline" onClick={handleBackClick} size="sm">
+              Back
+            </Button>
           </div>
-        )}
+        </div>
+
+        <Filters />
+
+        <div className="h-1 w-full shadow-sm" />
+      </MainContainer>
+
+      <div className="w-full overflow-auto pb-8">
+        <MainContainer>
+          <div className="space-y-1">
+            {prodsByDate.map(([date, departments], index) => {
+              return (
+                <div
+                  key={index}
+                  className="hover:bg-accent flex w-full flex-row items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all"
+                >
+                  <div className="flex flex-col items-start gap-4">
+                    {Object.entries(departments).map(([depName, { id: depId, products }]) => (
+                      <div key={depId} className="flex w-full flex-col gap-2">
+                        <div className="font-semibold">{depName}</div>
+
+                        <ul className="text-muted-foreground w-full text-xs">
+                          {Object.entries(products).map(([prodName, { id: prodId, quantity }]) => (
+                            <ProductTotal
+                              key={prodId}
+                              name={prodName}
+                              quantity={quantity}
+                              date={date}
+                              prodId={prodId}
+                            />
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-foreground ml-auto text-xs">{date}</div>
+                </div>
+              )
+            })}
+
+            {loading && (
+              <div className="flex w-full justify-center pt-6">
+                <span>loading...</span>
+              </div>
+            )}
+          </div>
+        </MainContainer>
       </div>
     </div>
   )
