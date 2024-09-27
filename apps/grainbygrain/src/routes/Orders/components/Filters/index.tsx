@@ -4,30 +4,30 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons'
 
 import { cn, removeNulls } from '@/utils'
-import { Routes } from '@/const'
+import { Routes, UrlParams } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import CustomerSelect from '@/components/CustomerSelect'
-
-const deliveryDateKey = 'delivery_date'
-const customerKey = 'customer'
+import DepartmentSelect from '@/components/DepartmentSelect'
 
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const delivery_date_param = searchParams.get(deliveryDateKey)
-  const customer_param = searchParams.get(customerKey)
+  const delivery_date_param = searchParams.get(UrlParams.delivery_date)
+  const customer_param = searchParams.get(UrlParams.customer)
+  const departmentParam = searchParams.get(UrlParams.department)
 
   const delivery_date = delivery_date_param ? new Date(delivery_date_param) : undefined
   const customer = removeNulls(customer_param) ?? ''
+  const department = removeNulls(departmentParam) ?? ''
 
   const handleDeliveryDateSelect = useCallback(
     (date?: Date) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (date) prev.set(deliveryDateKey, format(date, 'yyyy-MM-dd'))
+        if (date) prev.set(UrlParams.delivery_date, format(date, 'yyyy-MM-dd'))
 
         return prev
       })
@@ -40,7 +40,18 @@ const Filters = () => {
   const handleCustomerSelect = useCallback(
     (value?: string) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (value) prev.set(customerKey, value)
+        if (value) prev.set(UrlParams.customer, value)
+
+        return prev
+      })
+    },
+    [setSearchParams],
+  )
+
+  const handleDepartmentSelect = useCallback(
+    (value?: string) => {
+      setSearchParams((prev: URLSearchParams) => {
+        if (value) prev.set(UrlParams.department, value)
 
         return prev
       })
@@ -50,7 +61,7 @@ const Filters = () => {
 
   const handleClearDate = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(deliveryDateKey)
+      prev.delete(UrlParams.delivery_date)
 
       return prev
     })
@@ -58,7 +69,15 @@ const Filters = () => {
 
   const handleClearCustomer = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(customerKey)
+      prev.delete(UrlParams.customer)
+
+      return prev
+    })
+  }, [setSearchParams])
+
+  const handleClearDepartment = useCallback(() => {
+    setSearchParams((prev: URLSearchParams) => {
+      prev.delete(UrlParams.department)
 
       return prev
     })
@@ -69,9 +88,9 @@ const Filters = () => {
   }, [navigate])
 
   return (
-    <div className="mb-6 flex justify-between">
-      <div className="flex">
-        <div className="flex align-middle">
+    <div className="mb-5 flex justify-between">
+      <div className="flex flex-wrap-reverse">
+        <div className="mr-2 flex align-middle">
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -96,26 +115,41 @@ const Filters = () => {
               />
             </PopoverContent>
           </Popover>
-          <Button variant="link" onClick={handleClearDate}>
+          <Button size="icon" variant="ghost" onClick={handleClearDate}>
             <Cross2Icon />
           </Button>
         </div>
 
-        <div className="flex align-middle">
-          <CustomerSelect
-            value={customer}
-            onChange={handleCustomerSelect}
-            placeholder="customer"
-            triggerClassName="w-28"
-          />
+        <div className="mb-1 flex flex-row space-x-2">
+          <div className="flex align-middle">
+            <CustomerSelect
+              value={customer}
+              onChange={handleCustomerSelect}
+              placeholder="customer"
+              triggerClassName="w-28"
+            />
 
-          <Button variant="link" onClick={handleClearCustomer}>
-            <Cross2Icon />
-          </Button>
+            <Button size="icon" variant="ghost" onClick={handleClearCustomer}>
+              <Cross2Icon />
+            </Button>
+          </div>
+
+          <div className="flex align-middle">
+            <DepartmentSelect
+              value={department}
+              onChange={handleDepartmentSelect}
+              placeholder="department"
+              triggerClassName="w-30"
+            />
+
+            <Button size="icon" variant="ghost" onClick={handleClearDepartment}>
+              <Cross2Icon />
+            </Button>
+          </div>
         </div>
       </div>
 
-      <Button variant="ghost" onClick={handleClear}>
+      <Button size="icon" variant="ghost" onClick={handleClear}>
         <strong>clear</strong>
       </Button>
     </div>

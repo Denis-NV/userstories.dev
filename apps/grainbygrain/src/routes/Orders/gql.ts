@@ -25,6 +25,11 @@ export const LIST_ORDER_FRAGMENT = graphql(`
         id
         name
         weight
+
+        department {
+          id
+          name
+        }
       }
     }
   }

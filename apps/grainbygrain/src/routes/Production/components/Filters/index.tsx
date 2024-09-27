@@ -4,22 +4,19 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons'
 
 import { cn, removeNulls } from '@/utils'
-import { Routes } from '@/const'
+import { Routes, UrlParams } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import DepartmentSelect from '@/components/DepartmentSelect'
-
-const deliveryDateKey = 'delivery_date'
-const departmentKey = 'department'
 
 const Filters = () => {
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const delivery_date_param = searchParams.get(deliveryDateKey)
-  const departmentParam = searchParams.get(departmentKey)
+  const delivery_date_param = searchParams.get(UrlParams.delivery_date)
+  const departmentParam = searchParams.get(UrlParams.department)
 
   const delivery_date = delivery_date_param ? new Date(delivery_date_param) : undefined
 
@@ -28,7 +25,7 @@ const Filters = () => {
   const handleDeliveryDateSelect = useCallback(
     (date?: Date) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (date) prev.set(deliveryDateKey, format(date, 'yyyy-MM-dd'))
+        if (date) prev.set(UrlParams.delivery_date, format(date, 'yyyy-MM-dd'))
 
         return prev
       })
@@ -41,7 +38,7 @@ const Filters = () => {
   const handleDepartmentSelect = useCallback(
     (value?: string) => {
       setSearchParams((prev: URLSearchParams) => {
-        if (value) prev.set(departmentKey, value)
+        if (value) prev.set(UrlParams.department, value)
 
         return prev
       })
@@ -51,7 +48,7 @@ const Filters = () => {
 
   const handleClearDate = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(deliveryDateKey)
+      prev.delete(UrlParams.delivery_date)
 
       return prev
     })
@@ -59,7 +56,7 @@ const Filters = () => {
 
   const handleClearDepartment = useCallback(() => {
     setSearchParams((prev: URLSearchParams) => {
-      prev.delete(departmentKey)
+      prev.delete(UrlParams.department)
 
       return prev
     })
@@ -71,7 +68,7 @@ const Filters = () => {
 
   return (
     <div className="mb-6 flex justify-between">
-      <div className="flex">
+      <div className="flex space-x-2">
         <div className="flex align-middle">
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>
@@ -97,7 +94,7 @@ const Filters = () => {
               />
             </PopoverContent>
           </Popover>
-          <Button variant="link" onClick={handleClearDate}>
+          <Button size="icon" variant="ghost" onClick={handleClearDate}>
             <Cross2Icon />
           </Button>
         </div>
@@ -110,7 +107,7 @@ const Filters = () => {
             triggerClassName="w-30"
           />
 
-          <Button variant="link" onClick={handleClearDepartment}>
+          <Button size="icon" variant="ghost" onClick={handleClearDepartment}>
             <Cross2Icon />
           </Button>
         </div>
