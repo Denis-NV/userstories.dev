@@ -45,10 +45,7 @@ const Register = () => {
 
   const handleSignup = useCallback(
     async ({ email, password }: TFormData) => {
-      const result = await signUpEmailPassword(email, password, {
-        // allowedRoles: ['user'],
-        // defaultRole: 'user',
-      })
+      const result = await signUpEmailPassword(email, password)
 
       if (!result.isError) setSuccess(true)
     },
