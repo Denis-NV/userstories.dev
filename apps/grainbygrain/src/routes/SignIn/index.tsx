@@ -1,11 +1,12 @@
 import { useCallback } from 'react'
 import { useSignInEmailPassword } from '@nhost/react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
@@ -14,14 +15,13 @@ import { TypographyH2 } from '@/components/typography'
 
 const FormSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(1),
 })
 
 type TFormData = z.infer<typeof FormSchema>
 
 const SignIn = () => {
-  const { signInEmailPassword, needsEmailVerification, isLoading, isError, error } =
-    useSignInEmailPassword()
+  const { signInEmailPassword, needsEmailVerification, isError, error } = useSignInEmailPassword()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -56,9 +56,10 @@ const SignIn = () => {
   )
 
   return (
-    <div className="flex h-screen items-center justify-center px-4">
+    <div className="flex h-screen flex-col items-center justify-center px-4">
       <div className="w-full max-w-lg space-y-8">
-        <TypographyH2 text="Sign In" />
+        <TypographyH2 text="Sign in" />
+        <span className="text-muted-foreground">with your existing account</span>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -101,10 +102,14 @@ const SignIn = () => {
               )}
             </div>
 
-            <div>
+            <div className="flex items-center space-x-2 pt-8">
               <Button size="sm" type="submit" disabled={!isDirty || !isValid}>
-                {isLoading ? 'Logging in...' : 'Log in'}
+                Sign in
               </Button>
+
+              <Link to={`/${Routes.register}`}>
+                <Button variant="link">Register</Button>
+              </Link>
             </div>
           </form>
         </Form>

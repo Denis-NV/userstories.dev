@@ -1,5 +1,6 @@
 export enum Routes {
   signin = 'signin',
+  register = 'register',
   orders = 'orders',
   production = 'production',
   districts = 'districts',
