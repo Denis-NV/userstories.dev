@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { NhostClient, NhostProvider } from '@nhost/react'
+import { NhostClient, NhostProvider, NhostReactClientConstructorParams } from '@nhost/react'
 import { createApolloClient } from '@nhost/apollo'
 import { ApolloProvider, InMemoryCache } from '@apollo/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -14,6 +14,7 @@ import Product from '@/routes/Product'
 import Districts from '@/routes/Districts'
 import District from '@/routes/District'
 import SignIn from '@/routes/SignIn'
+import Register from '@/routes/Register'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
@@ -23,9 +24,21 @@ import typePolicies from '@/typePolicies'
 import './styles.css'
 import { RouteParams, Routes } from './const'
 
+const nhostClientParams: NhostReactClientConstructorParams = import.meta.env.DEV
+  ? {
+      authUrl: 'http://localhost:1337/v1/auth',
+      graphqlUrl: 'http://localhost:1337/v1/graphql',
+      storageUrl: 'http://localhost:1337/v1/storage',
+      functionsUrl: 'http://localhost:1337/v1/functions',
+    }
+  : {
+      subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
+      region: import.meta.env.VITE_GBG_NHOST_REGION,
+    }
+
 const nhost = new NhostClient({
-  subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
-  region: import.meta.env.VITE_GBG_NHOST_REGION,
+  ...nhostClientParams,
+
   autoSignIn: false,
 })
 
@@ -96,6 +109,10 @@ const router = createBrowserRouter([
   {
     path: `/${Routes.signin}`,
     element: <SignIn />,
+  },
+  {
+    path: `/${Routes.register}`,
+    element: <Register />,
   },
 ])
 
