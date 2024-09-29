@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Cog } from 'lucide-react'
-import { useSignOut } from '@nhost/react'
+import { useSignOut, useUserData, useUserDefaultRole } from '@nhost/react'
 
 import { cn } from '@/utils'
 import { Routes } from '@/const'
@@ -46,6 +46,10 @@ const settingsData = [
 const MainNav = () => {
   const [open, setOpen] = useState(false)
   const { signOut } = useSignOut()
+  const role = useUserDefaultRole()
+  const data = useUserData()
+
+  const name = data?.displayName ?? ''
 
   const handleSignOut = useCallback(() => {
     signOut()
@@ -73,46 +77,54 @@ const MainNav = () => {
         ))}
       </nav>
 
-      <div className="flex flex-row space-x-1 align-middle">
-        <Button variant="link" onClick={handleSignOut}>
-          Sign Out
-        </Button>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
+            <span className="sr-only">Settings</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-[300px] pr-0">
+          <div className="mb-8 flex w-full flex-col items-end pr-8 pt-6">
+            <p className="text-muted-foreground mb-4 text-right">
+              Hi,{' '}
+              <span className="font-medium text-black">{name.substring(0, name.indexOf('@'))}</span>
+              <br />
+              Your role is:{' '}
+              <span className="font-medium text-black">{role?.replace('_', ' ')}</span>
+            </p>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Cog className="h-[1.2rem] w-[1.2rem]  transition-all" />
-              <span className="sr-only">Settings</span>
+            <Button variant="default" size="sm" onClick={handleSignOut}>
+              Sign Out
             </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] pr-0">
-            <SheetTitle>Settings</SheetTitle>
-            <SheetDescription className="sr-only">Menu</SheetDescription>
-            <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-2">
-              <div className="flex flex-col space-y-3">
-                {settingsData.map(
-                  ({ to, name }, index) =>
-                    to && (
-                      <SettingsLink
-                        key={to}
-                        to={to}
-                        className={cn(
-                          'hover:text-primary transition-colors',
-                          isSelected(to, index)
-                            ? 'text-primary font-semibold'
-                            : 'text-muted-foreground',
-                        )}
-                        onOpenChange={setOpen}
-                      >
-                        {name}
-                      </SettingsLink>
-                    ),
-                )}
-              </div>
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
-      </div>
+          </div>
+          <SheetTitle>Settings</SheetTitle>
+          <SheetDescription className="sr-only">Menu</SheetDescription>
+
+          <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-2">
+            <div className="flex flex-col space-y-3">
+              {settingsData.map(
+                ({ to, name }, index) =>
+                  to && (
+                    <SettingsLink
+                      key={to}
+                      to={to}
+                      className={cn(
+                        'hover:text-primary transition-colors',
+                        isSelected(to, index)
+                          ? 'text-primary font-semibold'
+                          : 'text-muted-foreground',
+                      )}
+                      onOpenChange={setOpen}
+                    >
+                      {name}
+                    </SettingsLink>
+                  ),
+              )}
+            </div>
+          </ScrollArea>
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }

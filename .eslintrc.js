@@ -53,7 +53,10 @@ module.exports = {
     'react/no-unknown-property': 'off',
     'react/no-unescaped-entities ': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    'turbo/no-undeclared-env-vars': ['error', { allowList: ['NHOST_SECRET'] }],
+    'turbo/no-undeclared-env-vars': [
+      'error',
+      { allowList: ['NHOST_SECRET', 'HASURA_GRAPHQL_ADMIN_SECRET'] },
+    ],
     'import/no-duplicates': 'error',
     'import/no-unresolved': 'error',
     'import/export': 'warn',
