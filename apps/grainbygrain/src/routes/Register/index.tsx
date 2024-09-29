@@ -40,7 +40,7 @@ const Register = () => {
   })
 
   const {
-    formState: { isDirty, isValid },
+    formState: { isDirty },
   } = form
 
   const handleSignup = useCallback(
@@ -133,7 +133,7 @@ const Register = () => {
               </div>
 
               <div className="flex items-center space-x-2 pt-8">
-                <Button size="sm" type="submit" disabled={!isDirty || !isValid}>
+                <Button size="sm" type="submit" disabled={!isDirty}>
                   Register
                 </Button>
 

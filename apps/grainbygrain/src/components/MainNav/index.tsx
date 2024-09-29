@@ -30,6 +30,10 @@ const navData = [
 
 const settingsData = [
   {
+    name: 'Profile',
+    to: `/${Routes.profile}`,
+  },
+  {
     name: 'Districts',
     to: `/${Routes.districts}`,
   },
@@ -120,6 +124,21 @@ const MainNav = () => {
                       {name}
                     </SettingsLink>
                   ),
+              )}
+
+              {role === 'general_manager' && (
+                <SettingsLink
+                  to={`/${Routes.users}`}
+                  className={cn(
+                    'hover:text-primary transition-colors',
+                    isSelected(`/${Routes.users}`, settingsData.length)
+                      ? 'text-primary font-semibold'
+                      : 'text-muted-foreground',
+                  )}
+                  onOpenChange={setOpen}
+                >
+                  Users
+                </SettingsLink>
               )}
             </div>
           </ScrollArea>

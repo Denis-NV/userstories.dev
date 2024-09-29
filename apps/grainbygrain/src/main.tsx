@@ -18,6 +18,8 @@ import Register from '@/routes/Register'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
+import Profile from '@/routes/Profile'
+import Users from '@/routes/Users'
 import { TOrderRouteParams } from '@/routes/Order/types'
 import typePolicies from '@/typePolicies'
 
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: Routes.profile,
+        element: <Profile />,
+      },
+      {
+        path: Routes.users,
+        element: <Users />,
+      },
       {
         path: Routes.districts,
         element: <Districts />,
