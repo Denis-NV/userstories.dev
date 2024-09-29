@@ -8563,6 +8563,52 @@ export type AddProductMutation = {
   insert_product_one?: { __typename?: 'product'; id: any } | null
 }
 
+export type User_On_UsersFragment = {
+  __typename?: 'users'
+  id: any
+  email?: any | null
+  displayName: string
+  defaultRole: string
+  disabled: boolean
+  emailVerified: boolean
+  roles: Array<{ __typename?: 'authUserRoles'; id: any; role: string }>
+}
+
+export type UsersQueryVariables = Exact<{ [key: string]: never }>
+
+export type UsersQuery = {
+  __typename?: 'query_root'
+  users: Array<{
+    __typename?: 'users'
+    id: any
+    email?: any | null
+    displayName: string
+    defaultRole: string
+    disabled: boolean
+    emailVerified: boolean
+    roles: Array<{ __typename?: 'authUserRoles'; id: any; role: string }>
+  }>
+}
+
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['uuid']['input']
+  input?: InputMaybe<Users_Set_Input>
+}>
+
+export type UpdateUserMutation = {
+  __typename?: 'mutation_root'
+  updateUser?: {
+    __typename?: 'users'
+    id: any
+    email?: any | null
+    displayName: string
+    defaultRole: string
+    disabled: boolean
+    emailVerified: boolean
+    roles: Array<{ __typename?: 'authUserRoles'; id: any; role: string }>
+  } | null
+}
+
 export const FullCustomer_On_CustomerFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -8876,6 +8922,38 @@ export const FullProduct_On_ProductFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FullProduct_On_ProductFragment, unknown>
+export const User_On_UsersFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'user_on_Users' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'users' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'defaultRole' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'disabled' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'emailVerified' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'roles' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'role' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<User_On_UsersFragment, unknown>
 export const CustomersByDistrictDocument = {
   kind: 'Document',
   definitions: [
@@ -11081,3 +11159,143 @@ export const AddProductDocument = {
     },
   ],
 } as unknown as DocumentNode<AddProductMutation, AddProductMutationVariables>
+export const UsersDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Users' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'users' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'user_on_Users' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'user_on_Users' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'users' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'defaultRole' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'disabled' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'emailVerified' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'roles' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'role' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>
+export const UpdateUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'users_set_input' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pk_columns' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: '_set' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'user_on_Users' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'user_on_Users' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'users' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'defaultRole' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'disabled' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'emailVerified' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'roles' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'role' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>
