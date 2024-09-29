@@ -6,6 +6,8 @@ export enum Routes {
   districts = 'districts',
   customers = 'customers',
   products = 'products',
+  profile = 'profile',
+  users = 'users',
 }
 
 export enum UrlParams {

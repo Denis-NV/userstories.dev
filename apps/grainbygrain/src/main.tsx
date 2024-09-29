@@ -18,6 +18,8 @@ import Register from '@/routes/Register'
 import Production from '@/routes/Production'
 import Orders from '@/routes/Orders'
 import Order from '@/routes/Order'
+import Profile from '@/routes/Profile'
+import Users from '@/routes/Users'
 import { TOrderRouteParams } from '@/routes/Order/types'
 import typePolicies from '@/typePolicies'
 
@@ -26,10 +28,12 @@ import { RouteParams, Routes } from './const'
 
 const nhostClientParams: NhostReactClientConstructorParams = import.meta.env.DEV
   ? {
-      authUrl: 'http://localhost:1337/v1/auth',
-      graphqlUrl: 'http://localhost:1337/v1/graphql',
-      storageUrl: 'http://localhost:1337/v1/storage',
-      functionsUrl: 'http://localhost:1337/v1/functions',
+      authUrl: 'https://local.auth.local.nhost.run',
+      graphqlUrl: 'https://local.graphql.local.nhost.run',
+      storageUrl: 'https://local.storage.local.nhost.run',
+      functionsUrl: 'https://local.functions.local.nhost.run',
+      adminSecret: import.meta.env.HASURA_GRAPHQL_ADMIN_SECRET,
+      subdomain: 'local',
     }
   : {
       subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
@@ -38,7 +42,6 @@ const nhostClientParams: NhostReactClientConstructorParams = import.meta.env.DEV
 
 const nhost = new NhostClient({
   ...nhostClientParams,
-
   autoSignIn: false,
 })
 
@@ -55,6 +58,14 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: Routes.profile,
+        element: <Profile />,
+      },
+      {
+        path: Routes.users,
+        element: <Users />,
+      },
       {
         path: Routes.districts,
         element: <Districts />,

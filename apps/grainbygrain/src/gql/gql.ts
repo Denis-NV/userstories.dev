@@ -73,6 +73,11 @@ const documents = {
     types.OrdersByDateDocument,
   '\n  mutation AddProduct($name: String!, $weight: numeric!, $department_id: uuid!) {\n    insert_product_one(object: { name: $name, weight: $weight, department_id: $department_id }) {\n      id\n    }\n  }\n':
     types.AddProductDocument,
+  '\n  fragment user_on_Users on users {\n    id\n    email\n    displayName\n    defaultRole\n    disabled\n    emailVerified\n    roles {\n      id\n      role\n    }\n  }\n':
+    types.User_On_UsersFragmentDoc,
+  '\n  query Users {\n    users {\n      ...user_on_Users\n    }\n  }\n': types.UsersDocument,
+  '\n  mutation UpdateUser($id: uuid!, $input: users_set_input) {\n    updateUser(pk_columns: { id: $id }, _set: $input) {\n      ...user_on_Users\n    }\n  }\n':
+    types.UpdateUserDocument,
 }
 
 /**
@@ -269,6 +274,24 @@ export function graphql(
 export function graphql(
   source: '\n  mutation AddProduct($name: String!, $weight: numeric!, $department_id: uuid!) {\n    insert_product_one(object: { name: $name, weight: $weight, department_id: $department_id }) {\n      id\n    }\n  }\n',
 ): (typeof documents)['\n  mutation AddProduct($name: String!, $weight: numeric!, $department_id: uuid!) {\n    insert_product_one(object: { name: $name, weight: $weight, department_id: $department_id }) {\n      id\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  fragment user_on_Users on users {\n    id\n    email\n    displayName\n    defaultRole\n    disabled\n    emailVerified\n    roles {\n      id\n      role\n    }\n  }\n',
+): (typeof documents)['\n  fragment user_on_Users on users {\n    id\n    email\n    displayName\n    defaultRole\n    disabled\n    emailVerified\n    roles {\n      id\n      role\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query Users {\n    users {\n      ...user_on_Users\n    }\n  }\n',
+): (typeof documents)['\n  query Users {\n    users {\n      ...user_on_Users\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdateUser($id: uuid!, $input: users_set_input) {\n    updateUser(pk_columns: { id: $id }, _set: $input) {\n      ...user_on_Users\n    }\n  }\n',
+): (typeof documents)['\n  mutation UpdateUser($id: uuid!, $input: users_set_input) {\n    updateUser(pk_columns: { id: $id }, _set: $input) {\n      ...user_on_Users\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
