@@ -1,8 +1,12 @@
+import { useAccessToken } from '@nhost/react'
+import { useQuery } from '@apollo/client'
+
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'
-import { useQuery } from '@apollo/client'
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+
 import { USERS_QUERY } from './gql'
-import { useAccessToken } from '@nhost/react'
+import UserRow from './components/UserRow'
 
 const Users = () => {
   const accessToken = useAccessToken()
@@ -35,13 +39,30 @@ const Users = () => {
         <MainContainer>
           {loading && <p>loading...</p>}
           {users && (
-            <ul>
-              {users.map((user) => (
-                <li key={user.id}>
-                  {`${user.displayName} - ${user.defaultRole} | varified: ${user.emailVerified} | disabled: ${user.disabled}`}
-                </li>
-              ))}
-            </ul>
+            <Table className="table-fixed">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead className="w-28">Role</TableHead>
+                  <TableHead className="w-16">Verified</TableHead>
+                  <TableHead className="w-16">Disabled</TableHead>
+                  <TableHead className="w-24 text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {users?.map((user) => (
+                  <UserRow
+                    key={user.id}
+                    values={{
+                      disabled: user.disabled,
+                      verified: user.emailVerified,
+                      role: user.defaultRole,
+                    }}
+                    user={user}
+                  />
+                ))}
+              </TableBody>
+            </Table>
           )}
         </MainContainer>
       </div>
