@@ -26,3 +26,11 @@ export enum RouteParams {
   districtId = 'districtId',
   productId = 'productId',
 }
+
+export enum Roles {
+  user = 'user',
+  general_manager = 'general_manager',
+  order_manager = 'order_manager',
+  logistics_manager = 'logistics_manager',
+  production_manager = 'production_manager',
+}

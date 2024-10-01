@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
-import { useNavigate, Outlet, useParams } from 'react-router-dom'
+import { useNavigate, Outlet, useParams, Navigate } from 'react-router-dom'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
-import { RouteParams, Routes } from '@/const'
+import { Roles, RouteParams, Routes } from '@/const'
+import useAllowedForUser from '@/utils/useAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import { Switch } from '@/components/ui/switch'
@@ -19,6 +20,7 @@ type TRouteParams = {
 const Customers = () => {
   const [hideInactive, setHideIncative] = useState(true)
   const navigate = useNavigate()
+  const isAllowed = useAllowedForUser(Roles.order_manager)
   const { customerId = '' } = useParams<TRouteParams>()
 
   const handleCustomerSelect = useCallback(
@@ -33,7 +35,7 @@ const Customers = () => {
     navigate(`/${Routes.customers}`)
   }, [navigate])
 
-  return (
+  return isAllowed ? (
     <div className="flex h-full flex-col">
       <MainContainer>
         <div className="mb-2  flex justify-between">
@@ -76,6 +78,8 @@ const Customers = () => {
         </div>
       )}
     </div>
+  ) : (
+    <Navigate to="/" replace />
   )
 }
 

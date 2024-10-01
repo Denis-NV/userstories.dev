@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
-import { useNavigate, Outlet, useParams } from 'react-router-dom'
+import { useNavigate, Outlet, useParams, Navigate } from 'react-router-dom'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
-import { RouteParams, Routes } from '@/const'
+import { Roles, RouteParams, Routes } from '@/const'
+import useAllowedForUser from '@/utils/useAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import DistrictSelect from '@/components/DistrictSelect'
@@ -16,6 +17,7 @@ type TRouteParams = {
 
 const Districts = () => {
   const navigate = useNavigate()
+  const isAllowed = useAllowedForUser(Roles.order_manager)
   const { districtId = '' } = useParams<TRouteParams>()
 
   const handleDistrictSelect = useCallback(
@@ -30,7 +32,7 @@ const Districts = () => {
     navigate(`/${Routes.districts}`)
   }, [navigate])
 
-  return (
+  return isAllowed ? (
     <div className="flex h-full flex-col">
       <MainContainer>
         <div className="mb-2  flex justify-between">
@@ -65,6 +67,8 @@ const Districts = () => {
         </div>
       )}
     </div>
+  ) : (
+    <Navigate to="/" replace />
   )
 }
 export default Districts

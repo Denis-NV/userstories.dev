@@ -17,7 +17,7 @@ export const USER_FRAGMENT = graphql(`
 
 export const USERS_QUERY = graphql(`
   query Users {
-    users {
+    users(order_by: { createdAt: asc }) {
       ...user_on_Users
     }
   }

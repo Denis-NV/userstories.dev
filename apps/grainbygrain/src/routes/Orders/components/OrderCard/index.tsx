@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { Roles, Routes } from '@/const'
+import useAllowedForUser from '@/utils/useAllowedForUser'
 import { OrdersQuery } from '@/gql/graphql'
-import { Routes } from '@/const'
 
 type TOrderProduct = { id: string; name: string; weight: string; quantity: number }
 type TDepRecord = Record<string, { id: string; products: TOrderProduct[] }>
@@ -12,6 +13,7 @@ type TProps = { order: OrdersQuery['order'][0] }
 
 const OrderCard = ({ order }: TProps) => {
   const navigate = useNavigate()
+  const isAllowed = useAllowedForUser(Roles.order_manager)
 
   const handleClick = useCallback(() => {
     navigate(`/${Routes.orders}/${order.id}`)
@@ -42,6 +44,7 @@ const OrderCard = ({ order }: TProps) => {
       key={order.id}
       className="hover:bg-accent flex w-full flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all"
       onClick={handleClick}
+      disabled={!isAllowed}
     >
       <div className="mb-1 flex w-full flex-col gap-2">
         <div className="flex items-center">

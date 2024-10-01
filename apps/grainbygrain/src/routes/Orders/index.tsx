@@ -3,7 +3,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
-import { Routes } from '@/const'
+import { Roles, Routes } from '@/const'
+import useAllowedForUser from '@/utils/useAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'
@@ -20,6 +21,7 @@ const Orders = (): JSX.Element => {
   const accessToken = useAccessToken()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const isAllowed = useAllowedForUser(Roles.order_manager)
 
   const query = useQuery(ORDERS_QUERY, {
     context: {
@@ -76,7 +78,7 @@ const Orders = (): JSX.Element => {
               Back
             </Button>
 
-            <AddOrder onAdded={handleOrderAdd} />
+            {isAllowed && <AddOrder onAdded={handleOrderAdd} />}
           </div>
         </div>
 

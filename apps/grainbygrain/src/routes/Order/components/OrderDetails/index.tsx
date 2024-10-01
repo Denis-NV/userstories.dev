@@ -11,7 +11,6 @@ import { Form, FormControl, FormField, FormLabel } from '@/components/ui/form'
 import { removeNulls } from '@/utils'
 import { FullOrder_On_OrderFragment } from '@/gql/graphql'
 
-import { DELIVERY_METHODS_QUERY, UPDATE_ORDER_MUTATION } from '../../gql'
 import {
   Select,
   SelectContent,
@@ -22,6 +21,8 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import DeliveryDateSelectField from '@/components/DeliveryDateSelectField'
 import CustomerSelect from '@/components/CustomerSelect'
+
+import { DELIVERY_METHODS_QUERY, UPDATE_ORDER_MUTATION } from '../../gql'
 
 const FormSchema = z.object({
   comment: z.string().optional(),

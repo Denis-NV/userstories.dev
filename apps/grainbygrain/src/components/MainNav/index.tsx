@@ -4,7 +4,8 @@ import { Cog } from 'lucide-react'
 import { useSignOut, useUserData, useUserDefaultRole } from '@nhost/react'
 
 import { cn } from '@/utils'
-import { Routes } from '@/const'
+import { isAllowedForUser } from '@/utils/useAllowedForUser'
+import { Roles, Routes } from '@/const'
 import {
   Sheet,
   SheetContent,
@@ -32,25 +33,34 @@ const settingsData = [
   {
     name: 'Profile',
     to: `/${Routes.profile}`,
+    allowedRole: Roles.user,
   },
   {
     name: 'Districts',
     to: `/${Routes.districts}`,
+    allowedRole: Roles.order_manager,
   },
   {
     name: 'Customers',
     to: `/${Routes.customers}`,
+    allowedRole: Roles.order_manager,
   },
   {
     name: 'Products',
     to: `/${Routes.products}`,
+    allowedRole: Roles.order_manager,
+  },
+  {
+    name: 'Users',
+    to: `/${Routes.users}`,
+    allowedRole: Roles.general_manager,
   },
 ]
 
 const MainNav = () => {
   const [open, setOpen] = useState(false)
   const { signOut } = useSignOut()
-  const role = useUserDefaultRole()
+  const role = useUserDefaultRole() as Roles
   const data = useUserData()
 
   const name = data?.displayName ?? ''
@@ -108,8 +118,9 @@ const MainNav = () => {
           <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-2">
             <div className="flex flex-col space-y-3">
               {settingsData.map(
-                ({ to, name }, index) =>
-                  to && (
+                ({ to, name, allowedRole }, index) =>
+                  to &&
+                  isAllowedForUser(allowedRole, role) && (
                     <SettingsLink
                       key={to}
                       to={to}
@@ -124,21 +135,6 @@ const MainNav = () => {
                       {name}
                     </SettingsLink>
                   ),
-              )}
-
-              {role === 'general_manager' && (
-                <SettingsLink
-                  to={`/${Routes.users}`}
-                  className={cn(
-                    'hover:text-primary transition-colors',
-                    isSelected(`/${Routes.users}`, settingsData.length)
-                      ? 'text-primary font-semibold'
-                      : 'text-muted-foreground',
-                  )}
-                  onOpenChange={setOpen}
-                >
-                  Users
-                </SettingsLink>
               )}
             </div>
           </ScrollArea>
