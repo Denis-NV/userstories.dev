@@ -1,6 +1,9 @@
-import { useAccessToken } from '@nhost/react'
+import { Navigate } from 'react-router-dom'
+import { useAccessToken, useUserEmail } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
+import { Roles } from '@/const'
+import useAllowedForUser from '@/utils/useAllowedForUser'
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -10,6 +13,8 @@ import UserRow from './components/UserRow'
 
 const Users = () => {
   const accessToken = useAccessToken()
+  const ownEmail = useUserEmail()
+  const isAllowed = useAllowedForUser(Roles.general_manager)
 
   const query = useQuery(USERS_QUERY, {
     context: {
@@ -19,9 +24,9 @@ const Users = () => {
 
   const { data, loading } = query
 
-  const users = data?.users
+  const users = data?.users.filter((user) => user.email !== ownEmail)
 
-  return (
+  return isAllowed ? (
     <div className="flex h-full flex-col">
       <MainContainer>
         <div className="mb-2  flex justify-between">
@@ -43,10 +48,10 @@ const Users = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead className="w-28">Role</TableHead>
+                  <TableHead className="">Role</TableHead>
                   <TableHead className="w-16">Verified</TableHead>
                   <TableHead className="w-16">Disabled</TableHead>
-                  <TableHead className="w-24 text-right">Action</TableHead>
+                  <TableHead className="w-20 text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -67,6 +72,8 @@ const Users = () => {
         </MainContainer>
       </div>
     </div>
+  ) : (
+    <Navigate to="/" replace />
   )
 }
 export default Users

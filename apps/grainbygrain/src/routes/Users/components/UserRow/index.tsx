@@ -9,9 +9,16 @@ import { User_On_UsersFragment } from '@/gql/graphql'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Switch } from '@/components/ui/switch'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { UPDATE_USER_MUTATION } from '../../gql'
-import { Switch } from '@/components/ui/switch'
 
 const FormSchema = z.object({
   role: z.string(),
@@ -22,7 +29,7 @@ const FormSchema = z.object({
 export type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
-  user: Omit<User_On_UsersFragment, 'disabled' | 'roles' | 'emailVerified' | 'defaultRole'>
+  user: Omit<User_On_UsersFragment, 'disabled' | 'emailVerified' | 'defaultRole'>
   values: TFormData
 }
 
@@ -44,7 +51,7 @@ const USerRow = ({ user, values }: TProps) => {
     formState: { isDirty },
   } = form
 
-  const { id, displayName } = user
+  const { id, displayName, roles } = user
 
   const handleUpdate = useCallback(
     ({ role, verified, disabled }: TFormData) => {
@@ -65,8 +72,33 @@ const USerRow = ({ user, values }: TProps) => {
   return (
     <Form {...form}>
       <TableRow>
-        <TableCell className="font-medium">{displayName}</TableCell>
-        <TableCell className="">user</TableCell>
+        <TableCell className="font-medium">
+          <p className="... w-full truncate">{displayName}</p>
+        </TableCell>
+        <TableCell>
+          <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {roles.map(({ id, role }) => (
+                      <SelectItem key={id} value={role} className="cursor-pointer">
+                        {role.replace('_', ' ')}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+        </TableCell>
         <TableCell className="text-center">
           <FormField
             control={form.control}

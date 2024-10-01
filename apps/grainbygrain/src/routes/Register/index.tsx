@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Routes } from '@/const'
+import { Roles, Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
@@ -46,8 +46,13 @@ const Register = () => {
   const handleSignup = useCallback(
     async ({ email, password }: TFormData) => {
       const result = await signUpEmailPassword(email, password, {
-        allowedRoles: ['user', 'order_manager', 'logistics_manager', 'production_manager'],
-        defaultRole: 'user',
+        allowedRoles: [
+          Roles.user,
+          Roles.order_manager,
+          Roles.logistics_manager,
+          Roles.production_manager,
+        ],
+        defaultRole: Roles.user,
       })
 
       if (!result.isError) setSuccess(true)
