@@ -3,7 +3,7 @@ import { useAccessToken, useUserEmail } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
 import { Roles } from '@/const'
-import useAllowedForUser from '@/utils/useAllowedForUser'
+import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'

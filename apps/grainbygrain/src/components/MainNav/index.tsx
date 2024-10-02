@@ -4,7 +4,7 @@ import { Cog } from 'lucide-react'
 import { useSignOut, useUserData, useUserDefaultRole } from '@nhost/react'
 
 import { cn } from '@/utils'
-import { isAllowedForUser } from '@/utils/useAllowedForUser'
+import isAllowedForUser from '@/utils/isAllowedForUser'
 import { Roles, Routes } from '@/const'
 import {
   Sheet,

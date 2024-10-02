@@ -20,15 +20,15 @@ const roleGroups = {
   ],
 }
 
-export const isAllowedForUser = (allowedRole: Roles, userRole: Roles) => {
+const isAllowedForUser = (allowedRole: Roles, userRole: Roles) => {
   const group = roleGroups[allowedRole]
 
   return Boolean(group.find((role) => role === userRole))
 }
 
-const useAllowedForUser = (allowedRole: Roles) => {
+export const useAllowedForUser = (allowedRole: Roles) => {
   const userRole = useUserDefaultRole() as Roles
 
   return isAllowedForUser(allowedRole, userRole)
 }
-export default useAllowedForUser
+export default isAllowedForUser

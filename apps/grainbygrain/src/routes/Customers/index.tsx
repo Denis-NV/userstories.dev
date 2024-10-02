@@ -3,7 +3,7 @@ import { useNavigate, Outlet, useParams, Navigate } from 'react-router-dom'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
 import { Roles, RouteParams, Routes } from '@/const'
-import useAllowedForUser from '@/utils/useAllowedForUser'
+import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import { Switch } from '@/components/ui/switch'
