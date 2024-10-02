@@ -31,7 +31,7 @@ const orderFragmentOptions = {
 
 const FormSchema = z.object({
   productId: z.string().min(1),
-  quantity: z.coerce.number(),
+  quantity: z.coerce.number().min(1),
 })
 
 type TFormData = z.infer<typeof FormSchema>
@@ -103,8 +103,6 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   const handleAdd = useCallback(
     (data: TFormData) => {
-      console.log(data)
-
       addProduct({
         variables: {
           order_id: orderId,
@@ -151,7 +149,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
                   className="w-16"
                   type="number"
                   style={{ margin: 0 }}
-                  min={0}
+                  min={1}
                   {...register('quantity')}
                 />
               </FormControl>
