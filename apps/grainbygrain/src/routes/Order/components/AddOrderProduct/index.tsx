@@ -51,12 +51,13 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { quantity: 1, productId: '' },
+    defaultValues: { productId: '' },
   })
 
   const {
     formState: { isValid },
     reset,
+    register,
   } = form
 
   const [addProduct, addProductMutation] = useMutation(ADD_ORDER_PRODUCT_MUTATION, {
@@ -86,11 +87,24 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
         data: updatedOrder,
         ...orderFragmentOptions,
       })
+
+      cache.modify({
+        fields: {
+          order_aggregate: (_, { DELETE }) => {
+            return DELETE
+          },
+          order: (_, { DELETE }) => {
+            return DELETE
+          },
+        },
+      })
     },
   })
 
   const handleAdd = useCallback(
     (data: TFormData) => {
+      console.log(data)
+
       addProduct({
         variables: {
           order_id: orderId,
@@ -130,24 +144,18 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
           </TableCell>
           <TableCell className="hidden sm:table-cell" />
           <TableCell className="min-w-44">
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="hidden">Quantity</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="w-16"
-                      type="number"
-                      min={1}
-                      style={{ margin: 0 }}
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <FormItem>
+              <FormLabel className="hidden">Quantity</FormLabel>
+              <FormControl>
+                <Input
+                  className="w-16"
+                  type="number"
+                  style={{ margin: 0 }}
+                  min={0}
+                  {...register('quantity')}
+                />
+              </FormControl>
+            </FormItem>
           </TableCell>
           <TableCell className="text-right">
             <Button

@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Roles, Routes } from '@/const'
-import useAllowedForUser from '@/utils/useAllowedForUser'
+import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { OrdersQuery } from '@/gql/graphql'
 
 type TOrderProduct = { id: string; name: string; weight: string; quantity: number }

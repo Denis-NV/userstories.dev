@@ -4,7 +4,7 @@ import { useAccessToken } from '@nhost/react'
 import { useQuery } from '@apollo/client'
 
 import { Roles, Routes } from '@/const'
-import useAllowedForUser from '@/utils/useAllowedForUser'
+import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'

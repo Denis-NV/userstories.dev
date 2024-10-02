@@ -26,19 +26,22 @@ import typePolicies from '@/typePolicies'
 import './styles.css'
 import { RouteParams, Routes } from './const'
 
-const nhostClientParams: NhostReactClientConstructorParams = import.meta.env.DEV
-  ? {
-      authUrl: 'https://local.auth.local.nhost.run',
-      graphqlUrl: 'https://local.graphql.local.nhost.run',
-      storageUrl: 'https://local.storage.local.nhost.run',
-      functionsUrl: 'https://local.functions.local.nhost.run',
-      adminSecret: import.meta.env.HASURA_GRAPHQL_ADMIN_SECRET,
-      subdomain: 'local',
-    }
-  : {
-      subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
-      region: import.meta.env.VITE_GBG_NHOST_REGION,
-    }
+const pointToProd = false
+
+const nhostClientParams: NhostReactClientConstructorParams =
+  import.meta.env.DEV && !pointToProd
+    ? {
+        authUrl: 'https://local.auth.local.nhost.run',
+        graphqlUrl: 'https://local.graphql.local.nhost.run',
+        storageUrl: 'https://local.storage.local.nhost.run',
+        functionsUrl: 'https://local.functions.local.nhost.run',
+        adminSecret: import.meta.env.HASURA_GRAPHQL_ADMIN_SECRET,
+        subdomain: 'local',
+      }
+    : {
+        subdomain: import.meta.env.VITE_GBG_NHOST_SUBDOMAIN,
+        region: import.meta.env.VITE_GBG_NHOST_REGION,
+      }
 
 const nhost = new NhostClient({
   ...nhostClientParams,

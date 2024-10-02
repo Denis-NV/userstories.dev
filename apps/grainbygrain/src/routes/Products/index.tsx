@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useNavigate, Outlet, useParams, Navigate } from 'react-router-dom'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
-import useAllowedForUser from '@/utils/useAllowedForUser'
+import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { Roles, RouteParams, Routes } from '@/const'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
