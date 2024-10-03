@@ -112,7 +112,7 @@ const CustomerSelect = <T extends string>({
         </div>
 
         <div className="max-h-60 overflow-scroll">
-          {noItemsFound && <p className="py-6 text-center text-sm">No team found.</p>}
+          {noItemsFound && <p className="py-6 text-center text-sm">No customer found</p>}
 
           {districts?.map(({ id: distId, name, customers }) => {
             return customers.length > 0 ? (
