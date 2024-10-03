@@ -21,7 +21,7 @@ const documents = {
     types.DepartmentsDocument,
   '\n  query Districts {\n    district {\n      id\n      name\n    }\n  }\n':
     types.DistrictsDocument,
-  '\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true]) {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _in: $onlyActive } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n':
+  '\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true], $search: String = "%%") {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(\n        where: { _and: [{ is_active: { _in: $onlyActive } }, { name: { _ilike: $search } }] }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        weight\n      }\n    }\n  }\n':
     types.ProductsByDepartmentDocument,
   '\n  fragment fullCustomer_on_Customer on customer {\n    id\n    is_active\n    name\n    address\n\n    delivery_start_time\n    delivery_end_time\n\n    district {\n      id\n      name\n    }\n  }\n':
     types.FullCustomer_On_CustomerFragmentDoc,
@@ -123,8 +123,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true]) {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _in: $onlyActive } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true]) {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(where: { is_active: { _in: $onlyActive } }, order_by: { name: asc }) {\n        id\n        name\n        weight\n      }\n    }\n  }\n']
+  source: '\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true], $search: String = "%%") {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(\n        where: { _and: [{ is_active: { _in: $onlyActive } }, { name: { _ilike: $search } }] }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        weight\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query ProductsByDepartment($onlyActive: [Boolean!] = [true], $search: String = "%%") {\n    department(order_by: { name: asc }) {\n      id\n      name\n      products(\n        where: { _and: [{ is_active: { _in: $onlyActive } }, { name: { _ilike: $search } }] }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        weight\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

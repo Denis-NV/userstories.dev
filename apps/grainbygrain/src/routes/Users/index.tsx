@@ -9,7 +9,7 @@ import MainContainer from '@/components/MainContainer'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 import { USERS_QUERY } from './gql'
-import UserRow from './components/UserRow'
+import UserRow from './UserRow'
 
 const Users = () => {
   const accessToken = useAccessToken()

@@ -1,16 +1,11 @@
-import { FC, ReactNode, Fragment } from 'react'
+import { FC, ReactNode, Fragment, useCallback, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useAccessToken } from '@nhost/react'
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { SelectGroup, SelectLabel } from '@/components/ui/select'
+import ComboBox from '@/components/ComboBox'
+import ComboItem from '@/components/ComboItem'
+
 import { PRODUCST_BY_DEPARTMENT_QUERY } from './gql'
 
 type TProps<T extends string> = {
@@ -33,6 +28,8 @@ const ProductSelect = <T extends string>({
   onlyActive = true,
 }: TProps<T>) => {
   const accessToken = useAccessToken()
+  const [open, setOpen] = useState(false)
+  const [searchStr, setSearchStr] = useState('')
 
   const { data } = useQuery(PRODUCST_BY_DEPARTMENT_QUERY, {
     context: {
@@ -40,42 +37,84 @@ const ProductSelect = <T extends string>({
     },
     variables: {
       onlyActive: [true, onlyActive],
+      search: `%${searchStr}%`,
     },
   })
   const departments = data?.department
+  const products = departments?.reduce(
+    (prev, cur) => {
+      return [...prev, ...cur.products]
+    },
+    [] as (typeof departments)[0]['products'],
+  )
+  const selected = products?.find((product) => product.id === value)
+  const selectedLabel = selected ? `${selected.name} ${selected.weight}g` : undefined
+
   let productsNr = 0
 
+  const handleValueChange = useCallback(
+    (e: T) => {
+      setOpen(false)
+
+      onChange(e)
+    },
+    [setOpen, onChange],
+  )
+
+  const handleSearch = useCallback(
+    (str: string) => {
+      setSearchStr(str)
+    },
+    [setSearchStr],
+  )
+
   return (
-    <Select onValueChange={onChange} value={value}>
-      <TriggerWrapperComp>
-        <SelectTrigger disabled={!departments} style={{ margin: 0 }} className={triggerClassName}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-      </TriggerWrapperComp>
-      <SelectContent className="max-h-60">
-        {departments?.map(({ id: depId, name, products }) => {
-          const uniqueProducts = excludeIds
-            ? products.filter(({ id }) => !excludeIds.includes(id))
-            : products
+    <ComboBox
+      open={open}
+      onOpen={setOpen}
+      selected={selectedLabel}
+      onSearch={handleSearch}
+      TriggerWrapperComp={TriggerWrapperComp}
+      placeholder={placeholder}
+      notFoundMsg="No products found"
+      triggerClassName={triggerClassName}
+      noItemsFound={searchStr !== '' && products?.length == 0}
+      searchResult={
+        <>
+          {departments?.map(({ id: depId, name, products }) => {
+            const uniqueProducts = excludeIds
+              ? products.filter(({ id }) => !excludeIds.includes(id))
+              : products
 
-          productsNr += uniqueProducts?.length
+            productsNr += uniqueProducts?.length
 
-          return uniqueProducts?.length > 0 ? (
-            <SelectGroup key={depId}>
-              <SelectLabel>{name}</SelectLabel>
+            return uniqueProducts?.length > 0 ? (
+              <SelectGroup key={depId}>
+                <SelectLabel>{name}</SelectLabel>
 
-              {uniqueProducts?.map(({ id: prodId, name, weight }) => (
-                <SelectItem key={prodId} value={prodId}>
-                  {name} {weight}g
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          ) : null
-        })}
+                {uniqueProducts?.map(({ id: prodId, name, weight }) => (
+                  <ComboItem
+                    key={prodId}
+                    value={prodId}
+                    onSelected={handleValueChange}
+                    isSelected={prodId === value}
+                    className="cursor-pointer"
+                  >
+                    <p className="... max-w-64 truncate">
+                      {name} {weight}g
+                    </p>
+                  </ComboItem>
+                ))}
+              </SelectGroup>
+            ) : null
+          })}
 
-        {productsNr === 0 && <p className="px-3 py-2">All products selected</p>}
-      </SelectContent>
-    </Select>
+          {productsNr === 0 && searchStr == '' && (
+            <p className="py-6 text-center text-sm">All products selected</p>
+          )}
+        </>
+      }
+    />
   )
 }
 export default ProductSelect

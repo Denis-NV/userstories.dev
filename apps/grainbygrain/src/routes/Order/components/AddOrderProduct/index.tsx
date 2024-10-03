@@ -103,8 +103,6 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   const handleAdd = useCallback(
     (data: TFormData) => {
-      console.log(data)
-
       addProduct({
         variables: {
           order_id: orderId,

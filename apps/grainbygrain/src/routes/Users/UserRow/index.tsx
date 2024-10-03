@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import { UPDATE_USER_MUTATION } from '../../gql'
+import { UPDATE_USER_MUTATION } from '../gql'
 
 const FormSchema = z.object({
   role: z.string(),
