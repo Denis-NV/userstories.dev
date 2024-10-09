@@ -73,7 +73,7 @@ const CustomerSelect = <T extends string>({
     },
     [setOpen, onChange],
   )
-
+  // TODO: utilise Combo Box comp here
   return (
     <Popover open={open} onOpenChange={handleOpen} modal>
       <TriggerWrapperComp>
