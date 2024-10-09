@@ -1,4 +1,4 @@
-name: 'GbG app: delpoy to Netlify on "push" to "main"'
+name: 'GbG app: delpoy to Netlify on "push" to "main" and PRs'
 
 on:
   push:
@@ -15,9 +15,6 @@ env:
   VITE_GBG_NHOST_SUBDOMAIN: ${{ secrets.VITE_GBG_NHOST_SUBDOMAIN }}
   VITE_GBG_NHOST_REGION: ${{ secrets.VITE_GBG_NHOST_REGION }}
   BRANCH_NAME: ${{ github.ref_name }}
-
-permissions:
-  pull-requests: write
 
 jobs:
   delpoy:
@@ -57,20 +54,6 @@ jobs:
       - name: Build Grain by Grain App and all the dependant libraries
         run: pnpm turbo run build -F grain-by-grain
 
-      # - name: Deploy to Netlify
-      #   uses: nwtgck/actions-netlify@v3
-      #   with:
-      #     publish-dir: './apps/grainbygrain/dist'
-      #     production-branch: main
-      #     production-deploy: false
-      #     deploy-message: 'Deploy from GitHub Actions'
-      #     enable-pull-request-comment: false
-      #     enable-commit-comment: true
-      #     overwrites-pull-request-comment: true
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_GBG_SITE_ID }}
-
       - name: Deploy to Netlify
         id: netlify_deploy
         run: |
@@ -79,6 +62,7 @@ jobs:
           netlify deploy \
             --dir './apps/grainbygrain/dist' \
             --filter grain-by-grain \
+            --message 'Deploy from GitHub Actions' \
             --site ${{ secrets.NETLIFY_GBG_SITE_ID }} \
             --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
             $prod_flag \
@@ -92,29 +76,5 @@ jobs:
           NETLIFY_PREVIEW_URL=$(jq -r '.deploy_url' deploy_output.json)
           echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> "$GITHUB_OUTPUT"
 
-      - name: Comment URL Preview on PR
-        uses: actions/github-script@v7
-        if: ${{ env.BRANCH_NAME != 'main' }}
-        env:
-          NETLIFY_PREVIEW_URL: ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}
-        with:
-          script: |
-            async function comment(){
-              const result = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                commit_sha: context.sha,
-              })
-              const issueNumber = result.data[0].number
-              if(issueNumber){
-                await github.rest.issues.createComment({
-                  issue_number: issueNumber,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: 'Preview URL: ' + process.env.NETLIFY_PREVIEW_URL
-                })
-              }else{
-                console.log('No PR found for commit ' + context.sha)
-              }
-            }
-            comment()
+      - name: Print temp URL
+        run: echo ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}
