@@ -27,7 +27,7 @@ import './styles.css'
 import { RouteParams, Routes } from './const'
 
 const pointToProd = false
-
+// trigger deploy
 const nhostClientParams: NhostReactClientConstructorParams =
   import.meta.env.DEV && !pointToProd
     ? {

@@ -2,8 +2,11 @@ name: 'GbG app: delpoy to Netlify on "push" to "main"'
 
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
+    paths:
+      - 'apps/grainbygrain/**'
+  pull_request:
     paths:
       - 'apps/grainbygrain/**'
   workflow_dispatch:
@@ -75,6 +78,7 @@ jobs:
           if [ "$BRANCH_NAME" = "main" ]; then prod_flag="--prod"; fi
           netlify deploy \
             --dir './apps/grainbygrain/dist' \
+            --filter grain-by-grain \
             --site ${{ secrets.NETLIFY_GBG_SITE_ID }} \
             --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
             $prod_flag \
