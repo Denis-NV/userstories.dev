@@ -32,6 +32,7 @@ const orderFragmentOptions = {
 const FormSchema = z.object({
   productId: z.string().min(1),
   quantity: z.coerce.number().min(1),
+  comment: z.string(),
 })
 
 type TFormData = z.infer<typeof FormSchema>
@@ -51,7 +52,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { productId: '' },
+    defaultValues: { productId: '', comment: '' },
   })
 
   const {
@@ -108,6 +109,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
           order_id: orderId,
           product_id: data.productId,
           quantity: data.quantity,
+          comment: data.comment,
         },
       })
     },
@@ -140,7 +142,20 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
               )}
             />
           </TableCell>
-          <TableCell className="hidden sm:table-cell" />
+          <TableCell className="hidden sm:table-cell">
+            <FormField
+              control={form.control}
+              name="comment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="hidden">Comment</FormLabel>
+                  <FormControl>
+                    <Input style={{ margin: 0 }} {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </TableCell>
           <TableCell className="min-w-44">
             <FormItem>
               <FormLabel className="hidden">Quantity</FormLabel>

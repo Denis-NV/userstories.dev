@@ -5031,6 +5031,7 @@ export type Order_Pk_Columns_Input = {
 /** Bridge table for orders and products many-to-many relationship */
 export type Order_Product = {
   __typename?: 'order_product'
+  comment?: Maybe<Scalars['String']['output']>
   created_at: Scalars['timestamptz']['output']
   id: Scalars['uuid']['output']
   /** An object relationship */
@@ -5121,6 +5122,7 @@ export type Order_Product_Bool_Exp = {
   _and?: InputMaybe<Array<Order_Product_Bool_Exp>>
   _not?: InputMaybe<Order_Product_Bool_Exp>
   _or?: InputMaybe<Array<Order_Product_Bool_Exp>>
+  comment?: InputMaybe<String_Comparison_Exp>
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>
   id?: InputMaybe<Uuid_Comparison_Exp>
   order?: InputMaybe<Order_Bool_Exp>
@@ -5144,6 +5146,7 @@ export type Order_Product_Inc_Input = {
 
 /** input type for inserting data into table "order_product" */
 export type Order_Product_Insert_Input = {
+  comment?: InputMaybe<Scalars['String']['input']>
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
   order?: InputMaybe<Order_Obj_Rel_Insert_Input>
@@ -5157,6 +5160,7 @@ export type Order_Product_Insert_Input = {
 /** aggregate max on columns */
 export type Order_Product_Max_Fields = {
   __typename?: 'order_product_max_fields'
+  comment?: Maybe<Scalars['String']['output']>
   created_at?: Maybe<Scalars['timestamptz']['output']>
   id?: Maybe<Scalars['uuid']['output']>
   order_id?: Maybe<Scalars['uuid']['output']>
@@ -5167,6 +5171,7 @@ export type Order_Product_Max_Fields = {
 
 /** order by max() on columns of table "order_product" */
 export type Order_Product_Max_Order_By = {
+  comment?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   order_id?: InputMaybe<Order_By>
@@ -5178,6 +5183,7 @@ export type Order_Product_Max_Order_By = {
 /** aggregate min on columns */
 export type Order_Product_Min_Fields = {
   __typename?: 'order_product_min_fields'
+  comment?: Maybe<Scalars['String']['output']>
   created_at?: Maybe<Scalars['timestamptz']['output']>
   id?: Maybe<Scalars['uuid']['output']>
   order_id?: Maybe<Scalars['uuid']['output']>
@@ -5188,6 +5194,7 @@ export type Order_Product_Min_Fields = {
 
 /** order by min() on columns of table "order_product" */
 export type Order_Product_Min_Order_By = {
+  comment?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   order_id?: InputMaybe<Order_By>
@@ -5214,6 +5221,7 @@ export type Order_Product_On_Conflict = {
 
 /** Ordering options when selecting data from "order_product". */
 export type Order_Product_Order_By = {
+  comment?: InputMaybe<Order_By>
   created_at?: InputMaybe<Order_By>
   id?: InputMaybe<Order_By>
   order?: InputMaybe<Order_Order_By>
@@ -5232,6 +5240,8 @@ export type Order_Product_Pk_Columns_Input = {
 /** select columns of table "order_product" */
 export enum Order_Product_Select_Column {
   /** column name */
+  Comment = 'comment',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
@@ -5247,6 +5257,7 @@ export enum Order_Product_Select_Column {
 
 /** input type for updating data in table "order_product" */
 export type Order_Product_Set_Input = {
+  comment?: InputMaybe<Scalars['String']['input']>
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
   order_id?: InputMaybe<Scalars['uuid']['input']>
@@ -5298,6 +5309,7 @@ export type Order_Product_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Order_Product_Stream_Cursor_Value_Input = {
+  comment?: InputMaybe<Scalars['String']['input']>
   created_at?: InputMaybe<Scalars['timestamptz']['input']>
   id?: InputMaybe<Scalars['uuid']['input']>
   order_id?: InputMaybe<Scalars['uuid']['input']>
@@ -5319,6 +5331,8 @@ export type Order_Product_Sum_Order_By = {
 
 /** update columns of table "order_product" */
 export enum Order_Product_Update_Column {
+  /** column name */
+  Comment = 'comment',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -8187,6 +8201,7 @@ export type OrderProduct_On_OrderProductFragment = {
   __typename?: 'order_product'
   id: any
   quantity: number
+  comment?: string | null
   product: {
     __typename?: 'product'
     id: any
@@ -8215,6 +8230,7 @@ export type FullOrder_On_OrderFragment = {
     __typename?: 'order_product'
     id: any
     quantity: number
+    comment?: string | null
     product: {
       __typename?: 'product'
       id: any
@@ -8250,6 +8266,7 @@ export type OrderQuery = {
       __typename?: 'order_product'
       id: any
       quantity: number
+      comment?: string | null
       product: {
         __typename?: 'product'
         id: any
@@ -8294,6 +8311,7 @@ export type UpdateOrderMutation = {
       __typename?: 'order_product'
       id: any
       quantity: number
+      comment?: string | null
       product: {
         __typename?: 'product'
         id: any
@@ -8308,6 +8326,7 @@ export type UpdateOrderMutation = {
 export type UpdateOrderProductMutationVariables = Exact<{
   id: Scalars['uuid']['input']
   quantity: Scalars['Int']['input']
+  comment?: InputMaybe<Scalars['String']['input']>
 }>
 
 export type UpdateOrderProductMutation = {
@@ -8316,6 +8335,7 @@ export type UpdateOrderProductMutation = {
     __typename?: 'order_product'
     id: any
     quantity: number
+    comment?: string | null
     product: {
       __typename?: 'product'
       id: any
@@ -8330,6 +8350,7 @@ export type AddOrderProductMutationVariables = Exact<{
   order_id: Scalars['uuid']['input']
   quantity: Scalars['Int']['input']
   product_id: Scalars['uuid']['input']
+  comment?: InputMaybe<Scalars['String']['input']>
 }>
 
 export type AddOrderProductMutation = {
@@ -8338,6 +8359,7 @@ export type AddOrderProductMutation = {
     __typename?: 'order_product'
     id: any
     quantity: number
+    comment?: string | null
     product: {
       __typename?: 'product'
       id: any
@@ -8374,6 +8396,7 @@ export type ListOrder_On_OrderFragment = {
     __typename?: 'order_product'
     id: any
     quantity: number
+    comment?: string | null
     product: {
       __typename?: 'product'
       id: any
@@ -8412,6 +8435,7 @@ export type OrdersQuery = {
       __typename?: 'order_product'
       id: any
       quantity: number
+      comment?: string | null
       product: {
         __typename?: 'product'
         id: any
@@ -8447,6 +8471,7 @@ export type AddOrderMutation = {
       __typename?: 'order_product'
       id: any
       quantity: number
+      comment?: string | null
       product: {
         __typename?: 'product'
         id: any
@@ -8640,6 +8665,7 @@ export const OrderProduct_On_OrderProductFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -8758,6 +8784,7 @@ export const FullOrder_On_OrderFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -8831,6 +8858,7 @@ export const ListOrder_On_OrderFragmentDoc = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'product' },
@@ -9831,6 +9859,7 @@ export const OrderDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -10034,6 +10063,7 @@ export const UpdateOrderDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -10164,6 +10194,11 @@ export const UpdateOrderProductDocument = {
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -10197,6 +10232,11 @@ export const UpdateOrderProductDocument = {
                       name: { kind: 'Name', value: 'quantity' },
                       value: { kind: 'Variable', name: { kind: 'Name', value: 'quantity' } },
                     },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'comment' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+                    },
                   ],
                 },
               },
@@ -10223,6 +10263,7 @@ export const UpdateOrderProductDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -10283,6 +10324,11 @@ export const AddOrderProductDocument = {
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -10312,6 +10358,11 @@ export const AddOrderProductDocument = {
                       name: { kind: 'Name', value: 'product_id' },
                       value: { kind: 'Variable', name: { kind: 'Name', value: 'product_id' } },
                     },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'comment' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+                    },
                   ],
                 },
               },
@@ -10338,6 +10389,7 @@ export const AddOrderProductDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'product' },
@@ -10538,6 +10590,7 @@ export const OrdersDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'product' },
@@ -10667,6 +10720,7 @@ export const AddOrderDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'product' },

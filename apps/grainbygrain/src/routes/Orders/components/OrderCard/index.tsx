@@ -5,7 +5,13 @@ import { Roles, Routes } from '@/const'
 import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { OrdersQuery } from '@/gql/graphql'
 
-type TOrderProduct = { id: string; name: string; weight: string; quantity: number }
+type TOrderProduct = {
+  id: string
+  name: string
+  weight: string
+  quantity: number
+  comment?: string
+}
 type TDepRecord = Record<string, { id: string; products: TOrderProduct[] }>
 type TProdLists = [string, { id: string; products: TOrderProduct[] }][]
 
@@ -21,7 +27,7 @@ const OrderCard = ({ order }: TProps) => {
 
   const prodStore: TDepRecord = {}
 
-  order.order_products.forEach(({ product, quantity }) => {
+  order.order_products.forEach(({ product, quantity, comment }) => {
     if (product.department) {
       const depKey = product.department.name
 
@@ -31,7 +37,13 @@ const OrderCard = ({ order }: TProps) => {
         ...existingDep,
         products: [
           ...existingDep.products,
-          { id: product.id, name: product.name, weight: product.weight, quantity },
+          {
+            id: product.id,
+            name: product.name,
+            weight: product.weight,
+            quantity,
+            comment: comment ?? '',
+          },
         ],
       }
     }
@@ -67,6 +79,7 @@ const OrderCard = ({ order }: TProps) => {
                 {dep.products.map((prod) => (
                   <li key={prod.id}>
                     {prod.name} {prod.weight}g - <span className="font-bold">{prod.quantity}</span>
+                    {prod.comment && <span className="ml-4 italic">({prod.comment})</span>}
                   </li>
                 ))}
               </ul>
