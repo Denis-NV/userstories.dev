@@ -16,6 +16,7 @@ import DeleteProduct from '../DeleteOrderProduct'
 
 const FormSchema = z.object({
   quantity: z.coerce.number(),
+  comment: z.string(),
 })
 
 export type TFormData = z.infer<typeof FormSchema>
@@ -39,13 +40,10 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
     values,
   })
 
-  const {
-    formState: { isDirty },
-    watch,
-  } = form
+  const { watch } = form
 
   const {
-    product: { name, weight, department },
+    product: { name, weight },
   } = orderProduct
 
   const handleUpdate = useCallback(
@@ -54,6 +52,7 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
         variables: {
           id: orderProduct?.id,
           quantity: data.quantity,
+          comment: data.comment,
         },
       })
     },
@@ -61,57 +60,63 @@ const OrderProduct = ({ values, orderProduct }: TProps) => {
   )
 
   const quantity = parseInt(String(watch('quantity')))
+  const comment = watch('comment')
   const noQuantity = !quantity
-  const oldQuantity = quantity === values.quantity
+  const newValues = quantity !== values.quantity || comment !== values.comment
 
   // TODO: add error handling strategy
 
   return (
-    <TableRow>
-      <TableCell className="font-medium">
-        {name} {weight}g
-      </TableCell>
-      <TableCell className="hidden sm:table-cell">{department?.name}</TableCell>
-      <TableCell>
-        <Form {...form}>
+    <Form {...form}>
+      <TableRow>
+        <TableCell className="font-medium">
+          {name} {weight}g
+        </TableCell>
+        <TableCell className="hidden sm:table-cell">
           <form id={`productForm${orderProduct?.id}`} onSubmit={form.handleSubmit(handleUpdate)} />
-          <div className="flex flex-row">
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="hidden">Quantity</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="w-16"
-                      type="number"
-                      min={0}
-                      style={{ margin: 0 }}
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </Form>
-      </TableCell>
-      <TableCell className="text-right">
-        {noQuantity ? (
-          <DeleteProduct orderProdId={orderProduct?.id} />
-        ) : (
-          <Button
-            type="submit"
-            size="sm"
-            disabled={!isDirty || oldQuantity}
-            form={`productForm${orderProduct?.id}`}
-          >
-            Update
-          </Button>
-        )}
-      </TableCell>
-    </TableRow>
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="hidden">Comment</FormLabel>
+                <FormControl>
+                  <Input style={{ margin: 0 }} {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </TableCell>
+        <TableCell>
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="hidden">Quantity</FormLabel>
+                <FormControl>
+                  <Input className="w-16" type="number" min={0} style={{ margin: 0 }} {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </TableCell>
+        <TableCell className="text-right">
+          {noQuantity ? (
+            <DeleteProduct orderProdId={orderProduct?.id} />
+          ) : (
+            <Button
+              type="submit"
+              size="sm"
+              disabled={!newValues}
+              form={`productForm${orderProduct?.id}`}
+            >
+              Update
+            </Button>
+          )}
+        </TableCell>
+      </TableRow>
+    </Form>
   )
 }
 export default OrderProduct

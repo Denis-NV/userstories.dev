@@ -20,6 +20,7 @@ export const LIST_ORDER_FRAGMENT = graphql(`
     order_products {
       id
       quantity
+      comment
 
       product {
         id

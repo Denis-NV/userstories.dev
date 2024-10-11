@@ -4,6 +4,7 @@ export const ORDER_PRODUCT_FRAGMENT = graphql(`
   fragment orderProduct_on_OrderProduct on order_product {
     id
     quantity
+    comment
     product {
       id
       name
@@ -68,17 +69,30 @@ export const UPDATE_ORDER_MUTATION = graphql(`
 `)
 
 export const UPDATE_ORDER_PRODUCT_MUTATION = graphql(`
-  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {
-    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {
+  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!, $comment: String) {
+    update_order_product_by_pk(
+      pk_columns: { id: $id }
+      _set: { quantity: $quantity, comment: $comment }
+    ) {
       ...orderProduct_on_OrderProduct
     }
   }
 `)
 
 export const ADD_ORDER_PRODUCT_MUTATION = graphql(`
-  mutation AddOrderProduct($order_id: uuid!, $quantity: Int!, $product_id: uuid!) {
+  mutation AddOrderProduct(
+    $order_id: uuid!
+    $quantity: Int!
+    $product_id: uuid!
+    $comment: String
+  ) {
     insert_order_product_one(
-      object: { order_id: $order_id, quantity: $quantity, product_id: $product_id }
+      object: {
+        order_id: $order_id
+        quantity: $quantity
+        product_id: $product_id
+        comment: $comment
+      }
     ) {
       ...orderProduct_on_OrderProduct
     }

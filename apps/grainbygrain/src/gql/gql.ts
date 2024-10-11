@@ -39,7 +39,7 @@ const documents = {
     types.UpdateDistrictDocument,
   '\n  mutation AddDistrict($name: String!) {\n    insert_district_one(object: { name: $name }) {\n      id\n    }\n  }\n':
     types.AddDistrictDocument,
-  '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
+  '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    comment\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n':
     types.OrderProduct_On_OrderProductFragmentDoc,
   '\n  fragment fullOrder_on_Order on order {\n    id\n    created_at\n    updated_at\n    order_nr\n    comment\n    delivery_date\n    delivery_method {\n      id\n      name\n    }\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n    order_products(order_by: { created_at: asc }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
     types.FullOrder_On_OrderFragmentDoc,
@@ -49,13 +49,13 @@ const documents = {
     types.DeliveryMethodsDocument,
   '\n  mutation UpdateOrder($id: uuid!, $input: order_set_input!) {\n    update_order_by_pk(pk_columns: { id: $id }, _set: $input) {\n      ...fullOrder_on_Order\n    }\n  }\n':
     types.UpdateOrderDocument,
-  '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {\n    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
+  '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!, $comment: String) {\n    update_order_product_by_pk(\n      pk_columns: { id: $id }\n      _set: { quantity: $quantity, comment: $comment }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
     types.UpdateOrderProductDocument,
-  '\n  mutation AddOrderProduct($order_id: uuid!, $quantity: Int!, $product_id: uuid!) {\n    insert_order_product_one(\n      object: { order_id: $order_id, quantity: $quantity, product_id: $product_id }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
+  '\n  mutation AddOrderProduct(\n    $order_id: uuid!\n    $quantity: Int!\n    $product_id: uuid!\n    $comment: String\n  ) {\n    insert_order_product_one(\n      object: {\n        order_id: $order_id\n        quantity: $quantity\n        product_id: $product_id\n        comment: $comment\n      }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n':
     types.AddOrderProductDocument,
   '\n  mutation DeleteOrderProduct($id: uuid!) {\n    delete_order_product_by_pk(id: $id) {\n      id\n    }\n  }\n':
     types.DeleteOrderProductDocument,
-  '\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n':
+  '\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n      comment\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n':
     types.ListOrder_On_OrderFragmentDoc,
   '\n  query Orders($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n':
     types.OrdersDocument,
@@ -175,8 +175,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n',
-): (typeof documents)['\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n']
+  source: '\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    comment\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n',
+): (typeof documents)['\n  fragment orderProduct_on_OrderProduct on order_product {\n    id\n    quantity\n    comment\n    product {\n      id\n      name\n      weight\n      department {\n        id\n        name\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -205,14 +205,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {\n    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n',
-): (typeof documents)['\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!) {\n    update_order_product_by_pk(pk_columns: { id: $id }, _set: { quantity: $quantity }) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n']
+  source: '\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!, $comment: String) {\n    update_order_product_by_pk(\n      pk_columns: { id: $id }\n      _set: { quantity: $quantity, comment: $comment }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n',
+): (typeof documents)['\n  mutation UpdateOrderProduct($id: uuid!, $quantity: Int!, $comment: String) {\n    update_order_product_by_pk(\n      pk_columns: { id: $id }\n      _set: { quantity: $quantity, comment: $comment }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation AddOrderProduct($order_id: uuid!, $quantity: Int!, $product_id: uuid!) {\n    insert_order_product_one(\n      object: { order_id: $order_id, quantity: $quantity, product_id: $product_id }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n',
-): (typeof documents)['\n  mutation AddOrderProduct($order_id: uuid!, $quantity: Int!, $product_id: uuid!) {\n    insert_order_product_one(\n      object: { order_id: $order_id, quantity: $quantity, product_id: $product_id }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n']
+  source: '\n  mutation AddOrderProduct(\n    $order_id: uuid!\n    $quantity: Int!\n    $product_id: uuid!\n    $comment: String\n  ) {\n    insert_order_product_one(\n      object: {\n        order_id: $order_id\n        quantity: $quantity\n        product_id: $product_id\n        comment: $comment\n      }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n',
+): (typeof documents)['\n  mutation AddOrderProduct(\n    $order_id: uuid!\n    $quantity: Int!\n    $product_id: uuid!\n    $comment: String\n  ) {\n    insert_order_product_one(\n      object: {\n        order_id: $order_id\n        quantity: $quantity\n        product_id: $product_id\n        comment: $comment\n      }\n    ) {\n      ...orderProduct_on_OrderProduct\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -223,8 +223,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n',
-): (typeof documents)['\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n']
+  source: '\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n      comment\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n',
+): (typeof documents)['\n  fragment listOrder_on_Order on order {\n    id\n    created_at\n    order_nr\n    delivery_date\n    comment\n\n    customer {\n      id\n      name\n      district {\n        id\n        name\n      }\n    }\n\n    order_products {\n      id\n      quantity\n      comment\n\n      product {\n        id\n        name\n        weight\n\n        department {\n          id\n          name\n        }\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
