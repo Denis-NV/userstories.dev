@@ -69,8 +69,6 @@ const documents = {
     types.UpdateProductDocument,
   '\n  query ProdusctsByOrderDate($limit: Int = 100, $filters: order_product_bool_exp) {\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n':
     types.ProdusctsByOrderDateDocument,
-  '\n  query OrdersByDate($limit: Int = 100, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ delivery_date: desc }]) {\n      id\n      created_at\n      delivery_date\n\n      order_products {\n        id\n        quantity\n\n        product {\n          id\n          name\n          weight\n\n          department {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n':
-    types.OrdersByDateDocument,
   '\n  mutation AddProduct($name: String!, $weight: numeric!, $department_id: uuid!) {\n    insert_product_one(object: { name: $name, weight: $weight, department_id: $department_id }) {\n      id\n    }\n  }\n':
     types.AddProductDocument,
   '\n  fragment user_on_Users on users {\n    id\n    email\n    displayName\n    defaultRole\n    disabled\n    emailVerified\n    roles {\n      id\n      role\n    }\n  }\n':
@@ -263,12 +261,6 @@ export function graphql(
 export function graphql(
   source: '\n  query ProdusctsByOrderDate($limit: Int = 100, $filters: order_product_bool_exp) {\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n',
 ): (typeof documents)['\n  query ProdusctsByOrderDate($limit: Int = 100, $filters: order_product_bool_exp) {\n    order_product(limit: $limit, where: $filters, order_by: [{ order: { delivery_date: desc } }]) {\n      id\n\n      order {\n        id\n        delivery_date\n      }\n      product {\n        id\n        name\n        weight\n        department {\n          id\n          name\n        }\n      }\n      quantity\n    }\n  }\n']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n  query OrdersByDate($limit: Int = 100, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ delivery_date: desc }]) {\n      id\n      created_at\n      delivery_date\n\n      order_products {\n        id\n        quantity\n\n        product {\n          id\n          name\n          weight\n\n          department {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query OrdersByDate($limit: Int = 100, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ delivery_date: desc }]) {\n      id\n      created_at\n      delivery_date\n\n      order_products {\n        id\n        quantity\n\n        product {\n          id\n          name\n          weight\n\n          department {\n            id\n            name\n          }\n        }\n      }\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

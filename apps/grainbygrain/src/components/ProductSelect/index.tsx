@@ -78,7 +78,7 @@ const ProductSelect = <T extends string>({
       placeholder={placeholder}
       notFoundMsg="No products found"
       triggerClassName={triggerClassName}
-      noItemsFound={searchStr !== '' && products?.length == 0}
+      noItemsFound={searchStr !== '' && products?.length === 0}
       searchResult={
         <>
           {departments?.map(({ id: depId, name, products }) => {
