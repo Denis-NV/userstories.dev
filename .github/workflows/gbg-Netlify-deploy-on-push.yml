@@ -59,23 +59,28 @@ jobs:
         id: netlify_deploy
         run: |
           prod_flag=""
+          alias_flag=""
           if [ "$BRANCH_NAME" = "main" ]; then prod_flag="--prod"; fi
+          if [ "$BRANCH_NAME" != "main" ]; then alias_flag="deploy-preview-${{ github.event.pull_request.number }}"; fi
           netlify deploy \
             --dir './apps/grainbygrain/dist' \
             --filter grain-by-grain \
-            --message 'Deploy from GitHub Actions' \
+            --message "${{ github.event.pull_request.title }}" \
+            $alias_flag \
+            $prod_flag \
             --site ${{ secrets.NETLIFY_GBG_SITE_ID }} \
             --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
-            $prod_flag \
-            --json \
-            > deploy_output.json
 
-      - name: Generate URL Preview
-        id: url_preview
-        if: ${{ env.BRANCH_NAME != 'main' }}
-        run: |
-          NETLIFY_PREVIEW_URL=$(jq -r '.deploy_url' deploy_output.json)
-          echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> "$GITHUB_OUTPUT"
+      - name: Post Deployment Comment
+        if: ${{ github.ref_name == 'main' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          number: ${{ github.event.pull_request.number }}
+          header: deployment-preview
+          message: |
+            ### ✅ Deployment Preview Ready
 
-      - name: Print temp URL
-        run: echo ${{ steps.url_preview.outputs.NETLIFY_PREVIEW_URL }}
+            | Environment | URL |
+            |-------------|-----|
+            | <span aria-hidden="true">🔨</span> Latest commit | ${{ github.event.pull_request.head.sha }} |
+            | Preview     | https://deploy-preview-${{ github.event.pull_request.number }}--grainbygrain.netlify.app |
