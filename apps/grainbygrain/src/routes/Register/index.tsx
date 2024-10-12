@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { TypographyH2 } from '@/components/typography'
-
+//
 const FormSchema = z
   .object({
     email: z.string().email(),
