@@ -61,7 +61,7 @@ jobs:
           prod_flag=""
           if [ "$BRANCH_NAME" = "main" ]; then prod_flag="--prod"; fi
           alias_flag=""
-          if [ "$BRANCH_NAME" != "main" ]; then alias_flag="deploy-preview-${{ github.event.pull_request.number }}"; fi
+          if [ "$BRANCH_NAME" -ne "main" ]; then alias_flag="deploy-preview-${{ github.event.pull_request.number }}"; fi
           netlify deploy \
             --dir './apps/grainbygrain/dist' \
             --filter grain-by-grain \

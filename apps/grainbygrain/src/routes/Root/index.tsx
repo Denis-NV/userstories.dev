@@ -3,7 +3,7 @@ import { Outlet, Navigate, useLocation } from 'react-router-dom'
 
 import { Toaster } from '@/components/ui/toaster'
 import MainNav from '@/components/MainNav'
-
+//
 function Root() {
   const { isAuthenticated, isLoading } = useAuthenticationStatus()
   const location = useLocation()
