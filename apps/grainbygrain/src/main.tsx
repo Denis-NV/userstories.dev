@@ -25,9 +25,9 @@ import typePolicies from '@/typePolicies'
 
 import './styles.css'
 import { RouteParams, Routes } from './const'
-
-const pointToProd = false
 //
+const pointToProd = false
+
 const nhostClientParams: NhostReactClientConstructorParams =
   import.meta.env.DEV && !pointToProd
     ? {
