@@ -72,7 +72,7 @@ const Production = () => {
   }, [navigate])
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col print:h-auto">
       <MainContainer>
         <div className="mb-2 flex w-full justify-between">
           <TypographyH2 text="Production List" />

@@ -68,7 +68,7 @@ const Orders = (): JSX.Element => {
   const showLoadMore = Boolean(orders?.length && count && orders?.length < count)
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col print:h-auto">
       <MainContainer>
         <div className="mb-2 flex justify-between">
           <TypographyH2 text="Orders" />
