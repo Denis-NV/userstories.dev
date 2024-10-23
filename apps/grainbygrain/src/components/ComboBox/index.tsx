@@ -19,6 +19,7 @@ type TProps = {
   searchResult?: ReactNode
   notFoundMsg?: string
   noItemsFound?: boolean
+  disabled?: boolean
 }
 
 const ComboBox = ({
@@ -32,6 +33,7 @@ const ComboBox = ({
   noItemsFound,
   open,
   onOpen,
+  disabled,
 }: TProps) => {
   const handleSearch = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => onSearch(target?.value),
@@ -46,7 +48,7 @@ const ComboBox = ({
   return (
     <Popover open={open} onOpenChange={handleOpen} modal>
       <TriggerWrapperComp>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild disabled={disabled}>
           <Button
             variant="outline"
             role="combobox"

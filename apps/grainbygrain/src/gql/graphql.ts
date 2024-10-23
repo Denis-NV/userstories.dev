@@ -8055,6 +8055,17 @@ export type Virus_Updates = {
   where: Virus_Bool_Exp
 }
 
+export type AddOrderMutationVariables = Exact<{
+  customer_id?: InputMaybe<Scalars['uuid']['input']>
+  delivery_date?: InputMaybe<Scalars['date']['input']>
+  delivery_method_id?: InputMaybe<Scalars['uuid']['input']>
+}>
+
+export type AddOrderMutation = {
+  __typename?: 'mutation_root'
+  insert_order_one?: { __typename?: 'order'; id: any } | null
+}
+
 export type CustomersByDistrictQueryVariables = Exact<{
   onlyActive?: InputMaybe<Array<Scalars['Boolean']['input']> | Scalars['Boolean']['input']>
   search?: InputMaybe<Scalars['String']['input']>
@@ -8445,42 +8456,6 @@ export type OrdersQuery = {
       }
     }>
   }>
-}
-
-export type AddOrderMutationVariables = Exact<{
-  customer_id?: InputMaybe<Scalars['uuid']['input']>
-  delivery_date?: InputMaybe<Scalars['date']['input']>
-}>
-
-export type AddOrderMutation = {
-  __typename?: 'mutation_root'
-  insert_order_one?: {
-    __typename?: 'order'
-    id: any
-    created_at: any
-    order_nr: number
-    delivery_date: any
-    comment?: string | null
-    customer: {
-      __typename?: 'customer'
-      id: any
-      name: string
-      district?: { __typename?: 'district'; id: any; name: string } | null
-    }
-    order_products: Array<{
-      __typename?: 'order_product'
-      id: any
-      quantity: number
-      comment?: string | null
-      product: {
-        __typename?: 'product'
-        id: any
-        name: string
-        weight: any
-        department?: { __typename?: 'department'; id: any; name: string } | null
-      }
-    }>
-  } | null
 }
 
 export type FullProduct_On_ProductFragment = {
@@ -8952,6 +8927,75 @@ export const User_On_UsersFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<User_On_UsersFragment, unknown>
+export const AddOrderDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AddOrder' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'date' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_method_id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'insert_order_one' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'object' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'customer_id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'delivery_date' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'delivery_method_id' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'delivery_method_id' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddOrderMutation, AddOrderMutationVariables>
 export const CustomersByDistrictDocument = {
   kind: 'Document',
   definitions: [
@@ -10622,136 +10666,6 @@ export const OrdersDocument = {
     },
   ],
 } as unknown as DocumentNode<OrdersQuery, OrdersQueryVariables>
-export const AddOrderDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'AddOrder' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'uuid' } },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'date' } },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'insert_order_one' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'object' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'customer_id' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'customer_id' } },
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'delivery_date' },
-                      value: { kind: 'Variable', name: { kind: 'Name', value: 'delivery_date' } },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'listOrder_on_Order' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'listOrder_on_Order' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'order' } },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'order_nr' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'delivery_date' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'customer' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'district' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'order_products' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'product' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'department' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<AddOrderMutation, AddOrderMutationVariables>
 export const ProductDocument = {
   kind: 'Document',
   definitions: [

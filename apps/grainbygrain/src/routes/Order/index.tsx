@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { TypographyH2, TypographyH3 } from '@/components/typography'
 import DeleteOrder from '@/components/DeleteOrder'
 import MainContainer from '@/components/MainContainer'
+import AddOrder from '@/components/AddOrder'
 
 import { TOrderRouteParams } from './types'
 import { ORDER_QUERY } from './gql'
@@ -42,6 +43,15 @@ const Order = (): JSX.Element => {
     navigate(-1)
   }, [navigate])
 
+  const handleOrderAdd = useCallback(
+    (id: string) => {
+      navigate(`/${Routes.orders}/${id}`, {
+        state: [...(products ?? [])],
+      })
+    },
+    [navigate, JSON.stringify(products)],
+  )
+
   return isAllowed ? (
     order ? (
       <div className="flex h-full w-full flex-col">
@@ -51,15 +61,22 @@ const Order = (): JSX.Element => {
               <TypographyH2 text={`№ ${order?.order_nr}`} />
 
               <div className="space-x-2 pt-1">
-                <Button variant="outline" onClick={handleBackClick} size="sm">
+                <Button variant="link" onClick={handleBackClick} size="sm">
                   Back
                 </Button>
+
+                <AddOrder
+                  onAdded={handleOrderAdd}
+                  label="Duplicate"
+                  variant="secondary"
+                  order={order}
+                />
 
                 {orderId && (
                   <DeleteOrder
                     orderId={orderId}
                     trigger={
-                      <Button variant="secondary" size="sm">
+                      <Button variant="outline" size="sm">
                         Delete
                       </Button>
                     }

@@ -14,6 +14,7 @@ type TProps<T extends string> = {
   placeholder?: string
   triggerClassName?: string
   onlyActive?: boolean
+  disabled?: boolean
 }
 
 const CustomerSelect = <T extends string>({
@@ -23,6 +24,7 @@ const CustomerSelect = <T extends string>({
   placeholder = 'Select customer',
   triggerClassName,
   onlyActive = true,
+  disabled,
 }: TProps<T>) => {
   const accessToken = useAccessToken()
   const [searchStr, setSearchStr] = useState('')
@@ -65,6 +67,7 @@ const CustomerSelect = <T extends string>({
 
   return (
     <ComboBox
+      disabled={disabled}
       open={open}
       onOpen={setOpen}
       selected={selectedLabel}

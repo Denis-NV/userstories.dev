@@ -39,12 +39,25 @@ type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
   orderId?: string
+  orderProductId?: string
+  productId?: string
+  quantity?: number
+  comment?: string
   addedOrderProducts?: OrderProduct_On_OrderProductFragment[]
+  onAdded?: (id: string) => void
 }
 
-const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
+const AddOrderProduct = ({
+  orderId,
+  orderProductId = '',
+  productId = '',
+  comment = '',
+  quantity,
+  addedOrderProducts,
+  onAdded,
+}: TProps) => {
   const accessToken = useAccessToken()
-  const [showAdd, setShowAddd] = useState(false)
+  const [showAdd, setShowAddd] = useState(Boolean(productId))
 
   const handleAddProduct = useCallback(() => {
     setShowAddd(true)
@@ -52,7 +65,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { productId: '', comment: '' },
+    defaultValues: { productId, comment, quantity },
   })
 
   const {
@@ -66,6 +79,8 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
       headers: { authorization: `Bearer ${accessToken}` },
     },
     onCompleted: () => {
+      if (onAdded && orderProductId) onAdded(orderProductId)
+
       reset()
       setShowAddd(false)
     },
@@ -125,7 +140,10 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
       {showAdd ? (
         <TableRow>
           <TableCell>
-            <form id="addOrderProductForm" onSubmit={form.handleSubmit(handleAdd)} />
+            <form
+              id={`${orderProductId}addOrderProductForm`}
+              onSubmit={form.handleSubmit(handleAdd)}
+            />
             <FormField
               control={form.control}
               name="productId"
@@ -174,7 +192,7 @@ const AddOrderProduct = ({ orderId, addedOrderProducts }: TProps) => {
             <Button
               type="submit"
               size="sm"
-              form="addOrderProductForm"
+              form={`${orderProductId}addOrderProductForm`}
               disabled={!isValid || addProductMutation.loading}
             >
               Add

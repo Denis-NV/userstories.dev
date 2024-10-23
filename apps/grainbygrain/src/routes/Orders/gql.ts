@@ -48,11 +48,3 @@ export const ORDERS_QUERY = graphql(`
     }
   }
 `)
-
-export const ADD_ORDER_MUTATION = graphql(`
-  mutation AddOrder($customer_id: uuid, $delivery_date: date) {
-    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {
-      ...listOrder_on_Order
-    }
-  }
-`)

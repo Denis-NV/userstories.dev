@@ -13,6 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+  '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date, $delivery_method_id: uuid) {\n    insert_order_one(\n      object: {\n        customer_id: $customer_id\n        delivery_date: $delivery_date\n        delivery_method_id: $delivery_method_id\n      }\n    ) {\n      id\n    }\n  }\n':
+    types.AddOrderDocument,
   '\n  query CustomersByDistrict($onlyActive: [Boolean!] = [true], $search: String = "%%") {\n    district(order_by: { name: asc }) {\n      id\n      name\n      customers(\n        where: {\n          _and: [\n            { is_active: { _in: $onlyActive } }\n            { _or: [{ name: { _ilike: $search } }, { address: { _ilike: $search } }] }\n          ]\n        }\n        order_by: { name: asc }\n      ) {\n        id\n        name\n        address\n      }\n    }\n  }\n':
     types.CustomersByDistrictDocument,
   '\n  mutation DeleteOrder($id: uuid!) {\n    delete_order_by_pk(id: $id) {\n      id\n    }\n  }\n':
@@ -59,8 +61,6 @@ const documents = {
     types.ListOrder_On_OrderFragmentDoc,
   '\n  query Orders($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n':
     types.OrdersDocument,
-  '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date) {\n    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {\n      ...listOrder_on_Order\n    }\n  }\n':
-    types.AddOrderDocument,
   '\n  fragment fullProduct_on_Product on product {\n    id\n    is_active\n    name\n    weight\n    department {\n      id\n      name\n    }\n  }\n':
     types.FullProduct_On_ProductFragmentDoc,
   '\n  query Product($id: uuid!) {\n    product_by_pk(id: $id) {\n      ...fullProduct_on_Product\n    }\n  }\n':
@@ -93,6 +93,12 @@ const documents = {
  */
 export function graphql(source: string): unknown
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date, $delivery_method_id: uuid) {\n    insert_order_one(\n      object: {\n        customer_id: $customer_id\n        delivery_date: $delivery_date\n        delivery_method_id: $delivery_method_id\n      }\n    ) {\n      id\n    }\n  }\n',
+): (typeof documents)['\n  mutation AddOrder($customer_id: uuid, $delivery_date: date, $delivery_method_id: uuid) {\n    insert_order_one(\n      object: {\n        customer_id: $customer_id\n        delivery_date: $delivery_date\n        delivery_method_id: $delivery_method_id\n      }\n    ) {\n      id\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -231,12 +237,6 @@ export function graphql(
 export function graphql(
   source: '\n  query Orders($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n',
 ): (typeof documents)['\n  query Orders($limit: Int, $filters: order_bool_exp) {\n    order_aggregate(where: $filters) {\n      aggregate {\n        count\n      }\n    }\n    order(limit: $limit, where: $filters, order_by: [{ created_at: desc }]) {\n      ...listOrder_on_Order\n    }\n  }\n']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n  mutation AddOrder($customer_id: uuid, $delivery_date: date) {\n    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {\n      ...listOrder_on_Order\n    }\n  }\n',
-): (typeof documents)['\n  mutation AddOrder($customer_id: uuid, $delivery_date: date) {\n    insert_order_one(object: { customer_id: $customer_id, delivery_date: $delivery_date }) {\n      ...listOrder_on_Order\n    }\n  }\n']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
