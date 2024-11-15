@@ -7,17 +7,20 @@ import CustomerSelect from '../CustomerSelect'
 type TProps<T extends FieldValues> = {
   control: Control<T, any>
   name: Path<T>
+  disabled?: boolean
 }
 
-const CustomerSelectField = <T extends FieldValues>({ control, name }: TProps<T>) => {
+const CustomerSelectField = <T extends FieldValues>({ control, name, disabled }: TProps<T>) => {
   return (
     <FormField
+      disabled={disabled}
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem>
           <FormLabel>Customer</FormLabel>
           <CustomerSelect
+            disabled={disabled}
             value={field.value}
             onChange={field.onChange}
             TriggerWrapperComp={FormControl}

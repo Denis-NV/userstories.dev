@@ -78,7 +78,7 @@ const Production = () => {
           <TypographyH2 text="Production List" />
 
           <div className="pt-1">
-            <Button variant="outline" onClick={handleBackClick} size="sm">
+            <Button variant="link" onClick={handleBackClick} size="sm">
               Back
             </Button>
           </div>

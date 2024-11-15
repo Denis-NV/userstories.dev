@@ -20,7 +20,8 @@ import {
 import { Form } from '@/components/ui/form'
 import DeliveryDateSelectField from '@/components/DeliveryDateSelectField'
 
-import { ADD_ORDER_MUTATION } from '../../gql'
+import { ADD_ORDER_MUTATION } from './gql'
+import { OrderQuery } from '@/gql/graphql'
 
 const FormSchema = z.object({
   customer_id: z.string(),
@@ -31,15 +32,31 @@ type TFormData = z.infer<typeof FormSchema>
 
 type TProps = {
   onAdded?: (orderId: string) => void
+  label?: string
+  variant?:
+    | 'link'
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | null
+    | undefined
+  order?: OrderQuery['order_by_pk']
 }
 
-const AddOrder = ({ onAdded }: TProps) => {
+const AddOrder = ({ onAdded, label = 'Add order', variant = 'default', order }: TProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const accessToken = useAccessToken()
 
   const form = useForm<TFormData>({
     resolver: zodResolver(FormSchema),
+    values: order
+      ? {
+          customer_id: order.customer.id,
+        }
+      : undefined,
   })
 
   const {
@@ -80,6 +97,7 @@ const AddOrder = ({ onAdded }: TProps) => {
         variables: {
           customer_id,
           delivery_date: delivery_date ? format(delivery_date, 'yyyy-MM-dd') : undefined,
+          delivery_method_id: order?.delivery_method?.id,
         },
       })
     },
@@ -89,7 +107,9 @@ const AddOrder = ({ onAdded }: TProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Add order</Button>
+        <Button size="sm" variant={variant}>
+          {label}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>

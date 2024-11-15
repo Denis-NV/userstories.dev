@@ -1,3 +1,6 @@
+import { useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import { OrderProduct_On_OrderProductFragment } from '@/gql/graphql'
 import {
   Table,
@@ -17,6 +20,18 @@ type TProps = {
 }
 
 const OrderProducts = ({ products, orderId }: TProps) => {
+  const { state } = useLocation()
+  const navigate = useNavigate()
+
+  const initProducts = state as OrderProduct_On_OrderProductFragment[]
+
+  const handleAdded = useCallback(
+    (id: string) => {
+      navigate('.', { state: initProducts?.filter((p) => p.id !== id), replace: true })
+    },
+    [navigate, JSON.stringify(initProducts)],
+  )
+
   return (
     <Table className="table-fixed">
       <TableHeader>
@@ -28,6 +43,16 @@ const OrderProducts = ({ products, orderId }: TProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
+        {initProducts?.map(({ id, product }) => (
+          <AddOrderProduct
+            key={id}
+            orderId={orderId}
+            orderProductId={id}
+            productId={product.id}
+            addedOrderProducts={products}
+            onAdded={handleAdded}
+          />
+        ))}
         {products?.map((product) => (
           <OrderProduct
             key={product.id}

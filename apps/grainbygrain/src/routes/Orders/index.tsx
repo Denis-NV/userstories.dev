@@ -8,10 +8,10 @@ import { useAllowedForUser } from '@/utils/isAllowedForUser'
 import { Button } from '@/components/ui/button'
 import { TypographyH2 } from '@/components/typography'
 import MainContainer from '@/components/MainContainer'
+import AddOrder from '@/components/AddOrder'
 
 import { ORDERS_QUERY } from './gql'
 import { getParamsFilter, getCursorFilter } from './utils'
-import AddOrder from './components/AddOrder'
 import Filters from './components/Filters'
 import OrderCard from './components/OrderCard'
 
@@ -74,7 +74,7 @@ const Orders = (): JSX.Element => {
           <TypographyH2 text="Orders" />
 
           <div className="space-x-2 pt-1">
-            <Button variant="outline" onClick={handleBackClick} size="sm">
+            <Button variant="link" onClick={handleBackClick} size="sm">
               Back
             </Button>
 
