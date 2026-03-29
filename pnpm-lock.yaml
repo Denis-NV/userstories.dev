@@ -8,6 +8,8 @@ overrides:
   express>body-parser: ^1.20.3
   handlebars: '>=4.7.9'
   basic-ftp: '>=5.2.0'
+  minimatch: '>=3.1.4'
+  brace-expansion: '>=1.1.12'
 
 importers:
 
@@ -3907,9 +3909,6 @@ packages:
     resolution: {integrity: sha512-z0M+byMThzQmD9NILRniCUXYsYpjwnlO8N5uCFaCqIOpqRsJCrQL9NK3JsD67CN5a08nF5oIL2bD6loTdHOuKw==}
     engines: {node: '>= 5.10.0'}
 
-  brace-expansion@1.1.11:
-    resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
-
   brace-expansion@2.0.1:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
 
@@ -4178,9 +4177,6 @@ packages:
 
   computeds@0.0.1:
     resolution: {integrity: sha512-7CEBgcMjVmitjYo5q8JTJVra6X5mQ20uTThdK+0kR7UEaDrAWEQcRiBtWJzga4eRpP6afNwwLsX2SET2JhVB1Q==}
-
-  concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
@@ -5985,15 +5981,8 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimatch@3.1.2:
-    resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
-
   minimatch@4.2.3:
     resolution: {integrity: sha512-lIUdtK5hdofgCTu3aT0sOaHsYR37viUuIc0rwnnDXImbwFRcumyLMeZaM0t0I/fgxS6s6JMfu0rLD1Wz9pv1ng==}
-    engines: {node: '>=10'}
-
-  minimatch@5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
 
   minimatch@9.0.3:
@@ -9478,7 +9467,7 @@ snapshots:
       ignore: 5.3.0
       import-fresh: 3.3.0
       js-yaml: 4.1.0
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -9938,7 +9927,7 @@ snapshots:
     dependencies:
       '@humanwhocodes/object-schema': 2.0.1
       debug: 4.3.4
-      minimatch: 3.1.2
+      minimatch: 9.0.4
     transitivePeerDependencies:
       - supports-color
 
@@ -12558,11 +12547,6 @@ snapshots:
     dependencies:
       big-integer: 1.6.52
 
-  brace-expansion@1.1.11:
-    dependencies:
-      balanced-match: 1.0.2
-      concat-map: 0.0.1
-
   brace-expansion@2.0.1:
     dependencies:
       balanced-match: 1.0.2
@@ -12880,8 +12864,6 @@ snapshots:
       - supports-color
 
   computeds@0.0.1: {}
-
-  concat-map@0.0.1: {}
 
   consola@3.2.3: {}
 
@@ -13488,7 +13470,7 @@ snapshots:
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       object.fromentries: 2.0.7
       object.groupby: 1.0.1
       object.values: 1.1.7
@@ -13526,7 +13508,7 @@ snapshots:
       eslint: 8.56.0
       estraverse: 5.3.0
       jsx-ast-utils: 3.3.5
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       object.entries: 1.1.7
       object.fromentries: 2.0.7
       object.hasown: 1.1.3
@@ -13603,7 +13585,7 @@ snapshots:
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.4.1
       lodash.merge: 4.6.2
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       natural-compare: 1.4.0
       optionator: 0.9.3
       strip-ansi: 6.0.1
@@ -13792,7 +13774,7 @@ snapshots:
 
   filelist@1.0.4:
     dependencies:
-      minimatch: 5.1.6
+      minimatch: 9.0.4
 
   fill-range@7.0.1:
     dependencies:
@@ -14026,7 +14008,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -14035,7 +14017,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.2
+      minimatch: 9.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -14600,7 +14582,7 @@ snapshots:
       async: 3.2.5
       chalk: 4.1.2
       filelist: 1.0.4
-      minimatch: 3.1.2
+      minimatch: 9.0.4
 
   jiti@1.21.0: {}
 
@@ -14987,15 +14969,7 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  minimatch@3.1.2:
-    dependencies:
-      brace-expansion: 1.1.11
-
   minimatch@4.2.3:
-    dependencies:
-      brace-expansion: 1.1.11
-
-  minimatch@5.1.6:
     dependencies:
       brace-expansion: 2.0.1
 
@@ -15084,7 +15058,7 @@ snapshots:
 
   node-dir@0.1.17:
     dependencies:
-      minimatch: 3.1.2
+      minimatch: 9.0.4
 
   node-fetch-native@1.6.1: {}
 
