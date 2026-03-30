@@ -37,6 +37,7 @@ overrides:
   nanoid: '>=3.3.8'
   tmp: '>=0.2.4'
   yaml: '>=2.8.3'
+  ip: '>=2.0.1'
 
 importers:
 
@@ -4313,11 +4314,8 @@ packages:
   invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
 
-  ip@1.1.8:
-    resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
-
-  ip@2.0.0:
-    resolution: {integrity: sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==}
+  ip@2.0.1:
+    resolution: {integrity: sha512-lJUL9imLTNi1ZfXT+DU6rBBdbiKGBuay9B6xGSPVjUeQwaH1RIGqef8RZkUtHioLmSNpPR5M4HVKJGm1j8FWVQ==}
 
   is-absolute@1.0.0:
     resolution: {integrity: sha512-dOWoqflvcydARa360Gvv18DZ/gRuHKi2NU/wU5X1ZFzdYfH29nkiNZsF3mp4OJ3H4yo9Mx8A/uAGNzpzPN3yBA==}
@@ -11274,9 +11272,7 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  ip@1.1.8: {}
-
-  ip@2.0.0: {}
+  ip@2.0.1: {}
 
   is-absolute@1.0.0:
     dependencies:
@@ -12081,7 +12077,7 @@ snapshots:
   pac-resolver@7.0.0:
     dependencies:
       degenerator: 5.0.1
-      ip: 1.1.8
+      ip: 2.0.1
       netmask: 2.0.2
 
   param-case@2.1.1:
@@ -12774,7 +12770,7 @@ snapshots:
 
   socks@2.7.1:
     dependencies:
-      ip: 2.0.0
+      ip: 2.0.1
       smart-buffer: 4.2.0
 
   source-map-js@1.0.2: {}
